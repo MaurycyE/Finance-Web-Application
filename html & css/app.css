@@ -1,30 +1,39 @@
 body {
     background-color: #192038;
     font-family: 'Lato', serif;
-    margin: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0;
 
 }
 
 h1 {
-    display: inline-block;
+
     font-size: 50px;
     color: #192038;
     text-transform: uppercase;
     letter-spacing: 5px;
 
+
 }
 
 header {
     background-color: #455d8f;
-    text-align: center;
-    border: #fff solid 2px;
 
+    border-bottom: #fff solid 2px;
+    border-right: #fff solid 2px;
+    border-left: #fff solid 2px;
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
 
 }
 
-.title-picture {
-    width: 75px;
-    height: 75px;
+.footer-logo {
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
 
 
@@ -32,18 +41,14 @@ header {
 
 main {
     background-color: #455d8f;
-    width: 500px;
+    width: 300px;
     border: #fff solid 2px;
     margin-left: auto;
     margin-right: auto;
     margin-top: 10%;
+    border-radius: 5%;
 
 
-}
-
-footer {
-    background-color: #25282e;
-    border: #fff solid 2px;
 }
 
 .registration-sign-in {
@@ -54,19 +59,37 @@ footer {
 }
 
 .main-button {
+    color: #fff;
+    font-size: 20px;
     padding: 20px;
     width: 200px;
     height: 100px;
+    border: #fff solid 1px;
+    border-radius: 7%;
+    background-color: #7c9cd6;
+
+    transition: color 0.35s, border-color 0.35s, box-shadow 0.35s, transform 0.35s;
 }
 
 .main-button:hover {
-    color: #455d8f;
+    background-color: #6582ba;
     cursor: pointer;
+    /* border-color: #192038; */
+    border: #192038 solid 2px;
+    color: #192038;
+    box-shadow: 0 0.5em 0.5em -0.4em #192038;
+    transform: translateY(-0.25em);
 }
 
 footer {
+    background-color: #25282e;
+    border-top: #fff solid 2px;
     box-sizing: border-box;
     position: absolute;
-    bottom: 5px;
-    width: 100%;
+    bottom: 0;
+    left: auto;
+    right: auto;
+
+    width: 1000px;
+
 }
