@@ -10,19 +10,19 @@ body {
 h1 {
 
     font-size: 50px;
-    color: #192038;
+    color: #fff;
     text-transform: uppercase;
     letter-spacing: 5px;
-
 
 }
 
 header {
     background-color: #455d8f;
-
+    text-shadow: 4px 4px 2px #192038;
     border-bottom: #fff solid 2px;
     border-right: #fff solid 2px;
     border-left: #fff solid 2px;
+    border-radius: 4%;
     width: 1000px;
     margin-left: auto;
     margin-right: auto;
@@ -67,7 +67,6 @@ main {
     border: #fff solid 1px;
     border-radius: 7%;
     background-color: #7c9cd6;
-
     transition: color 0.35s, border-color 0.35s, box-shadow 0.35s, transform 0.35s;
 }
 
@@ -82,14 +81,13 @@ main {
 }
 
 footer {
-    background-color: #25282e;
-    border-top: #fff solid 2px;
-    box-sizing: border-box;
     position: absolute;
     bottom: 0;
-    left: auto;
-    right: auto;
-
-    width: 1000px;
+    margin-left: 2%;
+    margin-right: 2%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 96%;
 
 }
