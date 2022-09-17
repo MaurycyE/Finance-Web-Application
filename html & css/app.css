@@ -1,3 +1,72 @@
 body {
     background-color: #192038;
+    font-family: 'Lato', serif;
+    margin: 0;
+
+}
+
+h1 {
+    display: inline-block;
+    font-size: 50px;
+    color: #192038;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+
+}
+
+header {
+    background-color: #455d8f;
+    text-align: center;
+    border: #fff solid 2px;
+
+
+}
+
+.title-picture {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+
+
+}
+
+main {
+    background-color: #455d8f;
+    width: 500px;
+    border: #fff solid 2px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10%;
+
+
+}
+
+footer {
+    background-color: #25282e;
+    border: #fff solid 2px;
+}
+
+.registration-sign-in {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.main-button {
+    padding: 20px;
+    width: 200px;
+    height: 100px;
+}
+
+.main-button:hover {
+    color: #455d8f;
+    cursor: pointer;
+}
+
+footer {
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 5px;
+    width: 100%;
 }
