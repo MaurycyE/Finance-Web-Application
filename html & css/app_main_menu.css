@@ -46,7 +46,7 @@ nav {
     background-color: #455d8f;
     /* border: #fff solid 2px; */
     border-right: #fff solid 2px;
-    width: 175px;
+    width: 200px;
     float: left;
     min-height: 825px;
 
@@ -55,8 +55,19 @@ nav {
 
 main {
     /* border: #fff solid 2px; */
-    width: 823px;
+    width: 798px;
     float: left;
     min-height: 825px;
 
+}
+
+nav div {
+    width: 170px;
+    height: 45px;
+    background-color: #44c259;
+    padding: 5px;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
 }
