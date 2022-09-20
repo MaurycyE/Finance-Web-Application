@@ -31,7 +31,7 @@ header {
     border-bottom: #fff solid 2px;
     border-right: #fff solid 2px;
     border-left: #fff solid 2px;
-    border-radius: 4%;
+    border-radius: 20px;
     width: 1000px;
     margin-left: auto;
     margin-right: auto;
@@ -83,7 +83,7 @@ section {
     width: 150px;
     height: 50px;
     border: #fff solid 1px;
-    border-radius: 7%;
+    border-radius: 5px;
     background-color: #44c259;
     transition: color 0.35s, border-color 0.35s, box-shadow 0.35s, transform 0.35s;
     outline: none;
