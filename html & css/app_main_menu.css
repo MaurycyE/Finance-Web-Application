@@ -70,4 +70,19 @@ nav div {
     margin-top: 30px;
     margin-left: auto;
     margin-right: auto;
+    color: #fff;
+    text-align: center;
+    border-radius: 10px;
+    transition: color 0.35s, border-color 0.35s, box-shadow 0.35s, transform 0.35s;
+
+}
+
+nav div:hover {
+
+    background-color: #1d6e2f;
+    cursor: pointer;
+    border: #192038 solid 2px;
+    color: #fff;
+    box-shadow: 0 0.5em 0.5em -0.4em #192038;
+    transform: translateY(-0.25em);
 }
