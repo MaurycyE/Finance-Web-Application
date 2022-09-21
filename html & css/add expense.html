@@ -45,7 +45,75 @@
         </nav>
 
         <main>
-            Zaplanuj swój budżet!
+            <h2>Dodaj wydatek</h2>
+
+            <form action="#">
+                <p><label for="amout">Kwota: <input type="number" id="amout" name="amout"></label></p>
+
+                <p><label for="date">Data: <input type="date" id="date" name="date"></label></p>
+                <p><label for="payment-method">Sposób płatności:
+                        <select name="payment-method" id="payment-method">
+                            <option value="cash">gotówka</option>
+                            <option value="debit card">karta debetowa</option>
+                            <option value="credit card">karta kredytowa</option>
+                        </select>
+                    </label></p>
+
+                <h3>Kategoria: </h3>
+                <p>
+                    <label for="food">Jedzenie: <input type="radio" name="category" id="food" value="jedzenie"></label>
+                    <label for="trip">Wycieczka: <input type="radio" name="category" id="trip"
+                            value="wycieczka"></label>
+                    <label for="home">Mieszkanie: <input type="radio" name="category" id="home"
+                            value="mieszkanie"></label>
+                    <label for="training">Szkolenia: <input type="radio" name="category" id="training"
+                            value="Szkolenia"></label>
+
+                </p>
+                <p>
+                    <label for="transport">Transport: <input type="radio" name="category" id="transport"
+                            value="transport"></label>
+                    <label for="books">Książka: <input type="radio" name="category" id="books" value="książki"></label>
+                    <label for="telecomunication">Telekomunikacja: <input type="radio" name="category"
+                            id="telecomunication" value="Telekomunikacja"></label>
+                    <label for="savings">Oszczędności: <input type="radio" name="category" id="savings"
+                            value="Oszczędności"></label>
+
+                </p>
+                <p>
+                    <label for="health">Opieka zdrowotna: <input type="radio" name="category" id="health"
+                            value="Opieka zdrowotna"></label>
+                    <label for="retirement">Emerytura: <input type="radio" name="category" id="retirement"
+                            value="Emerytura"></label>
+                    <label for="clothes">Ubranie: <input type="radio" name="category" id="clothes"
+                            value="Ubranie"></label>
+                    <label for="debts">Spłata długów: <input type="radio" name="category" id="debts"
+                            value="Spłata długów"></label>
+
+                </p>
+                <p>
+                    <label for="hygiene">Higiena: <input type="radio" name="category" id="hygiene"
+                            value="Higiena"></label>
+                    <label for="donation">Darowizna: <input type="radio" name="category" id="donation"
+                            value="Darowizna"></label>
+                    <label for="children">Dzieci: <input type="radio" name="category" id="children"
+                            value="Dzieci"></label>
+                    <label for="entertainment">Rozrywka: <input type="radio" name="category" id="entertainment"
+                            value="Rozrywka"></label>
+
+                </p>
+                <p>
+                    <label for="others">Inne wydatki: <input type="radio" name="category" id="others"
+                            value="Inne wydatki"></label>
+                </p>
+
+
+                <p><label for="text">Komentarz: <input type="text" name="text" id="text"></label></p>
+
+                <button>Dodaj</button>
+                <button>Anuluj</button>
+
+            </form>
 
         </main>
     </div>
