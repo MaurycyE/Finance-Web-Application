@@ -54,10 +54,13 @@ nav {
 }
 
 main {
-    /* border: #fff solid 2px; */
     width: 798px;
     float: left;
     min-height: 825px;
+    color: #fff;
+    text-align: center;
+    padding-top: 150px;
+    font-size: 40px;
 
 }
 
