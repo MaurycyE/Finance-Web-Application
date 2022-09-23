@@ -4,18 +4,14 @@ body {
     margin-left: auto;
     margin-right: auto;
     margin-top: 0;
-
 }
 
 h1 {
-
     font-size: 50px;
     color: #fff;
     text-transform: uppercase;
     letter-spacing: 5px;
-
 }
-
 
 h2 {
     padding-left: 20px;
@@ -29,7 +25,6 @@ header {
     border-bottom: #fff solid 2px;
     border-right: #fff solid 2px;
     border-left: #fff solid 2px;
-    /* border-radius: 20px; */
     width: 1000px;
     margin-left: auto;
     margin-right: auto;
@@ -51,13 +46,10 @@ header {
 
 nav {
     background-color: #455d8f;
-    /* border: #fff solid 2px; */
     border-right: #fff solid 2px;
     width: 200px;
     float: left;
     min-height: 825px;
-
-
 }
 
 main {
@@ -65,10 +57,6 @@ main {
     float: left;
     min-height: 825px;
     color: #fff;
-
-    /* padding-top: 15px; */
-
-
 }
 
 nav div {
@@ -84,11 +72,9 @@ nav div {
     text-align: center;
     border-radius: 10px;
     transition: color 0.35s, border-color 0.35s, box-shadow 0.35s, transform 0.35s;
-
 }
 
 nav div:hover {
-
     background-color: #1d6e2f;
     cursor: pointer;
     border: #192038 solid 2px;
@@ -96,11 +82,6 @@ nav div:hover {
     box-shadow: 0 0.5em 0.5em -0.4em #192038;
     transform: translateY(-0.25em);
 }
-
-/* #text {
-    width: 250px;
-    height: 80px;
-} */
 
 .column {
     display: inline-block;
@@ -126,32 +107,16 @@ form {
     padding-bottom: 20px;
 }
 
-/* #amout {
-    margin-left: 10px;
-}
-
-#date {
-    margin-left: 10px;
-}
-
-#payment-method {
-    margin-left: 10px;
-} */
-
 .forms-fields {
     margin-left: 10px;
-    /* margin-bottom: 10px; */
     color: #192038;
     border-radius: 3px;
     border: none;
     outline: none;
-    /* height: 20px; */
-
 }
 
 .forms-fields:focus {
     box-shadow: 0px 0px 10px 3px #5a6ad1;
-
 }
 
 form button {
@@ -161,28 +126,17 @@ form button {
     color: #fff;
 }
 
-
 #add-expense-button {
-    /* width: 95px;
-    height: 40px; */
     font-size: 18px;
     margin-right: 15px;
     margin-top: 15px;
     background-color: #1d6e2f;
-    /* color: #fff; */
-    /* border-radius: 10px; */
     transition: color 0.35s, border-color 0.35s, box-shadow 0.35s, transform 0.35s;
-
-    /* border: #fff 2px solid; */
 }
 
 #abort-button {
-    /* width: 95px;
-    height: 40px; */
     font-size: 18px;
     background-color: #870824;
-    /* color: #fff; */
-    /* border-radius: 10px; */
     transition: color 0.35s, border-color 0.35s, box-shadow 0.35s, transform 0.35s;
 }
 
@@ -190,13 +144,11 @@ form button {
     background-color: #44c259;
     cursor: pointer;
     border: #fff solid 2px;
-    /* color: #fff; */
     box-shadow: 0 0.5em 0.5em -0.4em #fff;
     transform: translateY(-0.25em);
 }
 
 #abort-button:hover {
-
     cursor: pointer;
     background-color: #cf0a36;
     border: #fff solid 2px;
