@@ -48,13 +48,15 @@
             <h2>Dodaj wydatek</h2>
 
             <form action="#">
-                <div id="amout-of-money"><label for="amout">Kwota: <input type="number" id="amout" name="amout"></label>
+                <div id="amout-of-money"><label for="amout">Kwota: <input class="forms-fields" type="number" id="amout"
+                            name="amout" min="0"></label>
                 </div>
 
-                <div id="expanse-date"><label for="date">Data: <input type="date" id="date" name="date"></label></div>
+                <div id="expanse-date"><label for="date">Data: <input class="forms-fields" type="date" id="date"
+                            name="date"></label></div>
 
                 <div id="payment"><label for="payment-method">Sposób płatności:
-                        <select name="payment-method" id="payment-method">
+                        <select name="payment-method" id="payment-method" class="forms-fields">
                             <option value="cash">gotówka</option>
                             <option value="debit card">karta debetowa</option>
                             <option value="credit card">karta kredytowa</option>
@@ -117,12 +119,12 @@
                 </fieldset>
 
                 <p><label for="text">Komentarz: </label></p>
-                <p><textarea name="text" id="text" cols="30" rows="8"></textarea></p>
+                <p><textarea name="text" id="text" cols="30" rows="8" class="forms-fields"></textarea></p>
 
 
 
-                <button>Dodaj</button>
-                <button>Anuluj</button>
+                <button id="add-expense-button">Dodaj</button>
+                <button id="abort-button">Anuluj</button>
 
             </form>
 
