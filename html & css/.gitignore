@@ -32,6 +32,6 @@
 *.app
 
 *.ttf
-*.jpg
 
-img
+#images
+img/
