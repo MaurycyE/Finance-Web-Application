@@ -109,3 +109,7 @@ section {
 .label:hover {
     color: #44c259;
 }
+
+a {
+    text-decoration: none;
+}

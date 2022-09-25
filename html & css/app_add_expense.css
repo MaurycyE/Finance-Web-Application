@@ -13,6 +13,10 @@ h1 {
     letter-spacing: 5px;
 }
 
+h1:hover {
+    cursor: pointer;
+}
+
 h2 {
     padding-left: 20px;
     padding-top: 20px;
@@ -158,4 +162,8 @@ form button {
 
 fieldset {
     margin-bottom: 25px;
+}
+
+a {
+    text-decoration: none;
 }

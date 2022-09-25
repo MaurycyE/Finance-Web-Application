@@ -87,3 +87,7 @@ nav div:hover {
     box-shadow: 0 0.5em 0.5em -0.4em #192038;
     transform: translateY(-0.25em);
 }
+
+a {
+    text-decoration: none;
+}

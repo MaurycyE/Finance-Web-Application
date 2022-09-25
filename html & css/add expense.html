@@ -19,30 +19,44 @@
 
 <body>
     <header>
-        <h1>Budżet osobisty</h1>
+        <a href="main menu.html">
+            <h1>Budżet osobisty</h1>
+        </a>
 
     </header>
 
     <div id="container">
         <nav>
-            <div>
-                Dodaj przychód
-                <i class="icon-chart-line"></i>
-            </div>
-            <div>Dodaj wydatek
-                <i class="icon-money"></i>
-            </div>
-            <div>Przeglądaj bilans
-                <i class="icon-chart-pie"></i>
-            </div>
+            <a href="#">
+                <div>
+                    Dodaj przychód
+                    <i class="icon-chart-line"></i>
+                </div>
+            </a>
+            <a href="add expense.html">
+                <div>Dodaj wydatek
+                    <i class="icon-money"></i>
+                </div>
+            </a>
+
+            <a href="view balance sheet.html">
+                <div>Przeglądaj bilans
+                    <i class="icon-chart-pie"></i>
+                </div>
+            </a>
+
             <div>Ustawienia
                 <i class="icon-cog"></i>
             </div>
-            <div>Wyloguj
-                <i class="icon-logout"></i>
-            </div>
+
+            <a href="index.html">
+                <div>Wyloguj
+                    <i class="icon-logout"></i>
+                </div>
+            </a>
 
         </nav>
+
 
         <main>
             <h2>Dodaj wydatek</h2>
@@ -122,7 +136,7 @@
 
 
                 <button id="add-expense-button">Dodaj</button>
-                <button id="abort-button">Anuluj</button>
+                <a href="add expense.html"><button id="abort-button">Anuluj</button></a>
 
             </form>
 
