@@ -33,5 +33,6 @@
 
 *.ttf
 
-#images
-img/
+#dir
+finance_web_aplication_bootstrap/img/
+html & css/img/
