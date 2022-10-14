@@ -88,9 +88,53 @@
                             </li>
                         </ul>
 
-                        <!-- <div class="col-sm-8 float-start bg-white">
-                            
-                        </div> -->
+                        <div class="col-sm-8 float-start bg-white">
+
+                            <h2 class="font-monospace">Dodaj wydatek</h2>
+                            <form action="#">
+                                <div class="mb-3">
+                                    <label for="add-income-amout" class="form-label">Kwota:</label>
+                                    <input type="number" class="form-control" id="add-income-amout"
+                                        aria-describedby="amout of money" min="0" step="0.01" required>
+                                    <!-- <div id="add-income-amout" class="form-text">We'll never share your email with
+                                        anyone else.</div> -->
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="add-income-date" class="form-label">Data:</label>
+                                    <input type="date" class="form-control" id="add-income-date"
+                                        aria-describedby="date of income" min="2001-01-01" required>
+                                    <!-- <div id="add-income-amout" class="form-text">We'll never share your email with
+                                        anyone else.</div> -->
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="add-income-category" class="form-label">Wybierz kategorię:</label>
+                                    <select class="form-select" aria-label="income category" id="add-income-category"
+                                        required>
+                                        <option value="payment" selected>wynagrodzenie</option>
+                                        <option value="interest">odsetki bankowe</option>
+                                        <option value="sell">sprzedaż na allegro</option>
+                                        <option value="other">inne</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="add-income-textarea" class="form-label">Komentarz</label>
+                                    <textarea class="form-control" id="add-income-textarea" rows="3"
+                                        required></textarea>
+                                </div>
+
+
+
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="reset" class="btn btn-primary">Anuluj</button>
+
+
+
+                            </form>
+
+                        </div>
                     </div>
 
                 </div>
