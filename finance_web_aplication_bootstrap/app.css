@@ -30,3 +30,7 @@
 /* #separation-div {
     width: 50px;
 } */
+
+textarea {
+    resize: none;
+}
