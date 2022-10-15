@@ -37,12 +37,13 @@
                                     d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
                             </svg></a></h1>
 
-                    <div class="d-flex float-sm-start col-8 col-sm-4 px-4">
+                    <div class="d-flex float-sm-start col-8 col-sm-4 px-4 mb-3">
                         <ul class="nav nav-tabs flex-column  bg-light rounded-4">
                             <li class="nav-item p-2">
-                                <a class="nav-link text-light bg-dark active" aria-current="page" href="#"><svg
-                                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                        class="bi bi-clipboard-data" viewBox="0 0 16 16">
+                                <a class="nav-link text-light bg-dark active" aria-current="page"
+                                    href="add income.html"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                        height="16" fill="currentColor" class="bi bi-clipboard-data"
+                                        viewBox="0 0 16 16">
                                         <path
                                             d="M4 11a1 1 0 1 1 2 0v1a1 1 0 1 1-2 0v-1zm6-4a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0V7zM7 9a1 1 0 0 1 2 0v3a1 1 0 1 1-2 0V9z" />
                                         <path
@@ -52,9 +53,9 @@
                                     </svg> Dodaj przychód</a>
                             </li>
                             <li class="nav-item p-2">
-                                <a class="nav-link text-dark" href="#"><svg xmlns="http://www.w3.org/2000/svg"
-                                        width="16" height="16" fill="currentColor" class="bi bi-graph-down"
-                                        viewBox="0 0 16 16">
+                                <a class="nav-link text-dark" href="add expense.html"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-graph-down" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd"
                                             d="M0 0h1v15h15v1H0V0Zm14.817 11.887a.5.5 0 0 0 .07-.704l-4.5-5.5a.5.5 0 0 0-.74-.037L7.06 8.233 3.404 3.206a.5.5 0 0 0-.808.588l4 5.5a.5.5 0 0 0 .758.06l2.609-2.61 4.15 5.073a.5.5 0 0 0 .704.07Z" />
                                     </svg> Dodaj wydatek</a>
@@ -98,7 +99,7 @@
                             <div class="mb-3">
                                 <label for="add-income-amout" class="form-label">Kwota:</label>
                                 <input type="number" class="form-control" id="add-income-amout"
-                                    aria-describedby="amout of money" min="0" step="0.01" required>
+                                    aria-describedby="amout of money" min="0" step="0.01" placeholder="PLN" required>
                             </div>
 
                             <div class="mb-3">
@@ -107,7 +108,7 @@
                                     aria-describedby="date of income" min="2001-01-01" required>
                             </div>
 
-                            <div class="mb-3">
+                            <div class="mb-4">
                                 <label for="add-income-category" class="form-label">Wybierz kategorię:</label>
                                 <select class="form-select" aria-label="income category" id="add-income-category"
                                     required>
@@ -118,7 +119,7 @@
                                 </select>
                             </div>
 
-                            <div class="mb-3">
+                            <div class="mb-4">
                                 <label for="add-income-textarea" class="form-label">Komentarz:</label>
                                 <textarea class="form-control" id="add-income-textarea" rows="3" required></textarea>
                             </div>
