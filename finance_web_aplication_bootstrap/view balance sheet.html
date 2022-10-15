@@ -104,33 +104,50 @@
                                 <option value="current month" selected>Bieżący miesiąc</option>
                                 <option value="last month">Poprzedni miesiąc</option>
                                 <option value="current year">Bieżący rok</option>
-                                <option value="non-standard">niestandardowe</option>
+                                <option value="non-standard" data-bs-toggle="modal"
+                                    data-bs-target="#view-balance-modal">
+                                    niestandardowe</option>
                             </select>
                         </div>
 
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal">
-                            Launch demo modal
-                        </button>
-
                         <!-- Modal -->
-                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
+                        <div class="modal fade" id="view-balance-modal" tabindex="-1"
+                            aria-labelledby="view-balance-modalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                        <h1 class="modal-title fs-5" id="view-balance-modalLabel">Wybierz zakres dat:
+                                        </h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        ...
+                                        <form action="#">
+
+                                            <div class="mb-3">
+                                                <label for="view-balance-date-from" class="form-label">Od:</label>
+                                                <input type="date" class="form-control" id="view-balance-date-from"
+                                                    aria-describedby="first date to view balance sheet" min="2001-01-01"
+                                                    required>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="view-balance-date-to" class="form-label">Do:</label>
+                                                <input type="date" class="form-control" id="view-balance-date-to"
+                                                    aria-describedby="second date to view balance sheet"
+                                                    min="2001-01-01" required>
+                                            </div>
+
+                                        </form>
+
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                        <button type="submit" class="btn btn-success"><svg
+                                                xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
+                                            </svg></button>
                                     </div>
                                 </div>
                             </div>
