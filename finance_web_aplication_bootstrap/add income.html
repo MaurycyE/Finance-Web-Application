@@ -14,7 +14,7 @@
 
 <body>
 
-    <div class="container-fluid bg-image  d-flex justify-content-center "
+    <div class="container-fluid bg-image  d-flex justify-content-center"
         style="background-image: url(img/background_stars2.jpg); height: 100vh;">
 
         <main>
@@ -25,7 +25,8 @@
                 <div id="main-container" class="col-10 col-lg-12 bg-white rounded-5 shadow-lg border bg-image"
                     style="background-image: url(img/main_menu_graphic_site.png);">
 
-                    <h1 class="h1 my-4 fw-bolder font-monospace text-center text-dark bg-white p-2 rounded-4">Wszystko
+                    <h1 class="h1 my-4 fw-bolder font-monospace text-center text-dark bg-white p-2 rounded-4">
+                        Wszystko
                         co
                         potrzebne do
                         monitorowania
@@ -36,8 +37,8 @@
                                     d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
                             </svg></a></h1>
 
-                    <div>
-                        <ul class="nav nav-tabs flex-column float-start bg-light rounded-4">
+                    <div class="d-flex float-sm-start col-6 col-sm-4 px-4">
+                        <ul class="nav nav-tabs flex-column  bg-light rounded-4">
                             <li class="nav-item p-2">
                                 <a class="nav-link text-light bg-dark active" aria-current="page" href="#"><svg
                                         xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -87,61 +88,62 @@
                                     </svg> Wyloguj</a>
                             </li>
                         </ul>
-
-                        <div class="col-12 col-sm-8 float-start bg-white p-4 rounded-4">
-
-                            <h2 class="font-monospace">Dodaj wydatek</h2>
-                            <form action="#">
-                                <div class="mb-3">
-                                    <label for="add-income-amout" class="form-label">Kwota:</label>
-                                    <input type="number" class="form-control" id="add-income-amout"
-                                        aria-describedby="amout of money" min="0" step="0.01" required>
-                                    <!-- <div id="add-income-amout" class="form-text">We'll never share your email with
-                                        anyone else.</div> -->
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="add-income-date" class="form-label">Data:</label>
-                                    <input type="date" class="form-control" id="add-income-date"
-                                        aria-describedby="date of income" min="2001-01-01" required>
-                                    <!-- <div id="add-income-amout" class="form-text">We'll never share your email with
-                                        anyone else.</div> -->
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="add-income-category" class="form-label">Wybierz kategorię:</label>
-                                    <select class="form-select" aria-label="income category" id="add-income-category"
-                                        required>
-                                        <option value="payment" selected>wynagrodzenie</option>
-                                        <option value="interest">odsetki bankowe</option>
-                                        <option value="sell">sprzedaż na allegro</option>
-                                        <option value="other">inne</option>
-                                    </select>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="add-income-textarea" class="form-label">Komentarz</label>
-                                    <textarea class="form-control" id="add-income-textarea" rows="3"
-                                        required></textarea>
-                                </div>
-
-
-
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                                <button type="reset" class="btn btn-primary">Anuluj</button>
-
-
-
-                            </form>
-
-                        </div>
                     </div>
+                    <!-- <div id="separation-div" class="float-start">a</div> -->
 
+                    <div class="col-10 col-sm-8 float-sm-end bg-white p-4 rounded-4">
+
+                        <h2 class="font-monospace">Dodaj wydatek</h2>
+                        <form action="#">
+                            <div class="mb-3">
+                                <label for="add-income-amout" class="form-label">Kwota:</label>
+                                <input type="number" class="form-control" id="add-income-amout"
+                                    aria-describedby="amout of money" min="0" step="0.01" required>
+                                <!-- <div id="add-income-amout" class="form-text">We'll never share your email with
+                                        anyone else.</div> -->
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="add-income-date" class="form-label">Data:</label>
+                                <input type="date" class="form-control" id="add-income-date"
+                                    aria-describedby="date of income" min="2001-01-01" required>
+                                <!-- <div id="add-income-amout" class="form-text">We'll never share your email with
+                                        anyone else.</div> -->
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="add-income-category" class="form-label">Wybierz kategorię:</label>
+                                <select class="form-select" aria-label="income category" id="add-income-category"
+                                    required>
+                                    <option value="payment" selected>wynagrodzenie</option>
+                                    <option value="interest">odsetki bankowe</option>
+                                    <option value="sell">sprzedaż na allegro</option>
+                                    <option value="other">inne</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="add-income-textarea" class="form-label">Komentarz:</label>
+                                <textarea class="form-control" id="add-income-textarea" rows="3" required></textarea>
+                            </div>
+
+
+
+                            <button type="submit" class="btn btn-success">Dodaj</button>
+                            <button type="reset" class="btn btn-primary mx-4">Anuluj</button>
+
+
+
+                        </form>
+
+                    </div>
                 </div>
 
             </div>
 
-        </main>
+    </div>
+
+    </main>
 
     </div>
 
