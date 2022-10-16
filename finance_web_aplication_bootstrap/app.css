@@ -1,36 +1,20 @@
-/* body {
-    background-image: url('https://images.pexels.com/photos/956999/milky-way-starry-sky-night-sky-star-956999.jpeg');
-    background-position: top center;
-    background-repeat: no-repeat;
-    width: 100vh;
-} */
-
-
-@media (max-width: 768px) {
+@media (max-width: 992px) {
 
     body {
         background-image: url(img/background_stars2.jpg);
         height: 100%;
     }
 
-
 }
 
-@media (min-width: 768px) {
-
-
+@media (min-width: 992px) {
 
     #main-container {
         background-image: url(img/main_menu_graphic_site.png);
         height: 100vh;
-        /* background-repeat: repeat-y; */
 
     }
 }
-
-/* #separation-div {
-    width: 50px;
-} */
 
 textarea {
     resize: none;
