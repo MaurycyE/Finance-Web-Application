@@ -30,11 +30,11 @@
 
                     <p class="h5 my-3 fw-bolder font-monospace">Jeszcze tylko krótka formalność..</p>
 
-                    <form action="#" class="m-4">
+                    <form action="main menu.php" method="post" class="m-4">
 
                         <div class="input-group mb-2">
                             <span class="input-group-text" id="email-logging">@</span>
-                            <input type="email" class="form-control" placeholder="Email" aria-label="email-logging"
+                            <input type="email" name="login" class="form-control" placeholder="Email" aria-label="email-logging"
                                 aria-describedby="email-logging" required>
                         </div>
                         <div class="input-group mb-2">
@@ -43,7 +43,7 @@
                                     <path
                                         d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z" />
                                 </svg></span>
-                            <input type="password" class="form-control" placeholder="Password" aria-label="Password"
+                            <input type="password" name="password" class="form-control" placeholder="Password" aria-label="Password"
                                 aria-describedby="password" required>
                         </div>
 

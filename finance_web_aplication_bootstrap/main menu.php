@@ -1,3 +1,46 @@
+<?php
+
+session_start();
+require_once "connect.php";
+
+$connection = @new mysqli($host, $db_user, $db_password, $db_name);
+if($connection->connect_errno!=0){
+    echo "Error: ".$connection->connect_errno;
+}
+
+else {
+    $login=$_POST['login'];
+    $password=$_POST['password'];
+
+    $sql = "SELECT * FROM users WHERE user_email='$login' AND user_password='$password'";
+
+    if($result=@$connection->query($sql)) {
+
+        $usersFound=$result->num_rows;
+        if($usersFound>0) {
+
+            $row=$result->fetch_assoc();
+            $_SESSION['user_name']=$row['user_name'];
+            $_SESSION['user_password']=$row['user_password'];
+            $_SESSION['user_email']=$row['user_email'];
+
+            $result->free();
+
+            
+
+        }
+        else {
+            echo "nie znaleziono uzytkownika";
+
+        }
+    }
+
+    $connection->close();
+}
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,7 +69,7 @@
                     style="background-image: url(img/main_menu_graphic_site.png); height: 100vh;">
 
                     <div>
-                        <h1 class="h1 my-4 fw-bolder font-monospace text-center text-dark bg-white p-2 rounded-4">
+                        <h1 class="h1 my-4  fw-bolder font-monospace text-center text-dark bg-white p-2 rounded-4">
                             Wszystko
                             co
                             potrzebne do
@@ -40,6 +83,9 @@
                     </div>
 
                     <div class="d-flex float-sm-start col-6 col-sm-4 px-4">
+
+                    
+
                         <ul class="nav nav-tabs flex-column float-start bg-light rounded-4">
                             <li class="nav-item p-2">
                                 <a class="nav-link text-dark" href="add income.php"><svg
@@ -93,6 +139,11 @@
 
                     </div>
 
+                    <?php
+                        echo '<div class="col-10 col-sm-8 float-sm-end bg-white p-4 rounded-4 mb-2 text-center font-monospace h2">Witaj, <b>'.$_SESSION['user_name'].'!</b></div>';
+
+                    ?>
+
                 </div>
 
             </div>
@@ -105,3 +156,7 @@
 </body>
 
 </html>
+
+<?php
+
+?>
