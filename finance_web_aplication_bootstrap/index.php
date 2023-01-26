@@ -30,8 +30,8 @@
                         <img src="img/main_site_graphic2.png" alt="main_site_graphic" class="img-fluid">
                     </div>
 
-                    <a class="btn btn-dark my-4 mx-4 p-2 btn-lg" href="registration.html" role="button">Rejestracja</a>
-                    <a class="btn btn-dark mx-4 p-2 btn-lg" href="log in.html" role="button">Logowanie</a>
+                    <a class="btn btn-dark my-4 mx-4 p-2 btn-lg" href="registration.php" role="button">Rejestracja</a>
+                    <a class="btn btn-dark mx-4 p-2 btn-lg" href="log in.php" role="button">Logowanie</a>
 
                 </div>
 

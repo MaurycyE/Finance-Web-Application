@@ -42,7 +42,7 @@
                     <div class="d-flex float-sm-start col-6 col-sm-4 px-4">
                         <ul class="nav nav-tabs flex-column float-start bg-light rounded-4">
                             <li class="nav-item p-2">
-                                <a class="nav-link text-dark" href="add income.html"><svg
+                                <a class="nav-link text-dark" href="add income.php"><svg
                                         xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-clipboard-data" viewBox="0 0 16 16">
                                         <path
@@ -54,7 +54,7 @@
                                     </svg> Dodaj przychód</a>
                             </li>
                             <li class="nav-item p-2">
-                                <a class="nav-link text-dark" href="add income.html"><svg
+                                <a class="nav-link text-dark" href="add income.php"><svg
                                         xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-graph-down" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd"
@@ -62,7 +62,7 @@
                                     </svg> Dodaj wydatek</a>
                             </li>
                             <li class="nav-item p-2">
-                                <a class="nav-link text-dark" href="add expense.html"><svg
+                                <a class="nav-link text-dark" href="add expense.php"><svg
                                         xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-pie-chart" viewBox="0 0 16 16">
                                         <path
@@ -70,7 +70,7 @@
                                     </svg> Przeglądaj bilans</a>
                             </li>
                             <li class="nav-item p-2">
-                                <a class="nav-link text-dark" href="view balance sheet.html"><svg
+                                <a class="nav-link text-dark" href="view balance sheet.php"><svg
                                         xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-gear" viewBox="0 0 16 16">
                                         <path
@@ -80,7 +80,7 @@
                                     </svg> Ustawienia</a>
                             </li>
                             <li class="nav-item p-2">
-                                <a class="nav-link text-dark" href="index.html"><svg xmlns="http://www.w3.org/2000/svg"
+                                <a class="nav-link text-dark" href="index.php"><svg xmlns="http://www.w3.org/2000/svg"
                                         width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right"
                                         viewBox="0 0 16 16">
                                         <path fill-rule="evenodd"

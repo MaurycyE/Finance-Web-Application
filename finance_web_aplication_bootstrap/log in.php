@@ -54,7 +54,7 @@
 
                     </form>
 
-                    <a class="btn btn-primary mb-4" href="registration.html" role="button">Nie masz konta?</a>
+                    <a class="btn btn-primary mb-4" href="registration.php" role="button">Nie masz konta?</a>
 
                 </div>
 
