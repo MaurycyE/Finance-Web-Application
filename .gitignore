@@ -36,3 +36,10 @@
 #dir
 #finance_web_aplication_bootstrap/img/
 #html & css/img/
+
+#other
+*.pdf
+*.uxf
+*.docx
+
+materialy_pomocnicze/
