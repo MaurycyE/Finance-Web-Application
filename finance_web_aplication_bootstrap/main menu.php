@@ -1,43 +1,10 @@
 <?php
 
 session_start();
-require_once "connect.php";
-
-$connection = @new mysqli($host, $db_user, $db_password, $db_name);
-if($connection->connect_errno!=0){
-    echo "Error: ".$connection->connect_errno;
+if(!isset($_SESSION["isLoggedIn"])) {
+    header("Location: index.php");
+    exit();
 }
-
-else {
-    $login=$_POST['login'];
-    $password=$_POST['password'];
-
-    $sql = "SELECT * FROM users WHERE user_email='$login' AND user_password='$password'";
-
-    if($result=@$connection->query($sql)) {
-
-        $usersFound=$result->num_rows;
-        if($usersFound>0) {
-
-            $row=$result->fetch_assoc();
-            $_SESSION['user_name']=$row['user_name'];
-            $_SESSION['user_password']=$row['user_password'];
-            $_SESSION['user_email']=$row['user_email'];
-
-            $result->free();
-
-            
-
-        }
-        else {
-            echo "nie znaleziono uzytkownika";
-
-        }
-    }
-
-    $connection->close();
-}
-
 
 ?>
 
@@ -64,7 +31,6 @@ else {
 
             <div class="row justify-content-center">
 
-
                 <div class="col-10 col-lg-12 bg-white rounded-5 shadow-lg border bg-image"
                     style="background-image: url(img/main_menu_graphic_site.png); height: 100vh;">
 
@@ -83,8 +49,6 @@ else {
                     </div>
 
                     <div class="d-flex float-sm-start col-6 col-sm-4 px-4">
-
-                    
 
                         <ul class="nav nav-tabs flex-column float-start bg-light rounded-4">
                             <li class="nav-item p-2">
@@ -126,7 +90,7 @@ else {
                                     </svg> Ustawienia</a>
                             </li>
                             <li class="nav-item p-2">
-                                <a class="nav-link text-dark" href="index.php"><svg xmlns="http://www.w3.org/2000/svg"
+                                <a class="nav-link text-dark" href="logout_mechanism.php"><svg xmlns="http://www.w3.org/2000/svg"
                                         width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right"
                                         viewBox="0 0 16 16">
                                         <path fill-rule="evenodd"
@@ -156,7 +120,3 @@ else {
 </body>
 
 </html>
-
-<?php
-
-?>

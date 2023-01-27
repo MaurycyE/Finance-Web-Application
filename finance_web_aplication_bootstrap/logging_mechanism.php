@@ -1,6 +1,12 @@
 <?php
 
 session_start();
+
+if((!isset($_POST['login']))||(!isset($_POST['password']))) {
+    header('Location: index.php');
+    exit();
+}
+
 require_once "connect.php";
 
 $connection = @new mysqli($host, $db_user, $db_password, $db_name);
@@ -12,9 +18,14 @@ else {
     $login=$_POST['login'];
     $password=$_POST['password'];
 
-    $sql = "SELECT * FROM users WHERE user_email='$login' AND user_password='$password'";
+    $login = htmlentities($login, ENT_QUOTES, "UFT-8");
+    $password = htmlentities($password, ENT_QUOTES, "UFT-8");
 
-    if($result=@$connection->query($sql)) {
+    //$sql = "SELECT * FROM users WHERE user_email='$login' AND user_password='$password'";
+
+    if($result=@$connection->query(sprintf("SELECT * FROM users WHERE user_email='%s' AND user_password='%s'",
+    mysqli_real_escape_string($connection, $login),
+    mysqli_real_escape_string($connection, $password)))) {
 
         $usersFound=$result->num_rows;
         if($usersFound>0) {

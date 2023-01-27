@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+unset($_SESSION['error']);
+
+if((isset($_SESSION['isLoggedIn']))&&($_SESSION['isLoggedIn']==true)) {
+    header('Location: main menu.php');
+    exit();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

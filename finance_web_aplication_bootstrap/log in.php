@@ -1,3 +1,13 @@
+<?php
+
+session_start();
+if((isset($_SESSION['isLoggedIn']))&&($_SESSION['isLoggedIn']==true)) {
+    header('Location: main menu.php');
+    exit();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,7 +40,7 @@
 
                     <p class="h5 my-3 fw-bolder font-monospace">Jeszcze tylko krótka formalność..</p>
 
-                    <form action="main menu.php" method="post" class="m-4">
+                    <form action="logging_mechanism.php" method="post" class="m-4">
 
                         <div class="input-group mb-2">
                             <span class="input-group-text" id="email-logging">@</span>
@@ -46,6 +56,12 @@
                             <input type="password" name="password" class="form-control" placeholder="Password" aria-label="Password"
                                 aria-describedby="password" required>
                         </div>
+
+                        <?php
+                                if(isset($_SESSION['error'])){
+                                    echo '<div class="my-1 font-monospace">'.$_SESSION['error'].'</div>';
+                                }
+                                ?>
 
                         <div>
                             <button type="submit" class="btn btn-success mt-3 btn-lg">Zaloguj</button>

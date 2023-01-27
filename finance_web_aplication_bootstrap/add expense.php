@@ -1,3 +1,13 @@
+<?php
+
+session_start();
+if(!isset($_SESSION["isLoggedIn"])) {
+    header("Location: index.php");
+    exit();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -80,7 +90,7 @@
                                     </svg> Ustawienia</a>
                             </li>
                             <li class="nav-item p-2">
-                                <a class="nav-link text-dark" href="index.php"><svg xmlns="http://www.w3.org/2000/svg"
+                                <a class="nav-link text-dark" href="logout_mechanism.php"><svg xmlns="http://www.w3.org/2000/svg"
                                         width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right"
                                         viewBox="0 0 16 16">
                                         <path fill-rule="evenodd"
