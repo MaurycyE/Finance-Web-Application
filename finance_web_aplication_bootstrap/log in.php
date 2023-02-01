@@ -7,7 +7,6 @@ if((isset($_SESSION['isLoggedIn']))&&($_SESSION['isLoggedIn']==true)) {
 }
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,6 +33,30 @@ if((isset($_SESSION['isLoggedIn']))&&($_SESSION['isLoggedIn']==true)) {
 
                 <div class="col-8 col-sm-10 bg-white rounded-5 shadow-lg border">
 
+                    <?php
+                    if(isset($_SESSION['succesfullRegistration'])){
+
+                        if(isset($_SESSION['usernameWritenInForm']))
+                            unset($_SESSION['usernameWritenInForm']);
+                        if(isset($_SESSION['emailWritenInForm']))
+                            unset($_SESSION['emailWritenInForm']);
+                        if(isset($_SESSION['passwordWritenInForm']))
+                            unset($_SESSION['passwordWritenInForm']);
+                        if(isset($_SESSION['confirmPasswordWritenInForm']))
+                            unset($_SESSION['confirmPasswordWritenInForm']);
+
+                        if(isset($_SESSION['errorWithUsername']))
+                            unset($_SESSION['errorWithUsername']);
+                        if(isset($_SESSION['errorWithEmail']))
+                            unset($_SESSION['errorWithEmail']);
+                        if(isset($_SESSION['errorWithPassword']))
+                            unset($_SESSION['errorWithPassword']);
+                        
+                            echo '<div class="h2 text-success font-monospace mt-3">Udana rejestracja!</div>';
+                            unset($_SESSION['succesfullRegistration']);
+                    };
+                    ?>
+
                     <h1 class=" h4 my-3 fw-bolder font-monospace mx-2 mt-4">
                         A zatem do dzieła!
                     </h1>
@@ -55,6 +78,7 @@ if((isset($_SESSION['isLoggedIn']))&&($_SESSION['isLoggedIn']==true)) {
                                 </svg></span>
                             <input type="password" name="password" class="form-control" placeholder="Password" aria-label="Password"
                                 aria-describedby="password" required>
+
                         </div>
 
                         <?php
@@ -62,23 +86,20 @@ if((isset($_SESSION['isLoggedIn']))&&($_SESSION['isLoggedIn']==true)) {
                                     echo '<div class="my-1 font-monospace">'.$_SESSION['error'].'</div>';
                                 }
                                 ?>
-
                         <div>
                             <button type="submit" class="btn btn-success mt-3 btn-lg">Zaloguj</button>
                         </div>
 
-
                     </form>
 
                     <a class="btn btn-primary mb-4" href="registration.php" role="button">Nie masz konta?</a>
+                    
 
                 </div>
 
             </div>
 
         </main>
-
-
 
     </div>
 

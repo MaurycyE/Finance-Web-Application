@@ -8,6 +8,105 @@ if((isset($_SESSION['isLoggedIn']))&&($_SESSION['isLoggedIn']==true)) {
     exit();
 }
 
+if(isset($_POST['email'])) {
+
+    $areAllRegistrationDataOk = true;
+    $username=$_POST['username'];
+    $email=$_POST['email'];
+    $password=$_POST['password'];
+    $confirmPassword=$_POST['confirmPassword'];
+
+    //checking username
+    if((strlen($username)<3)||(strlen($username)>20)) {
+        $areAllRegistrationDataOk=false;
+        $_SESSION['errorWithUsername']="Nazwa użytkownika musi zawierać od 3 do 20 znaków";
+    }
+
+    if(ctype_alnum($username)==false) {
+        $areAllRegistrationDataOk=false;
+        $_SESSION['errorWithUsername']="Nazwa użytkownika może się składać tylko z liter i cyfr (bez polskich znaków)";
+    }
+
+    //checking email 
+    $comparingEmail = filter_var($email, FILTER_SANITIZE_EMAIL);
+    if ((filter_var($comparingEmail, FILTER_VALIDATE_EMAIL)==false)||($comparingEmail!=$email)) {
+        $areAllRegistrationDataOk=false;
+        $_SESSION['errorWithEmail']="Podaj prawidłowy email";
+    }
+
+    //checking password
+    if((strlen($password)<8)||(strlen($password)>20)) {
+        $areAllRegistrationDataOk=false;
+        $_SESSION['errorWithPassword']="Hasło musi mieć co najmniej 8 znaków i nie więcej niż 20";
+    }
+    if($password!=$confirmPassword) {
+        $areAllRegistrationDataOk=false;
+        $_SESSION['errorWithPassword']="Hasła nie są takie same";
+    }
+
+    $passwordConvertedToHash=password_hash($password, PASSWORD_DEFAULT);
+
+    $_SESSION['usernameWritenInForm']=$username;
+    $_SESSION['emailWritenInForm']=$email;
+    $_SESSION['passwordWritenInForm']=$password;
+    $_SESSION['confirmPasswordWritenInForm']=$confirmPassword;
+
+    require_once "connect.php";
+
+    mysqli_report(MYSQLI_REPORT_STRICT);
+    try {
+        $connection=new mysqli($host, $db_user, $db_password, $db_name);
+
+    if($connection->connect_errno!=0){
+        throw new Exeption (mysqli_connect_errno());
+    }
+    else {
+        //checking if email exist
+        $resultOfQuery = $connection->query("SELECT id_users FROM users WHERE user_email='$email'");
+
+        if (!$resultOfQuery){
+            throw new Exeption ($resultOfQuery->error);
+        }
+        $howManyEmailHasBeenFound = $resultOfQuery->num_rows;
+
+        if($howManyEmailHasBeenFound>0) {
+        $areAllRegistrationDataOk=false;
+        $_SESSION['errorWithEmail']="Istnieje już konto przypisane do tego adresu";
+        }
+        //checking if username exist
+
+        $resultOfQuery=$connection->query("SELECT id_users FROM users WHERE user_name='$username'");
+
+        if (!$resultOfQuery){
+            throw new Exeption ($resultOfQuery->error);
+        }
+
+        $howManyUsernamesHasBeenFound=$resultOfQuery->num_rows;
+
+        if($howManyUsernamesHasBeenFound>0) {
+        $areAllRegistrationDataOk=false;
+        $_SESSION['errorWithUsername']="Nazwa użytkownika jest już zajęta";
+        }
+
+        if($areAllRegistrationDataOk==true){
+            if($connection->query("INSERT INTO users VALUES(NULL, '$username', '$email', '$passwordConvertedToHash')")) {
+                $_SESSION['succesfullRegistration']= true;
+                header('Location:log in.php');
+            }
+            else {
+                throw new Exeption($connection->error);
+            }
+        }
+        $resultOfQuery->free();
+        $connection->close();
+    }
+    }
+    catch(Exeptions $e) {
+        echo '<span class="text-danger font-monospace">Coś poszło nie tak.. serwer nie odpowiada</span>';
+    }
+
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -42,7 +141,7 @@ if((isset($_SESSION['isLoggedIn']))&&($_SESSION['isLoggedIn']==true)) {
 
                     <p class="h5 my-3 fw-bolder font-monospace">Zacznij od..</p>
 
-                    <form action="#" class="m-4">
+                    <form method="post" class="m-4">
 
                         <div class="input-group mb-2">
                             <span class="input-group-text" id="username"><svg xmlns="http://www.w3.org/2000/svg"
@@ -53,13 +152,42 @@ if((isset($_SESSION['isLoggedIn']))&&($_SESSION['isLoggedIn']==true)) {
                                     <path d="M8 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
                                 </svg></span>
                             <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-                                aria-describedby="username" required>
+                                aria-describedby="username" name="username" value=
+                                
+                                "<?php
+                                    if(isset($_SESSION['usernameWritenInForm'])){
+                                        echo $_SESSION['usernameWritenInForm'];
+                                        unset ($_SESSION['usernameWritenInForm']);
+                                    }
+                                    ?>"
+                                 required> 
+                                
                         </div>
+                                <?php
+                                    if(isset($_SESSION['errorWithUsername'])){
+                                        echo '<div class="text-danger font-monospace">'.$_SESSION['errorWithUsername'].'</div>';
+                                        unset($_SESSION['errorWithUsername']);
+                                    }
+                                ?>
                         <div class="input-group mb-2">
                             <span class="input-group-text" id="email">@</span>
                             <input type="email" class="form-control" placeholder="Email" aria-label="Email"
-                                aria-describedby="email" required>
+                                aria-describedby="email" name="email" value= 
+                                
+                                "<?php
+                                    if(isset($_SESSION['emailWritenInForm'])){
+                                        echo $_SESSION['emailWritenInForm'];
+                                        unset ($_SESSION['emailWritenInForm']);
+                                    }
+                                    ?>"
+                                required>
                         </div>
+                        <?php
+                                    if(isset($_SESSION['errorWithEmail'])){
+                                        echo '<div class="text-danger font-monospace">'.$_SESSION['errorWithEmail'].'</div>';
+                                        unset($_SESSION['errorWithEmail']);
+                                    }
+                                ?>
                         <div class="input-group mb-2">
                             <span class="input-group-text" id="password"><svg xmlns="http://www.w3.org/2000/svg"
                                     width="16" height="16" fill="currentColor" class="bi bi-lock" viewBox="0 0 16 16">
@@ -67,8 +195,21 @@ if((isset($_SESSION['isLoggedIn']))&&($_SESSION['isLoggedIn']==true)) {
                                         d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z" />
                                 </svg></span>
                             <input type="password" class="form-control" placeholder="Password" aria-label="Password"
-                                aria-describedby="password" required>
+                                aria-describedby="password" name="password" value=
+                                "<?php
+                                    if(isset($_SESSION['passwordWritenInForm'])){
+                                        echo $_SESSION['passwordWritenInForm'];
+                                        unset ($_SESSION['passwordWritenInForm']);
+                                    }
+                                    ?>"
+                                required>
                         </div>
+                        <?php
+                                    if(isset($_SESSION['errorWithPassword'])){
+                                        echo '<div class="text-danger font-monospace">'.$_SESSION['errorWithPassword'].'</div>';
+                                        unset($_SESSION['errorWithPassword']);
+                                    }
+                                ?>
                         <div class="input-group mb-2">
                             <span class="input-group-text" id="password_confirm"><svg xmlns="http://www.w3.org/2000/svg"
                                     width="16" height="16" fill="currentColor" class="bi bi-clipboard-check"
@@ -81,8 +222,16 @@ if((isset($_SESSION['isLoggedIn']))&&($_SESSION['isLoggedIn']==true)) {
                                         d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
                                 </svg></span>
                             <input type="password" class="form-control" placeholder="Confirm password"
-                                aria-label="password confirm" aria-describedby="password confirm" required>
+                                aria-label="password confirm" aria-describedby="password confirm" name="confirmPassword" vaule=
+                                "<?php
+                                    if(isset($_SESSION['confirmPasswordWritenInForm'])){
+                                        echo $_SESSION['confirmPasswordWritenInForm'];
+                                        unset ($_SESSION['confirmPasswordWritenInForm']);
+                                    }
+                                    ?>"
+                                required>
                         </div>
+                        
 
                         <div>
                             <button type="submit" class="btn btn-success mt-3 btn-lg">Rejestracja</button>
@@ -98,8 +247,6 @@ if((isset($_SESSION['isLoggedIn']))&&($_SESSION['isLoggedIn']==true)) {
             </div>
 
         </main>
-
-
 
     </div>
 
