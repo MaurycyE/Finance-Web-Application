@@ -10,7 +10,6 @@ if((isset($_SESSION['isLoggedIn']))&&($_SESSION['isLoggedIn']==true)) {
 
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,7 +25,6 @@ if((isset($_SESSION['isLoggedIn']))&&($_SESSION['isLoggedIn']==true)) {
 </head>
 
 <body>
-
 
     <div class="container-fluid bg-image  d-flex justify-content-center align-items-center"
         style="background-image: url(img/background_stars2.jpg); height: 100vh;">

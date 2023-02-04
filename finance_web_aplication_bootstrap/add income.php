@@ -107,23 +107,23 @@ if(!isset($_SESSION["isLoggedIn"])) {
                     <div class="col-10 col-sm-8 float-sm-end bg-white p-4 rounded-4 mb-2">
 
                         <h2 class="font-monospace">Dodaj przychód</h2>
-                        <form action="#">
+                        <form action="#" method="post">
                             <div class="mb-3">
                                 <label for="add-income-amout" class="form-label">Kwota:</label>
                                 <input type="number" class="form-control" id="add-income-amout"
-                                    aria-describedby="amout of money" min="0" step="0.01" placeholder="PLN" required>
+                                    aria-describedby="amout of money" min="0" step="0.01" placeholder="PLN" name ="incomeAmout" required>
                             </div>
 
                             <div class="mb-3">
                                 <label for="add-income-date" class="form-label">Data:</label>
                                 <input type="date" class="form-control" id="add-income-date"
-                                    aria-describedby="date of income" min="2001-01-01" required>
+                                    aria-describedby="date of income" min="2001-01-01" name="incomeDate" required>
                             </div>
 
                             <div class="mb-4">
                                 <label for="add-income-category" class="form-label">Wybierz kategorię:</label>
                                 <select class="form-select" aria-label="income category" id="add-income-category"
-                                    required>
+                                    name="selectedCategory" required>
                                     <option value="payment" selected>wynagrodzenie</option>
                                     <option value="interest">odsetki bankowe</option>
                                     <option value="sell">sprzedaż na allegro</option>
@@ -133,7 +133,7 @@ if(!isset($_SESSION["isLoggedIn"])) {
 
                             <div class="mb-4">
                                 <label for="add-income-textarea" class="form-label">Komentarz:</label>
-                                <textarea class="form-control" id="add-income-textarea" rows="3" required></textarea>
+                                <textarea class="form-control" id="add-income-textarea" rows="3" name="commentary"></textarea>
                             </div>
 
                             <button type="submit" class="btn btn-success"><svg xmlns="http://www.w3.org/2000/svg"

@@ -196,9 +196,7 @@ if(!isset($_SESSION["isLoggedIn"])) {
                         </div> -->
 
 
-
                     </div>
-
 
                 </div>
 
@@ -206,11 +204,6 @@ if(!isset($_SESSION["isLoggedIn"])) {
         </main>
 
     </div>
-
-
-
-
-
 
 
     <script src="js/bootstrap.bundle.min.js"></script>

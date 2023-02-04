@@ -31,6 +31,7 @@ if(!isset($_SESSION["isLoggedIn"])) {
 
             <div class="row justify-content-center">
 
+
                 <div class="col-10 col-lg-12 bg-white rounded-5 shadow-lg border bg-image"
                     style="background-image: url(img/main_menu_graphic_site.png); height: 100vh;">
 
@@ -49,6 +50,8 @@ if(!isset($_SESSION["isLoggedIn"])) {
                     </div>
 
                     <div class="d-flex float-sm-start col-6 col-sm-4 px-4">
+
+                    
 
                         <ul class="nav nav-tabs flex-column float-start bg-light rounded-4">
                             <li class="nav-item p-2">
@@ -105,7 +108,6 @@ if(!isset($_SESSION["isLoggedIn"])) {
 
                     <?php
                         echo '<div class="col-10 col-sm-8 float-sm-end bg-white p-4 rounded-4 mb-2 text-center font-monospace h2">Witaj, <b>'.$_SESSION['user_name'].'!</b></div>';
-
                     ?>
 
                 </div>

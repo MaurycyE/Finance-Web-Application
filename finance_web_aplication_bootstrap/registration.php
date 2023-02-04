@@ -88,9 +88,35 @@ if(isset($_POST['email'])) {
         $_SESSION['errorWithUsername']="Nazwa użytkownika jest już zajęta";
         }
 
+        function writeDefaultCategoriesToNewUser ($tableColumn, $tableWithDefaultValues, $targetTable) {
+            global $connection, $userId;
+            $resultOfQuery=$connection->query("SELECT $tableColumn FROM $tableWithDefaultValues");
+                $rowFromDatabase=$resultOfQuery->fetch_all(MYSQLI_NUM);
+                
+                foreach($rowFromDatabase as $defaultCategory){
+                $connection->query("INSERT INTO $targetTable VALUES (NULL, '$userId', 
+                '$defaultCategory[0]')");
+                }
+        }
+
+
+
         if($areAllRegistrationDataOk==true){
             if($connection->query("INSERT INTO users VALUES(NULL, '$username', '$email', '$passwordConvertedToHash')")) {
+                
+                //przepisywanie tabeli default income/expense/payment categories
+                $resultOfQuery=$connection->query("SELECT id_users FROM users WHERE user_name='$username'");
+                $rowFromDatabase=$resultOfQuery->fetch_assoc();
+                $userId = $rowFromDatabase['id_users'];
+
+                writeDefaultCategoriesToNewUser('income_category', 'incomes_deafult_categories', 'income_categories');
+            
+                writeDefaultCategoriesToNewUser('expense_category', 'expense_deafult_categories', 'expense_categories');
+
+                writeDefaultCategoriesToNewUser('expense_deafult_payment_method', 'expense_payment_deafult', 'expense_payment');
+                
                 $_SESSION['succesfullRegistration']= true;
+  
                 header('Location:log in.php');
             }
             else {
