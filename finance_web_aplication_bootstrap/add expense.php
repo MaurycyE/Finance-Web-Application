@@ -106,57 +106,57 @@ if(!isset($_SESSION["isLoggedIn"])) {
                     <div class="col-10 col-sm-8 float-sm-end bg-white p-4 rounded-4 mb-2">
 
                         <h2 class="font-monospace">Dodaj wydatek</h2>
-                        <form action="#">
+                        <form action="send income or expense data.php" method="post">
                             <div class="mb-3">
                                 <label for="add-expense-amout" class="form-label">Kwota:</label>
                                 <input type="number" class="form-control" id="add-expense-amout"
-                                    aria-describedby="amout of money" min="0" step="0.01" placeholder="PLN" required>
+                                    aria-describedby="amout of money" min="0" step="0.01" placeholder="PLN" name="expenseAmout" required>
                             </div>
 
                             <div class="mb-3">
                                 <label for="add-expense-date" class="form-label">Data:</label>
                                 <input type="date" class="form-control" id="add-expense-date"
-                                    aria-describedby="date of expense" min="2001-01-01" required>
+                                    aria-describedby="date of expense" min="2001-01-01" name="expenseDate" required>
                             </div>
 
                             <div class="mb-3">
                                 <label for="add-expense-payment-method" class="form-label">Sposób płatności:</label>
                                 <select class="form-select" aria-label="payment method" id="add-expense-payment-method"
-                                    required>
-                                    <option value="bank transfer" selected>Przelew</option>
-                                    <option value="cash">gotówka</option>
-                                    <option value="credit card">karta bankowa</option>
-                                    <option value="debit card">karta debetowa</option>
+                                    name="selectedPaymentCategory" required>
+                                    <option value="Przelew" selected>Przelew</option>
+                                    <option value="gotówka">Gotówka</option>
+                                    <option value="karta bankowa">Karta bankowa</option>
+                                    <option value="karta debetowa">Karta debetowa</option>
                                 </select>
                             </div>
 
                             <div class="mb-4">
                                 <label for="add-expense-category" class="form-label">Wybierz kategorię:</label>
                                 <select class="form-select" aria-label="expense category" id="add-expense-category"
-                                    required>
-                                    <option value="food" selected>Jedzenie</option>
-                                    <option value="trip">Wycieczka</option>
-                                    <option value="home">Mieszkanie</option>
-                                    <option value="training">Szkolenia</option>
-                                    <option value="transport">Transport</option>
-                                    <option value="books">Książka</option>
-                                    <option value="telecomunication">Telekomunikacja</option>
-                                    <option value="savings">Oszczędności</option>
-                                    <option value="health">Opieka zdrowotna</option>
-                                    <option value="retirement">Emerytura</option>
-                                    <option value="clothes">Ubranie</option>
-                                    <option value="debts">Spłata długów</option>
-                                    <option value="hygiene">Higiena</option>
-                                    <option value="donation">Darowizna</option>
-                                    <option value="children">Dzieci</option>
-                                    <option value="entertainment">Rozrywka</option>
-                                    <option value="other">Inne wydatki</option>
+                                    name="selectedExpenseCategory" required>
+                                    <option value="Jedzenie" selected>Jedzenie</option>
+                                    <option value="Wycieczka">Wycieczka</option>
+                                    <option value="Mieszkanie">Mieszkanie</option>
+                                    <option value="Szkolenia">Szkolenia</option>
+                                    <option value="Transport">Transport</option>
+                                    <option value="Książka">Książka</option>
+                                    <option value="Telekomunikacja">Telekomunikacja</option>
+                                    <option value="Oszczędności">Oszczędności</option>
+                                    <option value="Opieka zdrowotna">Opieka zdrowotna</option>
+                                    <option value="Emerytura">Emerytura</option>
+                                    <option value="Ubranie">Ubranie</option>
+                                    <option value="Spłata długów">Spłata długów</option>
+                                    <option value="Higiena">Higiena</option>
+                                    <option value="Darowizna">Darowizna</option>
+                                    <option value="Dzieci">Dzieci</option>
+                                    <option value="Rozrywka">Rozrywka</option>
+                                    <option value="Inne wydatki">Inne wydatki</option>
                                 </select>
                             </div>
 
                             <div class="mb-4">
                                 <label for="add-expense-textarea" class="form-label">Komentarz:</label>
-                                <textarea class="form-control" id="add-expense-textarea" rows="3" required></textarea>
+                                <textarea class="form-control" id="add-expense-textarea" rows="3" name="expenseCommentary"></textarea>
                             </div>
 
                             <button type="submit" class="btn btn-success"><svg xmlns="http://www.w3.org/2000/svg"
@@ -170,6 +170,14 @@ if(!isset($_SESSION["isLoggedIn"])) {
                                     <path
                                         d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
                                 </svg></button>
+
+                                <?php
+                                if(isset($_SESSION['recordSuccessfullyAdded'])) {
+                                    echo '<div class="text-success font-monospace mt-3 h2">Dodano rekord! </div>';
+                                    unset($_SESSION['recordSuccessfullyAdded']);
+                                }
+
+                            ?>
 
                         </form>
 

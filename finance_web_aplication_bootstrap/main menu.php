@@ -67,7 +67,7 @@ if(!isset($_SESSION["isLoggedIn"])) {
                                     </svg> Dodaj przychód</a>
                             </li>
                             <li class="nav-item p-2">
-                                <a class="nav-link text-dark" href="add income.php"><svg
+                                <a class="nav-link text-dark" href="add expense.php"><svg
                                         xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-graph-down" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd"

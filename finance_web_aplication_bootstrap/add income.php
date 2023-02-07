@@ -107,7 +107,7 @@ if(!isset($_SESSION["isLoggedIn"])) {
                     <div class="col-10 col-sm-8 float-sm-end bg-white p-4 rounded-4 mb-2">
 
                         <h2 class="font-monospace">Dodaj przychód</h2>
-                        <form action="#" method="post">
+                        <form action="send income or expense data.php" method="post">
                             <div class="mb-3">
                                 <label for="add-income-amout" class="form-label">Kwota:</label>
                                 <input type="number" class="form-control" id="add-income-amout"
@@ -124,10 +124,10 @@ if(!isset($_SESSION["isLoggedIn"])) {
                                 <label for="add-income-category" class="form-label">Wybierz kategorię:</label>
                                 <select class="form-select" aria-label="income category" id="add-income-category"
                                     name="selectedCategory" required>
-                                    <option value="payment" selected>wynagrodzenie</option>
-                                    <option value="interest">odsetki bankowe</option>
-                                    <option value="sell">sprzedaż na allegro</option>
-                                    <option value="other">inne</option>
+                                    <option value="wynagrodzenie" selected>wynagrodzenie</option>
+                                    <option value="odsetki bankowe">odsetki bankowe</option>
+                                    <option value="sprzedaż na allegro">sprzedaż na allegro</option>
+                                    <option value="inne">inne</option>
                                 </select>
                             </div>
 
@@ -147,6 +147,13 @@ if(!isset($_SESSION["isLoggedIn"])) {
                                     <path
                                         d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
                                 </svg></button>
+                            <?php
+                                if(isset($_SESSION['recordSuccessfullyAdded'])) {
+                                    echo '<div class="text-success font-monospace mt-3 h2">Dodano rekord! </div>';
+                                    unset($_SESSION['recordSuccessfullyAdded']);
+                                }
+
+                            ?>
 
                         </form>
 
