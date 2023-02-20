@@ -6,8 +6,10 @@ if(!isset($_SESSION["isLoggedIn"])) {
     exit();
 }
 
-$selectedPeriodOfTime="Bieżący miesiąc";
-$_SESSION["selectedPeriodOfTime"]=$selectedPeriodOfTime;
+// $selectedPeriodOfTime="Bieżący miesiąc";
+// $_SESSION["selectedPeriodOfTime"]=$selectedPeriodOfTime;
+// header("Location:send balance data.php");
+// exit();
 
 
 ?>
@@ -188,20 +190,54 @@ $_SESSION["selectedPeriodOfTime"]=$selectedPeriodOfTime;
                         </div>
                         <!-- Modal -->
 
-                        <table>
-                    <thead>
-                        <tr><th>amout</th><th>date</th></tr>
-                    </thead>
-                    <tbody>
+                        <h3 class=" mt-3 fw-bolder font-monospace">Przychody</h3>
+                        <table class="table mt-1">
+                            <thead>
+                                <tr><th>Kwota</th><th>Kategoria</th><th>Data</th><th>Komentarz</th></tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                    if(isset($_SESSION["incomeResult"])){
+                                        foreach($_SESSION["incomeResult"] as $userIncomeData) {
+                                            echo "<tr><td> {$userIncomeData['income_amout']} </td><td> {$userIncomeData['income_category']}</td> 
+                                            <td> {$userIncomeData['income_date']} </td><td> {$userIncomeData['income_comment']}</td></tr>";
+                                        }
+                                        echo "<tr><td class='text-success font-monospace'> {$_SESSION['incomeSum'][0]} </td></tr>";
+                                    }
+                                    //echo $_SESSION['incomeSum'][0];
+                                ?>
+                            </tbody>
+                        </table>
+
+                        <h3 class=" mt-3 fw-bolder font-monospace">Wydatki</h3>
+                        <table class="table mt-1">
+                            <thead>
+                                <tr><th>Kwota</th><th>Kategoria</th><th>Metoda Płatności</th><th>Data</th><th>Komentarz</th></tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                    if(isset($_SESSION["expenseResult"])){
+                                        foreach($_SESSION["expenseResult"] as $userExpenseData) {
+                                            echo "<tr><td> {$userExpenseData['expense_amout']} </td><td> {$userExpenseData['expense_category']}</td>
+                                            <td> {$userExpenseData['expense_payment_method']} </td><td> {$userExpenseData['expense_date']} </td>
+                                            <td> {$userExpenseData['expense_description']} </td></tr>";
+                                        }
+                                        echo "<tr><td class='text-danger font-monospace'> {$_SESSION['expenseSum'][0]} </td></tr>";
+                                    }
+                                ?>
+                            </tbody>
+                        </table>
+
+                        <h3 class=" mt-3 fw-bolder font-monospace">Bilans</h3>
                         <?php
-                            if(isset($_SESSION["result"])){
-                            foreach($_SESSION["result"] as $user) {
-                                echo "<tr><td> {$user['income_amout']} </td><td> {$user['income_date']} </td></tr>";
-                            }
-                        }
+                            echo '<span class="font-monospace">'.$_SESSION['incomeSum'][0].'</span> - '
+                            .'<span class="font-monospace">'.$_SESSION['expenseSum'][0].'</span> = '
+                            .$_SESSION['incomeSum'][0]-$_SESSION['expenseSum'][0];
+
+
+                            //echo $_SESSION['incomeSum'][0]-$_SESSION['expenseSum'][0];
+                            
                         ?>
-                    </tbody>
-                </table>
 
                         
                         <!-- <div class="row">
