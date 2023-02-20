@@ -75,7 +75,7 @@ if(!isset($_SESSION["isLoggedIn"])) {
                                     </svg> Dodaj wydatek</a>
                             </li>
                             <li class="nav-item p-2">
-                                <a class="nav-link text-dark" href="add expense.php"><svg
+                                <a class="nav-link text-dark" href="view balance sheet.php"><svg
                                         xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-pie-chart" viewBox="0 0 16 16">
                                         <path
@@ -83,7 +83,7 @@ if(!isset($_SESSION["isLoggedIn"])) {
                                     </svg> Przeglądaj bilans</a>
                             </li>
                             <li class="nav-item p-2">
-                                <a class="nav-link text-dark" href="view balance sheet.php"><svg
+                                <a class="nav-link text-dark" href="#"><svg
                                         xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-gear" viewBox="0 0 16 16">
                                         <path

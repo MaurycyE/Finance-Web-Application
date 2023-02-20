@@ -6,6 +6,10 @@ if(!isset($_SESSION["isLoggedIn"])) {
     exit();
 }
 
+if(isset($_SESSION["result"]))
+    unset($_SESSION["result"]);
+
+
 ?>
 
 <!DOCTYPE html>

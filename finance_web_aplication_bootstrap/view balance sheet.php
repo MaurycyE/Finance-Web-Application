@@ -6,6 +6,10 @@ if(!isset($_SESSION["isLoggedIn"])) {
     exit();
 }
 
+$selectedPeriodOfTime="Bieżący miesiąc";
+$_SESSION["selectedPeriodOfTime"]=$selectedPeriodOfTime;
+
+
 ?>
 
 <!DOCTYPE html>
@@ -20,12 +24,14 @@ if(!isset($_SESSION["isLoggedIn"])) {
 
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="app.css">
+
 </head>
 
 <body>
+    
 
     <div class="container-fluid bg-image  d-flex justify-content-center"
-        style="background-image: url(img/background_stars2.jpg); height: 100vh;">
+    style="background-image: url(img/background_stars2.jpg); height: 100vh;">
 
         <main>
 
@@ -109,19 +115,29 @@ if(!isset($_SESSION["isLoggedIn"])) {
                             <h2 class="font-monospace">Przeglądaj bilans</h2>
                         </div>
 
+                        <!-- <div class="col-6 col-lg-3 float-end d-inline">
+                            
 
-                        <div class="col-6 col-lg-3">
-                            <label for="view-balance-period-of-time" class="form-label"></label>
-                            <select class="form-select" aria-label="view balance sheet" id="view-balance-period-of-time"
-                                required>
-                                <option value="current month" selected>Bieżący miesiąc</option>
-                                <option value="last month">Poprzedni miesiąc</option>
-                                <option value="current year">Bieżący rok</option>
-                                <option value="non-standard" data-bs-toggle="modal"
-                                    data-bs-target="#view-balance-modal">
-                                    niestandardowe</option>
-                            </select>
-                        </div>
+                                    <button class="btn btn-primary mx-2">Data niestandardowa</button>
+
+                                </div> -->
+                        <form action="send balance data.php" method="post">
+                            <div class="col-6 col-lg-4">
+                                <label for="view-balance-period-of-time" class="form-label"></label>
+                                <select class="form-select" aria-label="view balance sheet" id="view-balance-period-of-time"
+                                    name="periodOfTime" required>
+                                    <option value="Bieżący miesiąc" selected>Bieżący miesiąc</option>
+                                    <option value="Poprzedni miesiąc">Poprzedni miesiąc</option>                                  
+                                    <option value="Bieżący rok">Bieżący rok</option>
+                                    <option value="" data-bs-toggle="modal"
+                                        data-bs-target="#view-balance-modal">
+                                        niestandardowe</option>
+                                </select>
+                               
+                            </div>
+
+                        </form>
+                        <!-- onchange="this.form.submit()" -->
 
                         <!-- Modal -->
                         <div class="modal fade" id="view-balance-modal" tabindex="-1"
@@ -136,38 +152,58 @@ if(!isset($_SESSION["isLoggedIn"])) {
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="#">
+                                        <form action="send balance data.php" method="post">
 
-                                            <div class="mb-3">
-                                                <label for="view-balance-date-from" class="form-label">Od:</label>
-                                                <input type="date" class="form-control" id="view-balance-date-from"
-                                                    aria-describedby="first date to view balance sheet" min="2001-01-01"
-                                                    required>
-                                            </div>
+                                                <div class="mb-3">
+                                                    <label for="view-balance-date-from" class="form-label">Od:</label>
+                                                    <input type="date" class="form-control" id="view-balance-date-from"
+                                                        aria-describedby="first date to view balance sheet" min="2001-01-01"
+                                                        required>
+                                                </div>
 
-                                            <div class="mb-3">
-                                                <label for="view-balance-date-to" class="form-label">Do:</label>
-                                                <input type="date" class="form-control" id="view-balance-date-to"
-                                                    aria-describedby="second date to view balance sheet"
-                                                    min="2001-01-01" required>
-                                            </div>
+                                                <div class="mb-3">
+                                                    <label for="view-balance-date-to" class="form-label">Do:</label>
+                                                    <input type="date" class="form-control" id="view-balance-date-to"
+                                                        aria-describedby="second date to view balance sheet"
+                                                        min="2001-01-01" required>
+                                                </div>
 
-                                        </form>
-
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn btn-success"><svg
-                                                xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
-                                                <path
+                                            
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-success"><svg
+                                                    xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                    fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+                                                    <path
                                                     d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
-                                            </svg></button>
+                                                </svg></button>
+                                                </div>
+                                        
+                                        </form>
                                     </div>
+
+
                                 </div>
                             </div>
+                           
                         </div>
+                        <!-- Modal -->
 
+                        <table>
+                    <thead>
+                        <tr><th>amout</th><th>date</th></tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                            if(isset($_SESSION["result"])){
+                            foreach($_SESSION["result"] as $user) {
+                                echo "<tr><td> {$user['income_amout']} </td><td> {$user['income_date']} </td></tr>";
+                            }
+                        }
+                        ?>
+                    </tbody>
+                </table>
 
+                        
                         <!-- <div class="row">
                             <div class="col-12 col-lg-6 mt-4 border rounded-4 my-2">
                                 <h5 class="my-2">Przychody:</h5>
@@ -205,6 +241,20 @@ if(!isset($_SESSION["isLoggedIn"])) {
 
     </div>
 
+    <script>
+        
+        let options = document.getElementById("view-balance-period-of-time");
+        
+            options.addEventListener("change", 
+            function(){
+                if(options.value!="") {
+                    //alert(options.value);
+                    this.form.submit();
+                }
+                
+            });
+        
+    </script>
 
     <script src="js/bootstrap.bundle.min.js"></script>
 </body>

@@ -26,6 +26,7 @@ try {
         $userQuery = $databaseConnection->prepare('SELECT id_categories FROM income_categories WHERE income_category=:selectedCategory
         AND id_users=:idLoggedUser');
         $userQuery->bindValue(':selectedCategory', $selectedCategory, PDO::PARAM_STR);
+        $userQuery->bindValue(':idLoggedUser', $idLoggedUser, PDO::PARAM_INT);
         $userQuery->execute();
 
         if(!$userQuery) throw new Exeption ($userQuery->error);
@@ -100,7 +101,5 @@ try {
 
     catch (PDOException $error) {
         echo $error->getMessage();
-        exit('Darabase error');
+        exit('Database error');
     }
-
-
