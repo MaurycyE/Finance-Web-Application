@@ -11,7 +11,14 @@ if(!isset($_SESSION["isLoggedIn"])) {
 // header("Location:send balance data.php");
 // exit();
 
-
+$dataPoints = array( 
+	array("label"=>"Chrome", "y"=>64.02),
+	array("label"=>"Firefox", "y"=>12.55),
+	array("label"=>"IE", "y"=>8.47),
+	array("label"=>"Safari", "y"=>6.08),
+	array("label"=>"Edge", "y"=>4.29),
+	array("label"=>"Others", "y"=>4.59)
+)
 ?>
 
 <!DOCTYPE html>
@@ -26,6 +33,30 @@ if(!isset($_SESSION["isLoggedIn"])) {
 
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="app.css">
+
+    <script>
+window.onload = function() {
+ 
+ 
+    let chart = new CanvasJS.Chart("chartContainer", {
+        animationEnabled: true,
+        title: {
+            text: "Rozkład wydatków według kategorii"
+        },
+        subtitles: [{
+            text:"<?php echo $_SESSION["selectedPeriodOfTime"] ?>"
+        }],
+        data: [{
+            type: "pie",
+            yValueFormatString: "#,##0.00\"%\"",
+            indexLabel: "{label} ({y})",
+            dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
+        }]
+    });
+    chart.render();
+ 
+}
+</script>
 
 </head>
 
@@ -230,14 +261,22 @@ if(!isset($_SESSION["isLoggedIn"])) {
 
                         <h3 class=" mt-3 fw-bolder font-monospace">Bilans</h3>
                         <?php
-                            echo '<span class="font-monospace">'.$_SESSION['incomeSum'][0].'</span> - '
-                            .'<span class="font-monospace">'.$_SESSION['expenseSum'][0].'</span> = '
-                            .$_SESSION['incomeSum'][0]-$_SESSION['expenseSum'][0];
+                            $textColor;
+                            if($_SESSION['incomeSum'][0]-$_SESSION['expenseSum'][0]>0)
+                                    $textColor="text-success";
+                            else
+                                    $textColor="text-danger";
+                                    
+                            echo '<span class="font-monospace h4">'.$_SESSION['incomeSum'][0].' - </span>'
+                            .'<span class="font-monospace h4">'.$_SESSION['expenseSum'][0].' = </span> <span class="'.$textColor.' font-monospace h4">'
+                            .$_SESSION['incomeSum'][0]-$_SESSION['expenseSum'][0].'</span>';
 
 
                             //echo $_SESSION['incomeSum'][0]-$_SESSION['expenseSum'][0];
                             
                         ?>
+                        <!-- <div id="chartContainer" style="height: 370px; width: 100%;"></div> -->
+                        <div class="col-10 col-sm-8" id="chartContainer"></div>
 
                         
                         <!-- <div class="row">
@@ -293,6 +332,8 @@ if(!isset($_SESSION["isLoggedIn"])) {
     </script>
 
     <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    
 </body>
 
 </html>

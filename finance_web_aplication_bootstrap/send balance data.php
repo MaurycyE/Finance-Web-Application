@@ -15,12 +15,12 @@ try {
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
     ]);
 
-    $selectedPeriodOfTime=$_POST['periodOfTime'];
+    $_SESSION["selectedPeriodOfTime"]=$_POST['periodOfTime'];
 
-    if(!isset($selectedPeriodOfTime))
-        $selectedPeriodOfTime="Bieżący miesiąc";
+    if(!isset($_SESSION["selectedPeriodOfTime"]))
+        $_SESSION["selectedPeriodOfTime"]="Bieżący miesiąc";
 
-    if($selectedPeriodOfTime=="Bieżący miesiąc") {
+    if($_SESSION["selectedPeriodOfTime"]=="Bieżący miesiąc") {
 
             function sumAmoutOfIncomeOrExpense($incomeOrExpenseAmout, $incomeOrExpanseTable, $incomeOrExpenseDate) {
                 global $databaseConnection;
