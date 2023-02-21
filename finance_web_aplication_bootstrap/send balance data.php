@@ -54,8 +54,15 @@ try {
         $_SESSION["expenseResult"] = $userQuery->fetchAll();
         $_SESSION["expenseSum"] = sumAmoutOfIncomeOrExpense("expense_amout", "expenses", "expense_date");
 
-        //$_SESSION["differenceBeetwenIncomeAndExpense"][0] = $_SESSION["incomeSum"][0] - $_SESSION["expenseSum"][0];
 
+        $userQuery = $databaseConnection->prepare("SELECT expense_category, SUM(expense_amout) AS expense_sum_of_categories
+        FROM expenses, expense_categories WHERE YEAR(expense_date)=YEAR(CURRENT_DATE()) AND 
+        MONTH(expense_date)=MONTH(CURRENT_DATE()) AND expenses.id_users=:idLoggedUser AND id_users_expenses_categories=id_categories
+        AND expenses.id_users=expense_categories.id_users GROUP BY expense_category ORDER BY expense_sum_of_categories DESC");
+        $userQuery->bindValue(':idLoggedUser', $_SESSION['id_users'], PDO::PARAM_INT);
+        $userQuery->execute();
+        $_SESSION['groupResults'] = $userQuery->fetchAll();
+            
         header("Location: view balance sheet.php");
         exit();
     }

@@ -1,4 +1,4 @@
-@media (max-width: 992px) {
+/* @media (max-width: 993px) {
 
     body {
         background-image: url(img/background_stars2.jpg);
@@ -7,14 +7,14 @@
 
 }
 
-@media (min-width: 992px) {
+@media (min-width: 993px) {
 
     #main-container {
         background-image: url(img/main_menu_graphic_site.png);
         height: 100vh;
 
     }
-}
+} */
 
 textarea {
     resize: none;

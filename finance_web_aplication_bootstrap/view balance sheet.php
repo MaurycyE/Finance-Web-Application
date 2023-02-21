@@ -5,20 +5,25 @@ if(!isset($_SESSION["isLoggedIn"])) {
     header("Location: index.php");
     exit();
 }
+// $expenseGroup = $_SESSION['groupResults'];
+// foreach($_SESSION['groupResults'] as $expenseGroup){
+//     echo $expenseGroup['expense_category']."  ".round($expenseGroup['expense_sum']/$_SESSION["expenseSum"][0]*100, 2);
+// }
+//$numberOfArrayElements = sizeof($_SESSION['groupResults']);
 
-// $selectedPeriodOfTime="Bieżący miesiąc";
-// $_SESSION["selectedPeriodOfTime"]=$selectedPeriodOfTime;
-// header("Location:send balance data.php");
-// exit();
+$dataPoints = array();
 
-$dataPoints = array( 
-	array("label"=>"Chrome", "y"=>64.02),
-	array("label"=>"Firefox", "y"=>12.55),
-	array("label"=>"IE", "y"=>8.47),
-	array("label"=>"Safari", "y"=>6.08),
-	array("label"=>"Edge", "y"=>4.29),
-	array("label"=>"Others", "y"=>4.59)
-)
+     foreach($_SESSION['groupResults'] as $expenseGroup){
+       array_push($dataPoints, array("label"=>$expenseGroup['expense_category'], 
+       "y"=>round($expenseGroup['expense_sum_of_categories']/$_SESSION["expenseSum"][0]*100, 2)));
+    }
+	// array("label"=>"Chrome", "y"=>64.02),
+	// array("label"=>"Firefox", "y"=>12.55),
+	// array("label"=>"IE", "y"=>8.47),
+	// array("label"=>"Safari", "y"=>6.08),
+	// array("label"=>"Edge", "y"=>4.29),
+	// array("label"=>"Others", "y"=>4.59)
+
 ?>
 
 <!DOCTYPE html>
@@ -34,29 +39,7 @@ $dataPoints = array(
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="app.css">
 
-    <script>
-window.onload = function() {
- 
- 
-    let chart = new CanvasJS.Chart("chartContainer", {
-        animationEnabled: true,
-        title: {
-            text: "Rozkład wydatków według kategorii"
-        },
-        subtitles: [{
-            text:"<?php echo $_SESSION["selectedPeriodOfTime"] ?>"
-        }],
-        data: [{
-            type: "pie",
-            yValueFormatString: "#,##0.00\"%\"",
-            indexLabel: "{label} ({y})",
-            dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
-        }]
-    });
-    chart.render();
- 
-}
-</script>
+        
 
 </head>
 
@@ -64,7 +47,7 @@ window.onload = function() {
     
 
     <div class="container-fluid bg-image  d-flex justify-content-center"
-    style="background-image: url(img/background_stars2.jpg); height: 100vh;">
+    style="background-image: url(img/background_stars2.jpg); height: 100%;">
 
         <main>
 
@@ -72,7 +55,7 @@ window.onload = function() {
 
                 <!-- col-12 col-sm-10 -->
                 <div id="main-container" class="col-10 col-lg-12 bg-white rounded-5 shadow-lg border bg-image"
-                    style="background-image: url(img/main_menu_graphic_site.png);">
+                    style="background-image: url(img/main_menu_graphic_site.png); height: 100%;">
 
                     <div>
                         <h1 class="h1 my-4 fw-bolder font-monospace text-center text-dark bg-white p-2 rounded-4">
@@ -87,6 +70,8 @@ window.onload = function() {
                                         d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
                                 </svg></a></h1>
                     </div>
+
+                    
 
                     <div class="d-flex float-sm-start col-8 col-sm-4 px-4 mb-3">
                         <ul class="nav nav-tabs flex-column  bg-light rounded-4">
@@ -140,20 +125,16 @@ window.onload = function() {
                             </li>
                         </ul>
                     </div>
-
-
+                    
+                    
+                    
+                    
                     <div class="col-10 col-sm-8 float-sm-end bg-white p-4 rounded-4 mb-2">
 
                         <div>
                             <h2 class="font-monospace">Przeglądaj bilans</h2>
                         </div>
 
-                        <!-- <div class="col-6 col-lg-3 float-end d-inline">
-                            
-
-                                    <button class="btn btn-primary mx-2">Data niestandardowa</button>
-
-                                </div> -->
                         <form action="send balance data.php" method="post">
                             <div class="col-6 col-lg-4">
                                 <label for="view-balance-period-of-time" class="form-label"></label>
@@ -170,7 +151,6 @@ window.onload = function() {
                             </div>
 
                         </form>
-                        <!-- onchange="this.form.submit()" -->
 
                         <!-- Modal -->
                         <div class="modal fade" id="view-balance-modal" tabindex="-1"
@@ -235,7 +215,6 @@ window.onload = function() {
                                         }
                                         echo "<tr><td class='text-success font-monospace'> {$_SESSION['incomeSum'][0]} </td></tr>";
                                     }
-                                    //echo $_SESSION['incomeSum'][0];
                                 ?>
                             </tbody>
                         </table>
@@ -275,8 +254,40 @@ window.onload = function() {
                             //echo $_SESSION['incomeSum'][0]-$_SESSION['expenseSum'][0];
                             
                         ?>
+                        <button id="pie_chart" class="btn font-monospace btn-success mx-4 float-sm-end" data-bs-toggle="modal"
+                                        data-bs-target="#chart_modal"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                        height="16" fill="currentColor" class="bi bi-pie-chart mx-2" viewBox="0 0 16 16">
+                                        <path
+                                            d="M7.5 1.018a7 7 0 0 0-4.79 11.566L7.5 7.793V1.018zm1 0V7.5h6.482A7.001 7.001 0 0 0 8.5 1.018zM14.982 8.5H8.207l-4.79 4.79A7 7 0 0 0 14.982 8.5zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z" />
+                                    </svg>Zobacz wykres</button>
                         <!-- <div id="chartContainer" style="height: 370px; width: 100%;"></div> -->
-                        <div class="col-10 col-sm-8" id="chartContainer"></div>
+                        <!-- WYKRES -->
+                    <!-- <div class="col-10 col-sm-8 d-flex row" id="chartContainer"></div> -->
+                        
+
+                        <!-- MODAL - CHART -->
+                        <div class="modal fade" id="chart_modal" tabindex="-1"
+                            aria-labelledby="chart_modalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content" id="chartContainer">
+                                    <div class="modal-header">
+                                        <!-- <h1 class="modal-title fs-5" id="chart_modalLabel">Wybierz zakres
+                                            dat:
+                                        </h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button> -->
+                                            
+                                    </div>
+                                    <div class="modal-body">
+                                        <!-- <div class="col-10 col-sm-8 d-flex row" id="chartContainer"></div> -->
+                                    </div>
+
+
+                                </div>
+                            </div>
+                           
+                        </div>
+
 
                         
                         <!-- <div class="row">
@@ -334,6 +345,29 @@ window.onload = function() {
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     
+    <script>
+        //window.onload = function() {}
+        document.getElementById("pie_chart").addEventListener("click", function(){
+        
+            let chart = new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
+                title: {
+                    text: "Rozkład wydatków według kategorii"
+                },
+                subtitles: [{
+                    text:"<?php echo $_SESSION["selectedPeriodOfTime"] ?>"
+                }],
+                data: [{
+                    type: "pie",
+                    yValueFormatString: "#,##0.00\"%\"",
+                    indexLabel: "{label} ({y})",
+                    dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
+                }]
+            });
+            chart.render();
+        
+        });
+        </script>
 </body>
 
 </html>
