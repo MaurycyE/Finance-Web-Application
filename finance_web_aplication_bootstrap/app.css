@@ -1,4 +1,4 @@
-/* @media (max-width: 993px) {
+@media (max-width: 575px) {
 
     body {
         background-image: url(img/background_stars2.jpg);
@@ -7,7 +7,16 @@
 
 }
 
-@media (min-width: 993px) {
+@media (min-width: 576px) {
+
+    body {
+        background-image: url(img/background_stars2.jpg);
+        height: 100vh;
+    }
+
+}
+
+/* @media (min-width: 993px) {
 
     #main-container {
         background-image: url(img/main_menu_graphic_site.png);

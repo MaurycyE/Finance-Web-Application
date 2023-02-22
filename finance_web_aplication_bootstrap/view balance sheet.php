@@ -12,12 +12,6 @@ $dataPoints = array();
        array_push($dataPoints, array("label"=>$expenseGroup['expense_category'], 
        "y"=>round($expenseGroup['expense_sum_of_categories']/$_SESSION["expenseSum"][0]*100, 2)));
     }
-	// array("label"=>"Chrome", "y"=>64.02),
-	// array("label"=>"Firefox", "y"=>12.55),
-	// array("label"=>"IE", "y"=>8.47),
-	// array("label"=>"Safari", "y"=>6.08),
-	// array("label"=>"Edge", "y"=>4.29),
-	// array("label"=>"Others", "y"=>4.59)
 
 ?>
 
@@ -32,17 +26,14 @@ $dataPoints = array();
     <title>View balance sheet</title>
 
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="app.css">
-
-        
+    <link rel="stylesheet" href="app.css">      
 
 </head>
 
 <body>
     
-
     <div class="container-fluid bg-image  d-flex justify-content-center"
-    style="background-image: url(img/background_stars2.jpg); height: 100%;">
+    style="background-image: url(img/background_stars2.jpg); ">
 
         <main>
 
@@ -65,9 +56,7 @@ $dataPoints = array();
                                         d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
                                 </svg></a></h1>
                     </div>
-
-                    
-
+                
                     <div class="d-flex float-sm-start col-8 col-sm-4 px-4 mb-3">
                         <ul class="nav nav-tabs flex-column  bg-light rounded-4">
                             <li class="nav-item p-2">
@@ -120,10 +109,7 @@ $dataPoints = array();
                             </li>
                         </ul>
                     </div>
-                    
-                    
-                    
-                    
+                                     
                     <div class="col-12 col-sm-8 float-sm-end bg-white p-4 rounded-4 mb-2">
 
                         <div>
@@ -183,8 +169,7 @@ $dataPoints = array();
                                                     <path
                                                     d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
                                                 </svg></button>
-                                                </div>
-                                        
+                                                </div>                                       
                                         </form>
                                     </div>
 
@@ -196,7 +181,7 @@ $dataPoints = array();
 
                         <h3 class=" mt-3 fw-bolder font-monospace">Przychody</h3>
                         <div class="table-responsive">
-                        <table class="table table-sm mt-1">
+                        <table class="table table-sm table-hover mt-1">
                             <thead>
                                 <tr><th>Kwota</th><th>Kategoria</th><th>Data</th><th>Komentarz</th></tr>
                             </thead>
@@ -216,7 +201,7 @@ $dataPoints = array();
 
                         <h3 class=" mt-3 fw-bolder font-monospace">Wydatki</h3>
                         <div class="table-responsive">
-                        <table class="table table-sm mt-1">
+                        <table class="table table-sm table-hover mt-1">
                             <thead>
                                 <tr><th>Kwota</th><th>Kategoria</th><th>Metoda Płatności</th><th>Data</th><th>Komentarz</th></tr>
                             </thead>
@@ -250,11 +235,7 @@ $dataPoints = array();
                         <button id="pie_chart" class="btn font-monospace btn-success mx-4 float-sm-end mt-2" data-bs-toggle="modal"
                                         data-bs-target="#chart_modal"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart-line mx-2" viewBox="0 0 16 16">
                                         <path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2zm1 12h2V2h-2v12zm-3 0V7H7v7h2zm-5 0v-3H2v3h2z"/>
-                                        </svg>Zobacz wykres</button>
-                        <!-- <div id="chartContainer" style="height: 370px; width: 100%;"></div> -->
-                        <!-- WYKRES -->
-                        <!-- <div class="col-10 col-sm-8 d-flex row" id="chartContainer"></div> -->
-                        
+                                        </svg>Zobacz wykres</button>                        
 
                         <!-- MODAL - CHART -->
                         <div class="modal fade" id="chart_modal" tabindex="-1"
@@ -262,17 +243,10 @@ $dataPoints = array();
                             <div class="modal-dialog">
                                 <div class="modal-content" id="chartContainer">
                                     <div class="modal-header">
-                                        <!-- <h1 class="modal-title fs-5" id="chart_modalLabel">Wybierz zakres
-                                            dat:
-                                        </h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button> -->
-                                            
+
                                     </div>
                                     <div class="modal-body">
-                                        <!-- <div class="col-10 col-sm-8 d-flex row" id="chartContainer"></div> -->
                                     </div>
-
 
                                 </div>
                             </div>
@@ -295,40 +269,36 @@ $dataPoints = array();
             options.addEventListener("change", 
             function(){
                 if(options.value!="") {
-                    //alert(options.value);
                     this.form.submit();
                 }
                 
             });
         
+            document.getElementById("pie_chart").addEventListener("click", function(){
+            
+                let chart = new CanvasJS.Chart("chartContainer", {
+                    animationEnabled: true,
+                    title: {
+                        text: "Rozkład wydatków według kategorii"
+                    },
+                    subtitles: [{
+                        text:"<?php echo $_SESSION["selectedPeriodOfTime"] ?>"
+                    }],
+                    data: [{
+                        type: "pie",
+                        yValueFormatString: "#,##0.00\"%\"",
+                        indexLabel: "{label} ({y})",
+                        dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
+                    }]
+                });
+                chart.render();
+            
+            });
     </script>
 
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-    
-    <script>
-        //window.onload = function() {}
-        document.getElementById("pie_chart").addEventListener("click", function(){
-        
-            let chart = new CanvasJS.Chart("chartContainer", {
-                animationEnabled: true,
-                title: {
-                    text: "Rozkład wydatków według kategorii"
-                },
-                subtitles: [{
-                    text:"<?php echo $_SESSION["selectedPeriodOfTime"] ?>"
-                }],
-                data: [{
-                    type: "pie",
-                    yValueFormatString: "#,##0.00\"%\"",
-                    indexLabel: "{label} ({y})",
-                    dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
-                }]
-            });
-            chart.render();
-        
-        });
-        </script>
+
 </body>
 
 </html>
