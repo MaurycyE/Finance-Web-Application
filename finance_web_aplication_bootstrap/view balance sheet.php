@@ -129,7 +129,7 @@ $dataPoints = array();
                     
                     
                     
-                    <div class="col-10 col-sm-8 float-sm-end bg-white p-4 rounded-4 mb-2">
+                    <div class="col-12 col-sm-8 float-sm-end bg-white p-4 rounded-4 mb-2">
 
                         <div>
                             <h2 class="font-monospace">Przeglądaj bilans</h2>
@@ -181,7 +181,6 @@ $dataPoints = array();
                                                         min="2001-01-01" required>
                                                 </div>
 
-                                            
                                                 <div class="modal-footer">
                                                     <button type="submit" class="btn btn-success"><svg
                                                     xmlns="http://www.w3.org/2000/svg" width="20" height="20"
@@ -194,7 +193,6 @@ $dataPoints = array();
                                         </form>
                                     </div>
 
-
                                 </div>
                             </div>
                            
@@ -202,7 +200,8 @@ $dataPoints = array();
                         <!-- Modal -->
 
                         <h3 class=" mt-3 fw-bolder font-monospace">Przychody</h3>
-                        <table class="table mt-1">
+                        <div class="table-responsive">
+                        <table class="table table-sm mt-1">
                             <thead>
                                 <tr><th>Kwota</th><th>Kategoria</th><th>Data</th><th>Komentarz</th></tr>
                             </thead>
@@ -218,9 +217,11 @@ $dataPoints = array();
                                 ?>
                             </tbody>
                         </table>
+                        </div>
 
                         <h3 class=" mt-3 fw-bolder font-monospace">Wydatki</h3>
-                        <table class="table mt-1">
+                        <div class="table-responsive">
+                        <table class="table table-sm mt-1">
                             <thead>
                                 <tr><th>Kwota</th><th>Kategoria</th><th>Metoda Płatności</th><th>Data</th><th>Komentarz</th></tr>
                             </thead>
@@ -237,7 +238,7 @@ $dataPoints = array();
                                 ?>
                             </tbody>
                         </table>
-
+                        </div>
                         <h3 class=" mt-3 fw-bolder font-monospace">Bilans</h3>
                         <?php
                             $textColor;
@@ -254,15 +255,13 @@ $dataPoints = array();
                             //echo $_SESSION['incomeSum'][0]-$_SESSION['expenseSum'][0];
                             
                         ?>
-                        <button id="pie_chart" class="btn font-monospace btn-success mx-4 float-sm-end" data-bs-toggle="modal"
-                                        data-bs-target="#chart_modal"><svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                        height="16" fill="currentColor" class="bi bi-pie-chart mx-2" viewBox="0 0 16 16">
-                                        <path
-                                            d="M7.5 1.018a7 7 0 0 0-4.79 11.566L7.5 7.793V1.018zm1 0V7.5h6.482A7.001 7.001 0 0 0 8.5 1.018zM14.982 8.5H8.207l-4.79 4.79A7 7 0 0 0 14.982 8.5zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z" />
-                                    </svg>Zobacz wykres</button>
+                        <button id="pie_chart" class="btn font-monospace btn-success mx-4 float-sm-end mt-2" data-bs-toggle="modal"
+                                        data-bs-target="#chart_modal"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart-line mx-2" viewBox="0 0 16 16">
+                                        <path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2zm1 12h2V2h-2v12zm-3 0V7H7v7h2zm-5 0v-3H2v3h2z"/>
+                                        </svg>Zobacz wykres</button>
                         <!-- <div id="chartContainer" style="height: 370px; width: 100%;"></div> -->
                         <!-- WYKRES -->
-                    <!-- <div class="col-10 col-sm-8 d-flex row" id="chartContainer"></div> -->
+                        <!-- <div class="col-10 col-sm-8 d-flex row" id="chartContainer"></div> -->
                         
 
                         <!-- MODAL - CHART -->
