@@ -16,6 +16,16 @@ try {
     ]);
 
     $_SESSION["selectedPeriodOfTime"]=$_POST['periodOfTime'];
+    $_SESSION['selectedCurrentMonthOption'] = "selected";
+        $_SESSION['selectedPreviousMonthOption'] = "";
+        $_SESSION['selectedCurrentYearOption'] = "";
+        $_SESSION['selectedNotStandardOption'] = "";
+    // if($_POST['firstNotStandardDate']){
+
+    //    $firstNotStandardDate = $_POST['firstNotStandardDate'];
+    //    $secondNotStandardDate = $_POST['secondNotStandardDate'];
+
+    // }
 
     if(!isset($_SESSION["selectedPeriodOfTime"]))
         $_SESSION["selectedPeriodOfTime"]="Bieżący miesiąc";
@@ -32,7 +42,7 @@ try {
 
                 return $userQuery->fetch();
             }
-
+            //incomes
         $userQuery = $databaseConnection->prepare("SELECT * FROM incomes, income_categories WHERE YEAR(income_date)=YEAR(CURRENT_DATE())
         AND MONTH(income_date)=MONTH(CURRENT_DATE()) AND incomes.id_users=:idLoggedUser 
         AND incomes.id_users=income_categories.id_users 
@@ -43,6 +53,7 @@ try {
         $_SESSION["incomeResult"] = $userQuery->fetchAll();
         $_SESSION["incomeSum"] = sumAmoutOfIncomeOrExpense("income_amout", "incomes", "income_date");
 
+        //expenses
         $userQuery = $databaseConnection->prepare("SELECT * FROM expenses, expense_categories, expense_payment WHERE
         YEAR(expense_date)=YEAR(CURRENT_DATE()) AND MONTH(expense_date)=MONTH(CURRENT_DATE()) AND expenses.id_users=:idLoggedUser
         AND expenses.id_users=expense_categories.id_users AND expenses.id_users=expense_payment.id_users
@@ -54,7 +65,7 @@ try {
         $_SESSION["expenseResult"] = $userQuery->fetchAll();
         $_SESSION["expenseSum"] = sumAmoutOfIncomeOrExpense("expense_amout", "expenses", "expense_date");
 
-
+        //grouped expenses categories
         $userQuery = $databaseConnection->prepare("SELECT expense_category, SUM(expense_amout) AS expense_sum_of_categories
         FROM expenses, expense_categories WHERE YEAR(expense_date)=YEAR(CURRENT_DATE()) AND 
         MONTH(expense_date)=MONTH(CURRENT_DATE()) AND expenses.id_users=:idLoggedUser AND id_users_expenses_categories=id_categories
@@ -62,11 +73,30 @@ try {
         $userQuery->bindValue(':idLoggedUser', $_SESSION['id_users'], PDO::PARAM_INT);
         $userQuery->execute();
         $_SESSION['groupResults'] = $userQuery->fetchAll();
+
+        $_SESSION['selectedCurrentMonthOption'] = "selected";
+        $_SESSION['selectedPreviousMonthOption'] = "";
+        $_SESSION['selectedCurrentYearOption'] = "";
+        $_SESSION['selectedNotStandardOption'] = "";
             
         header("Location: view balance sheet.php");
         exit();
     }
 
+    else if($_SESSION["selectedPeriodOfTime"]=="Poprzedni miesiąc") {
+        header("Location:send balance data previous month.php");
+        exit();
+    }
+
+    else if($_SESSION["selectedPeriodOfTime"]=="Bieżący rok") {
+        header("Location:send balance data current year.php");
+        exit();
+    }
+
+    else  {
+        header("Location:send balance data notstandard.php");
+        exit();
+    }
 
 }
 

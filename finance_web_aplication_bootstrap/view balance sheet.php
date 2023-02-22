@@ -5,11 +5,6 @@ if(!isset($_SESSION["isLoggedIn"])) {
     header("Location: index.php");
     exit();
 }
-// $expenseGroup = $_SESSION['groupResults'];
-// foreach($_SESSION['groupResults'] as $expenseGroup){
-//     echo $expenseGroup['expense_category']."  ".round($expenseGroup['expense_sum']/$_SESSION["expenseSum"][0]*100, 2);
-// }
-//$numberOfArrayElements = sizeof($_SESSION['groupResults']);
 
 $dataPoints = array();
 
@@ -140,11 +135,11 @@ $dataPoints = array();
                                 <label for="view-balance-period-of-time" class="form-label"></label>
                                 <select class="form-select" aria-label="view balance sheet" id="view-balance-period-of-time"
                                     name="periodOfTime" required>
-                                    <option value="Bieżący miesiąc" selected>Bieżący miesiąc</option>
-                                    <option value="Poprzedni miesiąc">Poprzedni miesiąc</option>                                  
-                                    <option value="Bieżący rok">Bieżący rok</option>
+                                    <option value="Bieżący miesiąc" <?php echo $_SESSION['selectedCurrentMonthOption']; ?> >Bieżący miesiąc</option>
+                                    <option value="Poprzedni miesiąc" <?php echo $_SESSION['selectedPreviousMonthOption']; ?> >Poprzedni miesiąc</option>                                  
+                                    <option value="Bieżący rok" <?php echo $_SESSION['selectedCurrentYearOption']; ?> >Bieżący rok</option>
                                     <option value="" data-bs-toggle="modal"
-                                        data-bs-target="#view-balance-modal">
+                                        data-bs-target="#view-balance-modal" <?php echo $_SESSION['selectedNotStandardOption']; ?>>
                                         niestandardowe</option>
                                 </select>
                                
@@ -165,20 +160,20 @@ $dataPoints = array();
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="send balance data.php" method="post">
+                                        <form action="send balance data notstandard.php" method="post">
 
                                                 <div class="mb-3">
                                                     <label for="view-balance-date-from" class="form-label">Od:</label>
                                                     <input type="date" class="form-control" id="view-balance-date-from"
                                                         aria-describedby="first date to view balance sheet" min="2001-01-01"
-                                                        required>
+                                                        name="firstNotStandardDate" required>
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label for="view-balance-date-to" class="form-label">Do:</label>
                                                     <input type="date" class="form-control" id="view-balance-date-to"
                                                         aria-describedby="second date to view balance sheet"
-                                                        min="2001-01-01" required>
+                                                        min="2001-01-01" name="secondNotStandardDate" required>
                                                 </div>
 
                                                 <div class="modal-footer">
@@ -250,9 +245,6 @@ $dataPoints = array();
                             echo '<span class="font-monospace h4">'.$_SESSION['incomeSum'][0].' - </span>'
                             .'<span class="font-monospace h4">'.$_SESSION['expenseSum'][0].' = </span> <span class="'.$textColor.' font-monospace h4">'
                             .$_SESSION['incomeSum'][0]-$_SESSION['expenseSum'][0].'</span>';
-
-
-                            //echo $_SESSION['incomeSum'][0]-$_SESSION['expenseSum'][0];
                             
                         ?>
                         <button id="pie_chart" class="btn font-monospace btn-success mx-4 float-sm-end mt-2" data-bs-toggle="modal"
@@ -286,36 +278,6 @@ $dataPoints = array();
                             </div>
                            
                         </div>
-
-
-                        
-                        <!-- <div class="row">
-                            <div class="col-12 col-lg-6 mt-4 border rounded-4 my-2">
-                                <h5 class="my-2">Przychody:</h5>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero ad explicabo nulla
-                                tenetur placeat labore cupiditate ducimus id iure, quidem modi sapiente ab harum,
-                                dicta
-                                expedita corrupti cum totam sequi?
-                            </div>
-                            <div class="col-12 col-md-6 mt-4 border rounded-4 my-2">
-                                <h5 class="my-2">Wydatki:</h5>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi est minima beatae
-                                similique, ab asperiores omnis expedita accusamus aspernatur eaque error voluptatum
-                                quasi? Quam, quasi. Sequi veniam asperiores accusamus tenetur.
-                            </div>
-
-                        </div>
-
-                        <div class="row">
-                            <div class="col-12 border rounded-4 my-2">
-                                <h5>Wykres:</h5>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis vitae similique
-                                corrupti quasi iusto reiciendis quae ducimus! Accusantium repellendus hic error
-                                explicabo rem ea expedita ut omnis quaerat perspiciatis! Ipsam.
-
-                            </div>
-                        </div> -->
-
 
                     </div>
 
