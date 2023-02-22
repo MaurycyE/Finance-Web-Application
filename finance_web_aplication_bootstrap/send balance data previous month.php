@@ -74,5 +74,5 @@ try {
 
 catch (PDOException $error) {
     echo $error->getMessage();
-    exit('Darabase error');
+    exit('Database error');
 }

@@ -16,7 +16,7 @@ try {
     ]);
 
     $_SESSION["selectedPeriodOfTime"]=$_POST['periodOfTime'];
-    
+
     $_SESSION['selectedCurrentMonthOption'] = "selected";
     $_SESSION['selectedPreviousMonthOption'] = "";
     $_SESSION['selectedCurrentYearOption'] = "";
@@ -103,5 +103,5 @@ try {
 
 catch (PDOException $error) {
     echo $error->getMessage();
-    exit('Darabase error');
+    exit('Database error');
 }
