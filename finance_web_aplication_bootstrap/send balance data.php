@@ -16,10 +16,11 @@ try {
     ]);
 
     $_SESSION["selectedPeriodOfTime"]=$_POST['periodOfTime'];
+    
     $_SESSION['selectedCurrentMonthOption'] = "selected";
-        $_SESSION['selectedPreviousMonthOption'] = "";
-        $_SESSION['selectedCurrentYearOption'] = "";
-        $_SESSION['selectedNotStandardOption'] = "";
+    $_SESSION['selectedPreviousMonthOption'] = "";
+    $_SESSION['selectedCurrentYearOption'] = "";
+    $_SESSION['selectedNotStandardOption'] = "";
     // if($_POST['firstNotStandardDate']){
 
     //    $firstNotStandardDate = $_POST['firstNotStandardDate'];

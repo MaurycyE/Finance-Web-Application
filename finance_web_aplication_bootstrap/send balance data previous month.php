@@ -57,8 +57,7 @@ try {
     FROM expenses, expense_categories WHERE expense_date
     BETWEEN DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01 00:00:00')
     AND DATE_FORMAT(LAST_DAY(NOW() - INTERVAL 1 MONTH), '%Y-%m-%d 23:59:59') AND expenses.id_users=:idLoggedUser 
-    AND id_users_expenses_categories=id_categories AND expenses.id_users=expense_categories.id_users 
-    GROUP BY expense_category ORDER BY expense_sum_of_categories DESC");
+    AND id_users_expenses_categories=id_categories AND expenses.id_users=expense_categories.id_users GROUP BY expense_category ORDER BY expense_sum_of_categories DESC");
     $userQuery->bindValue(':idLoggedUser', $_SESSION['id_users'], PDO::PARAM_INT);
     $userQuery->execute();
     $_SESSION['groupResults'] = $userQuery->fetchAll();
