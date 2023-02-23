@@ -21,12 +21,6 @@ try {
     $_SESSION['selectedPreviousMonthOption'] = "";
     $_SESSION['selectedCurrentYearOption'] = "";
     $_SESSION['selectedNotStandardOption'] = "";
-    // if($_POST['firstNotStandardDate']){
-
-    //    $firstNotStandardDate = $_POST['firstNotStandardDate'];
-    //    $secondNotStandardDate = $_POST['secondNotStandardDate'];
-
-    // }
 
     if(!isset($_SESSION["selectedPeriodOfTime"]))
         $_SESSION["selectedPeriodOfTime"]="Bieżący miesiąc";

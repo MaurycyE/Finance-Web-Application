@@ -1,7 +1,5 @@
 <?php
 
-//echo "Poprzedni miesiąc";
-
 session_start();
 if(!isset($_SESSION["isLoggedIn"])) {
     header("Location: index.php");
@@ -37,9 +35,6 @@ try {
 
     $_SESSION["incomeResult"] = $userQuery->fetchAll();
     $_SESSION["incomeSum"] = sumAmoutOfIncomeOrExpense("income_amout", "incomes", "income_date");
-
-// print_r($_SESSION["incomeResult"]);
-// exit();
 
     $userQuery = $databaseConnection->prepare("SELECT * FROM expenses, expense_categories, expense_payment WHERE expense_date
     BETWEEN DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01 00:00:00')

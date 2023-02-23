@@ -99,8 +99,6 @@ if(isset($_POST['email'])) {
                 }
         }
 
-
-
         if($areAllRegistrationDataOk==true){
             if($connection->query("INSERT INTO users VALUES(NULL, '$username', '$email', '$passwordConvertedToHash')")) {
                 
@@ -150,7 +148,6 @@ if(isset($_POST['email'])) {
 </head>
 
 <body>
-
 
     <div class="container-fluid bg-image  d-flex justify-content-center align-items-center"
         style="background-image: url(img/background_stars2.jpg); height: 100vh;">
@@ -258,11 +255,9 @@ if(isset($_POST['email'])) {
                                 required>
                         </div>
                         
-
                         <div>
                             <button type="submit" class="btn btn-success mt-3 btn-lg">Rejestracja</button>
                         </div>
-
 
                     </form>
 

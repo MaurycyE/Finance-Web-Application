@@ -178,7 +178,7 @@ $dataPoints = array();
                            
                         </div>
                         <!-- Modal -->
-
+                        
                         <h3 class=" mt-3 fw-bolder font-monospace">Przychody</h3>
                         <div class="table-responsive">
                         <table class="table table-sm table-hover mt-1">
