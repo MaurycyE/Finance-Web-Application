@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 26 Sty 2023, 14:57
+-- Czas generowania: 23 Lut 2023, 22:42
 -- Wersja serwera: 10.4.25-MariaDB
 -- Wersja PHP: 8.1.10
 
@@ -49,6 +49,29 @@ CREATE TABLE `expense_categories` (
   `expense_category` varchar(50) COLLATE utf8_polish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
+--
+-- Zrzut danych tabeli `expense_categories`
+--
+
+INSERT INTO `expense_categories` (`id_categories`, `id_users`, `expense_category`) VALUES
+(1, 1, 'jedzenie'),
+(2, 1, 'wycieczka'),
+(3, 1, 'mieszkanie'),
+(4, 1, 'szkolenia'),
+(5, 1, 'transport'),
+(6, 1, 'książka'),
+(7, 1, 'telekomunikacja'),
+(8, 1, 'oszczędności'),
+(9, 1, 'opieka zdrowotna'),
+(10, 1, 'emerytura'),
+(11, 1, 'ubranie'),
+(12, 1, 'spłata długów'),
+(13, 1, 'higiena'),
+(14, 1, 'darowizna'),
+(15, 1, 'dzieci'),
+(16, 1, 'rozrywka'),
+(17, 1, 'inne wydatki');
+
 -- --------------------------------------------------------
 
 --
@@ -59,6 +82,29 @@ CREATE TABLE `expense_deafult_categories` (
   `id_categories` int(11) NOT NULL,
   `expense_category` varchar(50) COLLATE utf8_polish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+--
+-- Zrzut danych tabeli `expense_deafult_categories`
+--
+
+INSERT INTO `expense_deafult_categories` (`id_categories`, `expense_category`) VALUES
+(1, 'jedzenie'),
+(2, 'wycieczka'),
+(3, 'mieszkanie'),
+(4, 'szkolenia'),
+(5, 'transport'),
+(6, 'książka'),
+(7, 'telekomunikacja'),
+(8, 'oszczędności'),
+(9, 'opieka zdrowotna'),
+(10, 'emerytura'),
+(11, 'ubranie'),
+(12, 'spłata długów'),
+(13, 'higiena'),
+(14, 'darowizna'),
+(15, 'dzieci'),
+(16, 'rozrywka'),
+(17, 'inne wydatki');
 
 -- --------------------------------------------------------
 
@@ -72,6 +118,16 @@ CREATE TABLE `expense_payment` (
   `expense_payment_method` varchar(50) COLLATE utf8_polish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
+--
+-- Zrzut danych tabeli `expense_payment`
+--
+
+INSERT INTO `expense_payment` (`id_payment`, `id_users`, `expense_payment_method`) VALUES
+(1, 1, 'przelew'),
+(2, 1, 'gotówka'),
+(3, 1, 'karta bankowa'),
+(4, 1, 'karta debetowa');
+
 -- --------------------------------------------------------
 
 --
@@ -82,6 +138,16 @@ CREATE TABLE `expense_payment_deafult` (
   `id_deafult_payment` int(11) NOT NULL,
   `expense_deafult_payment_method` varchar(50) COLLATE utf8_polish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+--
+-- Zrzut danych tabeli `expense_payment_deafult`
+--
+
+INSERT INTO `expense_payment_deafult` (`id_deafult_payment`, `expense_deafult_payment_method`) VALUES
+(1, 'przelew'),
+(2, 'gotówka'),
+(3, 'karta bankowa'),
+(4, 'karta debetowa');
 
 -- --------------------------------------------------------
 
@@ -109,6 +175,16 @@ CREATE TABLE `incomes_deafult_categories` (
   `income_category` varchar(50) COLLATE utf8_polish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
+--
+-- Zrzut danych tabeli `incomes_deafult_categories`
+--
+
+INSERT INTO `incomes_deafult_categories` (`id_categories`, `income_category`) VALUES
+(1, 'wynagrodzenie'),
+(2, 'odsetki bankowe'),
+(3, 'sprzedaż na allegro'),
+(4, 'inne');
+
 -- --------------------------------------------------------
 
 --
@@ -120,6 +196,16 @@ CREATE TABLE `income_categories` (
   `id_users` int(11) NOT NULL,
   `income_category` varchar(50) COLLATE utf8_polish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+--
+-- Zrzut danych tabeli `income_categories`
+--
+
+INSERT INTO `income_categories` (`id_categories`, `id_users`, `income_category`) VALUES
+(1, 1, 'wynagrodzenie'),
+(2, 1, 'odsetki bankowe'),
+(3, 1, 'sprzedaż na allegro'),
+(4, 1, 'inne');
 
 -- --------------------------------------------------------
 
@@ -133,6 +219,13 @@ CREATE TABLE `users` (
   `user_email` varchar(50) COLLATE utf8_polish_ci NOT NULL,
   `user_password` varchar(255) COLLATE utf8_polish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+--
+-- Zrzut danych tabeli `users`
+--
+
+INSERT INTO `users` (`id_users`, `user_name`, `user_email`, `user_password`) VALUES
+(1, 'Rachel', 'vitharig@gmail.com', '$2y$10$2R7ew3KAOwn.XuRGlC37I.NTtplO4cGpthO5ErWD/EIFzC1bIFBRu');
 
 --
 -- Indeksy dla zrzutów tabel
@@ -192,7 +285,7 @@ ALTER TABLE `incomes_deafult_categories`
 --
 ALTER TABLE `income_categories`
   ADD PRIMARY KEY (`id_categories`),
-  ADD KEY `users.id_users` (`id_users`);
+  ADD KEY `id_users` (`id_users`);
 
 --
 -- Indeksy dla tabeli `users`
@@ -214,25 +307,25 @@ ALTER TABLE `expenses`
 -- AUTO_INCREMENT dla tabeli `expense_categories`
 --
 ALTER TABLE `expense_categories`
-  MODIFY `id_categories` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_categories` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT dla tabeli `expense_deafult_categories`
 --
 ALTER TABLE `expense_deafult_categories`
-  MODIFY `id_categories` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_categories` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT dla tabeli `expense_payment`
 --
 ALTER TABLE `expense_payment`
-  MODIFY `id_payment` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_payment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT dla tabeli `expense_payment_deafult`
 --
 ALTER TABLE `expense_payment_deafult`
-  MODIFY `id_deafult_payment` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_deafult_payment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT dla tabeli `incomes`
@@ -244,19 +337,19 @@ ALTER TABLE `incomes`
 -- AUTO_INCREMENT dla tabeli `incomes_deafult_categories`
 --
 ALTER TABLE `incomes_deafult_categories`
-  MODIFY `id_categories` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_categories` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT dla tabeli `income_categories`
 --
 ALTER TABLE `income_categories`
-  MODIFY `id_categories` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_categories` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT dla tabeli `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_users` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_users` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Ograniczenia dla zrzutów tabel
