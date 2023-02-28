@@ -4,5 +4,5 @@ return [
         'host' => 'localhost',
         'user' => 'root',
         'password' => '',
-        'database' => 'beph7r_slawomir'
+        'database' => 'finance_web_application'
 ];

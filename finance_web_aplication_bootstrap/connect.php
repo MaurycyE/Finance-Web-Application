@@ -3,4 +3,4 @@
 $host = "localhost";
 $db_user = "root";
 $db_password = "";
-$db_name = "beph7r_slawomir";
+$db_name = "finance_web_application";
