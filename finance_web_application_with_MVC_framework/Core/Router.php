@@ -7,14 +7,14 @@ Class Router {
     protected $routes = [];
     protected $parametersFromMatchedRoute = [];
 
-    public function add($route, $parametersFromMatchedRoute = []) {
+    public function add($route, $parameters = []) {
 
         $route = preg_replace('/\//', '\\/', $route);
         $route = preg_replace('/\{([a-z]+)\}/', '(?P<\1>[a-z-]+)', $route);
         $route = preg_replace('/\{([a-z]+):([^\}]+)\}/', '(?P</1>\2)', $route);
         $route = '/^' . $route . '$/i';
 
-        $this->routes[$route] = $parametersFromMatchedRoute;
+        $this->routes[$route] = $parameters;
     }
 
     public function getRoutes() {
@@ -59,7 +59,7 @@ Class Router {
             if(class_exists($controller)){
                 $controller_object = new $controller($this->parametersFromMatchedRoute);
 
-                $action = $this->parametersFromeMatchedRoute['action'];
+                $action = $this->parametersFromMatchedRoute['action'];
                 $action = $this->convertToCamelCase($action);
 
                 if(preg_match('/action$/i', $action) == 0) {
@@ -90,7 +90,7 @@ Class Router {
         return lcfirst($this->convertToStudlyCaps($string));
     }
 
-    protected function removeQueryStringVariable($url){
+    protected function removeQueryStringVariables($url){
 
         if($url != '') {
 
@@ -109,7 +109,7 @@ Class Router {
 
     protected function getNamespace(){
 
-        $namespace = 'App\Controller\\';
+        $namespace = 'App\Controllers\\';
 
         if(array_key_exists('namespace', $this->parametersFromMatchedRoute)){
             $namespace.= $this->parametersFromMatchedRoute['namespace'] . '\\';

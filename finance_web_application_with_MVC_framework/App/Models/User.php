@@ -23,15 +23,15 @@ class User extends \Core\Model {
 
             $password_hash = password_hash($this->password, PASSWORD_DEFAULT);
 
-            $sql = 'INSERT INTO users (name, email, password_hash)
+            $sql = 'INSERT INTO users (user_name, user_email, user_password)
             VALUES (:name, :email, :password_hash)';
 
             $db = static::getDB();
             $stmt = $db->prepare($sql);
 
             $stmt->bindValue(':name', $this->name, PDO::PARAM_STR);
-            $stmt->bindValue(':email', $this->name, PDO::PARAM_STR);
-            $stmt->bindValue(':password_hash', $this->name, PDO::PARAM_STR);
+            $stmt->bindValue(':email', $this->email, PDO::PARAM_STR);
+            $stmt->bindValue(':password_hash', $password_hash, PDO::PARAM_STR);
 
             return $stmt->execute();
         }
@@ -53,7 +53,7 @@ class User extends \Core\Model {
             $this->errors[] = 'email already taken';
         }
 
-        if(strln($this->password)<6) {
+        if(strlen($this->password)<6) {
             $this->errors[] = 'Please enter at least 6 characters for the password';
         }
 
@@ -68,7 +68,7 @@ class User extends \Core\Model {
 
     public static function emailExists($email) {
 
-        $sql = 'SELECT * FROM users WHERE email = :email';
+        $sql = 'SELECT * FROM users WHERE user_email = :email';
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
