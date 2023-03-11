@@ -18,6 +18,10 @@ class Signup extends \Core\Controller {
 
         if($user->save()) {
 
+            $user->writeDefaultCategoriesToNewUser('income_category', 'incomes_deafult_categories', 'income_categories');
+            $user->writeDefaultCategoriesToNewUser('expense_category', 'expense_deafult_categories', 'expense_categories');
+            $user->writeDefaultCategoriesToNewUser('expense_deafult_payment_method', 'expense_payment_deafult', 'expense_payment');
+
             header('Location: http://' . $_SERVER['HTTP_HOST'] . 
             '/finance_web_application_with_MVC_framework/public/?signup/success', true, 303);
             exit;

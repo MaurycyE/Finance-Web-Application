@@ -79,5 +79,30 @@ class User extends \Core\Model {
         return $stmt->fetch() !== false;
     }
 
+    public function writeDefaultCategoriesToNewUser($tableColumn, $tableWithDefaultValues, $targetTable)
+    {
+        $db = static::getDB();
+        $userId = $this->findUserId();
+
+        $resultOfQuery = $db->query("SELECT $tableColumn FROM $tableWithDefaultValues");
+        $rowFromDatabase = $resultOfQuery->fetchAll();
+
+        foreach ($rowFromDatabase as $defaultCategory) {
+            $db->query("INSERT INTO $targetTable VALUES (NULL, '$userId', 
+        '$defaultCategory[0]')");
+        }
+    }
+
+    protected function findUserId() {
+
+        $db = static::getDB();
+
+        $resultOfQuery = $db->query("SELECT id_users FROM users WHERE user_email='$this->email'");
+        $rowFromDatabase = $resultOfQuery->fetch();
+        $userId = $rowFromDatabase['id_users'];
+
+        return $userId;
+    }
+
 
 }
