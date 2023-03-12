@@ -2,6 +2,8 @@
 
 namespace Core;
 
+use \App\Authentication;
+
 abstract class Controller {
 
     protected $routeMatchedParams = [];
@@ -32,4 +34,20 @@ abstract class Controller {
     protected function after(){
         
     }
+
+    public function redirect($url) {
+
+        header('Location: http://' . $_SERVER['HTTP_HOST'] . $url, true, 303);
+        exit;
+    }
+
+    public function requireLogin() {
+
+        if(! Authentication::getUser()) {
+
+            Authentication::rememberRequestedPage();
+            $this->redirect('/finance_web_application_with_MVC_framework/public/?login');
+        }
+    }
+    
 }

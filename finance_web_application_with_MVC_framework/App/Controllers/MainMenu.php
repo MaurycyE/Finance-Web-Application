@@ -5,10 +5,11 @@ namespace App\Controllers;
 use \Core\View;
 use \App\Authentication;
 
-class Home extends \Core\Controller {
+class MainMenu extends Authenticated {
 
     public function indexAction() {
 
-        View::renderTemplate('Home/index.html');
+        View::renderTemplate('MainMenu/index.html');
     }
+
 }

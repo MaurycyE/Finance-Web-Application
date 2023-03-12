@@ -68,15 +68,33 @@ class User extends \Core\Model {
 
     public static function emailExists($email) {
 
-        $sql = 'SELECT * FROM users WHERE user_email = :email';
+        return static::findByEmail($email) !== false;
+    }
+
+    public static function findByEmail($email) {
+
+        $sql = 'SELECT *FROM users WHERE user_email = :email';
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
-        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+        $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
         $stmt->execute();
 
-        return $stmt->fetch() !== false;
+        return $stmt->fetch();
+    }
+
+    public static function authenticate($email, $password) {
+
+        $user = static::findByEmail($email);
+
+        if($user) {
+            if(password_verify($password, $user->password_hash)){
+                return $user;
+            }
+        }
+
+        return false;
     }
 
     public function writeDefaultCategoriesToNewUser($tableColumn, $tableWithDefaultValues, $targetTable)
@@ -102,6 +120,20 @@ class User extends \Core\Model {
         $userId = $rowFromDatabase['id_users'];
 
         return $userId;
+    }
+
+    public static function findByID($id) {
+
+        $sql = 'SELECT * FROM users WHERE id_users = :id';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+
+        $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+        $stmt->execute();
+
+        return $stmt->fetch();
     }
 
 
