@@ -20,7 +20,8 @@ class Login extends \Core\Controller {
         if($user) {
 
             Authentication::login($user);
-            $this->redirect(Authentication::getReturnToPage());
+            //$this->redirect(Authentication::getReturnToPage());
+            $this->redirect('/finance_web_application_with_MVC_framework/public/?mainmenu/index');
         }
         else {
             View::renderTemplate('Login/new.html', [

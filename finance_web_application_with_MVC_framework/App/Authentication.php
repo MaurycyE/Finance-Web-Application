@@ -10,7 +10,7 @@ class  Authentication {
 
         session_regenerate_id(true);
 
-        $_SESSION['user_id'] = $user->id;
+        $_SESSION['user_id'] = $user->id_users;
     }
 
     public static function logout() {
@@ -46,7 +46,7 @@ class  Authentication {
 
     public static function getUser() {
 
-        if(isset($_SESSION['user_if'])) {
+        if(isset($_SESSION['user_id'])) {
 
             return User::findByID($_SESSION['user_id']);
         }
