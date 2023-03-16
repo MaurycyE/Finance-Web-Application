@@ -3,14 +3,24 @@
 namespace App;
 
 use \App\Models\User;
+use \App\Config;
+use \App\Models\RememberedLogin;
 
 class  Authentication {
 
-    public static function login($user) {
+    public static function login($user, $remember_me) {
 
         session_regenerate_id(true);
 
         $_SESSION['user_id'] = $user->id_users;
+
+        if($remember_me) {
+
+            if($user->rememberLogin()) {
+
+                setcookie('remember_me', $user->remember_token, $user->expiry_timestamp, '/');
+            }
+        }
     }
 
     public static function logout() {
@@ -31,6 +41,8 @@ class  Authentication {
             );
         }
         session_destroy();
+
+        static::forgetLogin();
       
     }
 
@@ -41,7 +53,7 @@ class  Authentication {
 
     public static function getReturnToPage() {
 
-        return $_SESSION['return_to'] ?? '/finance_web_application_with_MVC_framework/public/';
+        return $_SESSION['return_to'] ?? Config::PATH_TO_MAIN_FOLDER;
     }
 
     public static function getUser() {
@@ -49,6 +61,47 @@ class  Authentication {
         if(isset($_SESSION['user_id'])) {
 
             return User::findByID($_SESSION['user_id']);
+        }
+
+        else {
+
+            return static::loginFromRememberCookie();
+        }
+    }
+
+    protected static function loginFromRememberCookie() {
+
+        $cookie = $_COOKIE['remember_me'] ?? false;
+
+        if($cookie) {
+
+            $remembered_login = RememberedLogin::findByToken($cookie);
+
+            if($remembered_login && ! $remembered_login->hasExpired()) {
+
+                $user = $remembered_login->getUser();
+
+                static::login($user, false);
+
+                return $user;
+            }
+        }
+    }
+
+    protected static function forgetLogin() {
+
+        $cookie = $_COOKIE['remember_me'] ?? false;
+
+        if($cookie) {
+
+            $remembered_login = RememberedLogin::findByToken($cookie);
+
+            if($remembered_login) {
+
+                $remembered_login->delete();
+            }
+
+            setcookie('remember_me', '', time() -3600); //set expire date in the past
         }
     }
 

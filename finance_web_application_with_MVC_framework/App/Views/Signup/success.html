@@ -14,7 +14,12 @@
 
         <div class="col-8 col-sm-10 bg-white rounded-5 shadow-lg border">
 
-            <div class="h2 text-success font-monospace mt-3">Udana rejestracja!</div>
+            <!-- <div class="h2 text-success font-monospace mt-3">Udana rejestracja!</div> -->
+
+            {% for message in flash_messages %}
+            <div class="h2 text-{{ message.type }} font-monospace mt-3 alert alert-{ message.type }">{{ message.body }}
+            </div>
+            {% endfor %}
 
             <h1 class=" h4 my-3 fw-bolder font-monospace mx-2 mt-4">
                 A zatem do dzieła!

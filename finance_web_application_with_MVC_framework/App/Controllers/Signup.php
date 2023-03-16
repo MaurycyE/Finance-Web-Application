@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use \Core\View;
 use \App\Models\User;
+use \App\Config;
+use \App\Flash;
 
 class Signup extends \Core\Controller {
 
@@ -22,8 +24,10 @@ class Signup extends \Core\Controller {
             $user->writeDefaultCategoriesToNewUser('expense_category', 'expense_deafult_categories', 'expense_categories');
             $user->writeDefaultCategoriesToNewUser('expense_deafult_payment_method', 'expense_payment_deafult', 'expense_payment');
 
+            Flash::addMessage('Udana rejestracja!', Flash::SUCCESS);
+
             header('Location: http://' . $_SERVER['HTTP_HOST'] . 
-            '/finance_web_application_with_MVC_framework/public/?signup/success', true, 303);
+            Config::PATH_TO_MAIN_FOLDER.'?login/new', true, 303);
             exit;
         }
 

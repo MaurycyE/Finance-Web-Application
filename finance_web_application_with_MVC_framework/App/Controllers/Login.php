@@ -5,6 +5,8 @@ namespace App\Controllers;
 use \Core\View;
 use \App\Models\User;
 use \App\Authentication;
+use \App\Config;
+use \App\Flash;
 
 class Login extends \Core\Controller {
 
@@ -17,16 +19,24 @@ class Login extends \Core\Controller {
 
         $user = User::authenticate($_POST['email'], $_POST['password']);
 
+        $remember_me = isset($_POST['remember_me']);
+
         if($user) {
 
-            Authentication::login($user);
+            Authentication::login($user, $remember_me);
             //$this->redirect(Authentication::getReturnToPage());
-            $this->redirect('/finance_web_application_with_MVC_framework/public/?mainmenu/index');
+            Flash::addMessage('Logowanie udane');
+            $this->redirect(Config::PATH_TO_MAIN_FOLDER.'?mainmenu/index');
+            
         }
         else {
+
+            Flash::addMessage('Logowanie nieudane, spróbuj jeszcze raz', Flash::DANGER);
+
             View::renderTemplate('Login/new.html', [
 
                 'email' => $_POST['email'],
+                'remember_me' => $remember_me
 
             ]);
         }
@@ -35,7 +45,13 @@ class Login extends \Core\Controller {
     public function destroyAction() {
 
         Authentication::logout();
-        $this->redirect('/finance_web_application_with_MVC_framework/public/');
+        $this->redirect(Config::PATH_TO_MAIN_FOLDER.'?login/show-logout-message');
+    }
+
+    public function showLogoutMessageAction() {
+
+        Flash::addMessage('Logout successful');
+        $this->redirect(Config::PATH_TO_MAIN_FOLDER);
     }
     
 }

@@ -1,5 +1,7 @@
 <?php
 
+ini_set('session.cookie_lifetime', 864000); // ten days in seconds
+
 require dirname(__DIR__) . '/vendor/autoload.php';
 
 

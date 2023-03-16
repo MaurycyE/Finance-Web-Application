@@ -20,12 +20,17 @@
 
             <p class="h5 my-3 fw-bolder font-monospace">Jeszcze tylko krótka formalność..</p>
 
+            {% for message in flash_messages %}
+            <div class="h5 text-{{ message.type }} font-monospace">{{ message.body }}
+            </div>
+            {% endfor %}
+
             <form action="?login/create" method="post" class="m-4">
 
                 <div class="input-group mb-2">
                     <span class="input-group-text" id="email-logging">@</span>
                     <input type="email" name="email" class="form-control" placeholder="Email" aria-label="email-logging"
-                        aria-describedby="email-logging" required>
+                        aria-describedby="email-logging" required autofocus value="{{ email }}">
                 </div>
                 <div class="input-group mb-2">
                     <span class="input-group-text" id="password"><svg xmlns="http://www.w3.org/2000/svg" width="16"
@@ -36,6 +41,14 @@
                     <input type="password" name="password" class="form-control" placeholder="Password"
                         aria-label="Password" aria-describedby="password" required>
 
+                </div>
+
+                <div class="form-check my-1">
+                    <label class="font-monospace">
+                        <input type="checkbox" name="remember_me" {% if remember_me %} checked="checked" {% endif %}
+                            class="form-check-input">
+                        Zapamiętaj mnie
+                    </label>
                 </div>
 
                 <div>

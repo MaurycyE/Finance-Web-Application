@@ -3,6 +3,8 @@
 namespace Core;
 
 use \App\Authentication;
+use \App\Config;
+use \App\Flash;
 
 abstract class Controller {
 
@@ -45,8 +47,10 @@ abstract class Controller {
 
         if(! Authentication::getUser()) {
 
+            Flash::addMessage('Zaloguj się, by uzyskać dostęp do tej strony', Flash::INFO);
+
             Authentication::rememberRequestedPage();
-            $this->redirect('/finance_web_application_with_MVC_framework/public/?login');
+            $this->redirect(Config::PATH_TO_MAIN_FOLDER.'?login');
         }
     }
     
