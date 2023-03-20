@@ -47,7 +47,7 @@ abstract class Controller {
 
         if(! Authentication::getUser()) {
 
-            Flash::addMessage('Zaloguj się, by uzyskać dostęp do tej strony', Flash::INFO);
+            Flash::addMessage('Zaloguj się, by uzyskać dostęp do tej strony', Flash::WARNING);
 
             Authentication::rememberRequestedPage();
             $this->redirect(Config::PATH_TO_MAIN_FOLDER.'?login');

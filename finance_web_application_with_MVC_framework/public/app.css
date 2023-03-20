@@ -29,10 +29,10 @@ textarea {
     resize: none;
 }
 
-.alert {
+/* .alert {
 
     border: 1px solid #ccc;
-    /* padding: 6px; */
+    padding: 6px;
 }
 
 .alert-info {
@@ -45,4 +45,4 @@ textarea {
 
 .alert-warning {
     background-color: #fcf8e3;
-}
+} */
