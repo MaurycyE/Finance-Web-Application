@@ -7,28 +7,10 @@
 <!-- <script src="/public/js/hideShowPassword.min.js"></script> -->
 <!-- <script src="hideShowPassword.min.js"></script> -->
 <script src="/finance_web_application_with_MVC_framework/public/js/hideShowPassword.min.js"></script>
+<script src="/finance_web_application_with_MVC_framework/public/js/app.js"></script>
 
 
 <script>
-    $.validator.addMethod('validPassword',
-        function (value, element, param) {
-            if (value != '') {
-                if (value.match(/.*[a-z]+.*/i) == null) {
-                    return false;
-
-                }
-                if (value.match(/.*\d+.*/) == null) {
-                    return false;
-
-                }
-            }
-
-            return true;
-        },
-        'Must contain at least one letter and one number'
-    );
-
-
 
     $(document).ready(function () {
 
@@ -124,14 +106,14 @@
                             <path d="M8 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
                         </svg></span>
                     <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-                        aria-describedby="username" name="username" required>
+                        aria-describedby="username" name="user_name" required>
 
                 </div>
 
                 <div class="input-group mb-2">
                     <span class="input-group-text" id="email">@</span>
                     <input type="email" class="form-control" placeholder="Email" aria-label="Email"
-                        aria-describedby="email" name="email" required>
+                        aria-describedby="email" name="user_email" required>
                 </div>
 
                 <div class="input-group mb-2">

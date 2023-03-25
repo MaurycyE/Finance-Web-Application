@@ -26,9 +26,10 @@ class Signup extends \Core\Controller {
 
             Flash::addMessage('Udana rejestracja!', Flash::SUCCESS);
 
-            header('Location: http://' . $_SERVER['HTTP_HOST'] . 
-            Config::PATH_TO_MAIN_FOLDER.'?login/new', true, 303);
-            exit;
+            //header('Location: http://' . $_SERVER['HTTP_HOST'] . 
+            //Config::PATH_TO_MAIN_FOLDER.'?login/new', true, 303);
+            //exit;
+            $this->redirect(Config::PATH_TO_MAIN_FOLDER . '?login/new');
         }
 
         else {

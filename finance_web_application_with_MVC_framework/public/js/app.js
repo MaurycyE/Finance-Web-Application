@@ -1,9 +1,4 @@
 
-/**
- * add jquery validation plugin method for a valid password
- * 
- * valid passwords contain at least one letter and one number
- */
 
 $.validator.addMethod('validPassword',
     function (value, element, param) {

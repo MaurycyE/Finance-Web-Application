@@ -14,4 +14,7 @@ class Config {
 
     const HASHING_KEY = '4sM0g3gligrA4q8a3g2trwwTQR50P3mO';
 
+    const PHP_MAILER_KEY = 'vhjbccpdlgmtyrhd';
+    const PHP_MAILER_LOGIN = 'financeapplicationuser@gmail.com';
+
 }
