@@ -15,5 +15,5 @@ $.validator.addMethod('validPassword',
 
         return true;
     },
-    'Must contain at least one letter and one number'
+    'Musi zawierać conajmniej jedną literę i liczbę'
 );

@@ -25,10 +25,6 @@ class Signup extends \Core\Controller {
             $user->writeDefaultCategoriesToNewUser('expense_deafult_payment_method', 'expense_payment_deafult', 'expense_payment');
 
             Flash::addMessage('Udana rejestracja!', Flash::SUCCESS);
-
-            //header('Location: http://' . $_SERVER['HTTP_HOST'] . 
-            //Config::PATH_TO_MAIN_FOLDER.'?login/new', true, 303);
-            //exit;
             $this->redirect(Config::PATH_TO_MAIN_FOLDER . '?login/new');
         }
 

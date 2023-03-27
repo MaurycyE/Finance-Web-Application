@@ -15,8 +15,13 @@ class User extends \Core\Model {
     public function __construct($data = []) {
 
         foreach($data as $key => $value) {
+            
+            if($key == "email") {
+                $key = "user_email";
+            }
             $this->$key = $value;
         };
+
     }
 
     public function save() {

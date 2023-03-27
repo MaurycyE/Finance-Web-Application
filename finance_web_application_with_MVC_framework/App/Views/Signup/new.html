@@ -1,11 +1,9 @@
 {% extends "base.html" %}
 
-{% block title %}Sign up{% endblock %}
+{% block title %}Zarejestruj się{% endblock %}
 
 {% block footer %}
 
-<!-- <script src="/public/js/hideShowPassword.min.js"></script> -->
-<!-- <script src="hideShowPassword.min.js"></script> -->
 <script src="/finance_web_application_with_MVC_framework/public/js/hideShowPassword.min.js"></script>
 <script src="/finance_web_application_with_MVC_framework/public/js/app.js"></script>
 
@@ -33,6 +31,16 @@
                 email: {
                     remote: 'email already taken'
                 }
+            },
+
+            errorPlacement: function (error, element) {
+
+                let placement = $(element).data('error');
+                if (placement) {
+                    $(placement).append(error)
+                } else {
+                    error.insertAfter(element);
+                }
             }
         });
 
@@ -51,8 +59,6 @@
 
 {% block body %}
 
-<!-- <h1>Sing up</h1>
-
 {% if user.errors is not empty %}
 
 <p>Errors:</p>
@@ -61,28 +67,7 @@
     <li>{{ error }}</li>
     {% endfor %}
 </ul>
-{% endif %} -->
-
-<!-- <form method="post" action="?signup/create" id="formSignup">
-
-    <div>
-        <label for="inputName">Name</label>
-        <input id="inputName" name="name" placeholder="Name" autofocus value="{{ user.name }}" required>
-    </div>
-
-    <div>
-        <label for="inputEmail">Email address</label>
-        <input id="inputEmial" name="email" placeholder="email address" value="{{ user.email }}" type="email" required>
-    </div>
-
-    <div>
-        <label for="inputPassword">Password</label>
-        <input type="password" id="inputPassword" name="password" placeholder="Password" required>
-    </div>
-
-    <button type="submit">Sign up</button>
-
-</form> -->
+{% endif %}
 
 <main>
 
@@ -106,15 +91,17 @@
                             <path d="M8 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
                         </svg></span>
                     <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-                        aria-describedby="username" name="user_name" required>
+                        aria-describedby="username" name="user_name" required data-error="#usernameError">
 
                 </div>
+                <span id="usernameError" class="font-monospace text-danger"></span>
 
                 <div class="input-group mb-2">
                     <span class="input-group-text" id="email">@</span>
                     <input type="email" class="form-control" placeholder="Email" aria-label="Email"
-                        aria-describedby="email" name="user_email" required>
+                        aria-describedby="email" name="email" required data-error="#emailError">
                 </div>
+                <span id="emailError" class="font-monospace text-danger"></span>
 
                 <div class="input-group mb-2">
                     <span class="input-group-text" id="password"><svg xmlns="http://www.w3.org/2000/svg" width="16"
@@ -123,8 +110,10 @@
                                 d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z" />
                         </svg></span>
                     <input type="password" class="form-control" placeholder="Password" aria-label="Password"
-                        aria-describedby="password" name="password" id="inputPassword" required>
+                        aria-describedby="password" name="password" id="inputPassword" required
+                        data-error="#passwordError">
                 </div>
+                <span id="passwordError" class="font-monospace text-danger"></span>
 
                 <!-- <div class="input-group mb-2">
                     <span class="input-group-text" id="password_confirm"><svg xmlns="http://www.w3.org/2000/svg"
