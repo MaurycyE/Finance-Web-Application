@@ -47,7 +47,26 @@
 
         $('#inputPassword').hideShowPassword({
             show: false,
-            innerToggle: 'focus'
+            innerToggle: 'focus',
+
+            toggle: {
+                className: 'hideShowPassword-toggle, btn btn-secondary'
+            },
+
+            states: {
+                shown: {
+                    toggle: {
+                        content: 'Ukryj'
+                    }
+                },
+
+                hidden: {
+                    toggle: {
+                        content: 'Pokaż'
+                    }
+                }
+
+            }
         });
 
     });
