@@ -15,7 +15,7 @@ class User extends \Core\Model {
     public function __construct($data = []) {
 
         foreach($data as $key => $value) {
-            
+
             if($key == "email") {
                 $key = "user_email";
             }
@@ -51,27 +51,27 @@ class User extends \Core\Model {
     public function validate() {
 
         if($this->user_name == '') {
-            $this->errors[] = 'Name is required';
+            $this->errors[] = 'Nazwa jest wymagana';
         }
 
         if(filter_var($this->user_email, FILTER_VALIDATE_EMAIL) === false) {
-            $this->errors[] = 'Invalid email';
+            $this->errors[] = 'Nieprawidłowy email';
         }
 
         if(static::emailExists($this->user_email, $this->id_users ?? null)) {
-            $this->errors[] = 'email already taken';
+            $this->errors[] = 'Email już zajęty';
         }
 
         if(strlen($this->password)<6) {
-            $this->errors[] = 'Please enter at least 6 characters for the password';
+            $this->errors[] = 'Hasło musi mieć conajmniej 6 znaków';
         }
 
         if(preg_match('/.*[a-z]+.*/i', $this->password) ==0 ) {
-            $this->errors[] = 'Password needs at least one letter';
+            $this->errors[] = 'Hasło powinno mieć przynajmniej jedną literę';
         }
 
         if(preg_match('/.*\d+.*/i', $this->password) == 0) {
-            $this->errors[] = 'Password needs at least one number';
+            $this->errors[] = 'Hasło powinno mieć przynajmniej jedną cyfrę';
         }
     }
 
@@ -206,9 +206,6 @@ class User extends \Core\Model {
         $stmt->bindValue(':token_hash', $hashed_token, PDO::PARAM_STR);
         $stmt->bindValue(':expires_at', date('Y-m-d H:i:s', $expiry_timestamp), PDO::PARAM_STR);
         $stmt->bindValue(':id', $this->id_users, PDO::PARAM_INT);
-
-        // echo $this->id_users . " ". $hashed_token . " " . date('Y-m-d H:i:s', $expiry_timestamp);
-        // exit;
 
         return $stmt->execute();
     }

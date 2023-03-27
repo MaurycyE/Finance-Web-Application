@@ -104,5 +104,4 @@ class  Authentication {
             setcookie('remember_me', '', time() -3600); //set expire date in the past
         }
     }
-
 }

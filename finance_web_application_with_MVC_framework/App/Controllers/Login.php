@@ -24,7 +24,6 @@ class Login extends \Core\Controller {
         if($user) {
 
             Authentication::login($user, $remember_me);
-            //$this->redirect(Authentication::getReturnToPage());
             Flash::addMessage('Logowanie udane');
             $this->redirect(Config::PATH_TO_MAIN_FOLDER .'?mainmenu/index');
             

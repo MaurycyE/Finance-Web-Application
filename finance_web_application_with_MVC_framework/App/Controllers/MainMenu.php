@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use \Core\View;
-//use \App\Authentication;
 
 class MainMenu extends Authenticated {
 

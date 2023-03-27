@@ -79,7 +79,6 @@ Class Router {
         } 
     }
 
-
     protected function convertToStudlyCaps($string) {
 
         return str_replace(' ', '', ucwords(str_replace('-', ' ', $string)));

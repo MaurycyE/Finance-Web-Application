@@ -4,7 +4,7 @@ namespace Core;
 
 class View {
 
-    public static function render($view, $args = []){
+    public static function render($view, $args = []) {
 
         extract($args, EXTR_SKIP);
 
@@ -37,4 +37,5 @@ class View {
         
         return $twig->render($template, $args);
     }
+    
 }
