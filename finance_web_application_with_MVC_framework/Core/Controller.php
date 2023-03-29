@@ -39,7 +39,7 @@ abstract class Controller {
 
     public function redirect($url) {
 
-        header('Location: http://' . $_SERVER['HTTP_HOST'] . $url, true, 303);
+        header('Location: https://' . $_SERVER['HTTP_HOST'] . $url, true, 303);
         exit;
     }
 
@@ -50,7 +50,7 @@ abstract class Controller {
             Flash::addMessage('Zaloguj się, by uzyskać dostęp do tej strony', Flash::WARNING);
 
             Authentication::rememberRequestedPage();
-            $this->redirect(Config::PATH_TO_MAIN_FOLDER.'?login');
+            $this->redirect('/login');
         }
     }
     

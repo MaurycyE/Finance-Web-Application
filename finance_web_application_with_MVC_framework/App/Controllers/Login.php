@@ -25,7 +25,7 @@ class Login extends \Core\Controller {
 
             Authentication::login($user, $remember_me);
             Flash::addMessage('Logowanie udane');
-            $this->redirect(Config::PATH_TO_MAIN_FOLDER .'?mainmenu/index');
+            $this->redirect('/mainmenu/index');
             
         }
         else {
@@ -44,13 +44,13 @@ class Login extends \Core\Controller {
     public function destroyAction() {
 
         Authentication::logout();
-        $this->redirect(Config::PATH_TO_MAIN_FOLDER.'?login/show-logout-message');
+        $this->redirect('/login/show-logout-message');
     }
 
     public function showLogoutMessageAction() {
 
         Flash::addMessage('Logout successful');
-        $this->redirect(Config::PATH_TO_MAIN_FOLDER);
+        $this->redirect('/');
     }
     
 }

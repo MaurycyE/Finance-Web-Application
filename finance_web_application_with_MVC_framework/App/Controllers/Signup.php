@@ -25,7 +25,7 @@ class Signup extends \Core\Controller {
             $user->writeDefaultCategoriesToNewUser('expense_deafult_payment_method', 'expense_payment_deafult', 'expense_payment');
 
             Flash::addMessage('Udana rejestracja!', Flash::SUCCESS);
-            $this->redirect(Config::PATH_TO_MAIN_FOLDER . '?login/new');
+            $this->redirect('/login/new');
         }
 
         else {

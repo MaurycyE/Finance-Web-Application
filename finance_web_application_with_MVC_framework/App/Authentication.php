@@ -53,7 +53,7 @@ class  Authentication {
 
     public static function getReturnToPage() {
 
-        return $_SESSION['return_to'] ?? Config::PATH_TO_MAIN_FOLDER;
+        return $_SESSION['return_to'] ?? '/';
     }
 
     public static function getUser() {

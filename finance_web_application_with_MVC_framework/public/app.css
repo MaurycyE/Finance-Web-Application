@@ -1,7 +1,7 @@
 @media (max-width: 575px) {
 
     body {
-        background-image: url(img/background_stars2.jpg);
+        background-image: url(/img/background_stars2.jpg);
         height: 100%;
     }
 
@@ -10,7 +10,7 @@
 @media (min-width: 576px) {
 
     body {
-        background-image: url(img/background_stars2.jpg);
+        background-image: url(/img/background_stars2.jpg);
         height: 100vh;
     }
 
