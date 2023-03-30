@@ -1,0 +1,87 @@
+{% extends "MainMenu/navigation.html" %}
+
+{% block menuOptionContent %}
+
+<div class="col-10 col-sm-8 float-sm-end bg-white p-4 rounded-4 mb-2">
+
+    <h2 class="font-monospace">Dodaj wydatek</h2>
+
+
+
+    <form action="/addexpense/add" method="post">
+
+        <div class="mb-3">
+            <label for="add-expense-amout" class="form-label">Kwota:</label>
+            <input type="number" class="form-control" id="add-expense-amout" aria-describedby="amout of money" min="0"
+                step="0.01" placeholder="PLN" name="expenseAmout" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="add-expense-date" class="form-label">Data:</label>
+            <input type="date" class="form-control" id="add-expense-date" aria-describedby="date of expense"
+                min="2001-01-01" name="expenseDate" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="add-expense-payment-method" class="form-label">Sposób płatności:</label>
+            <select class="form-select" aria-label="payment method" id="add-expense-payment-method"
+                name="selectedPaymentCategory" required>
+                <option value="Przelew" selected>Przelew</option>
+                <option value="gotówka">Gotówka</option>
+                <option value="karta bankowa">Karta bankowa</option>
+                <option value="karta debetowa">Karta debetowa</option>
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label for="add-expense-category" class="form-label">Wybierz kategorię:</label>
+            <select class="form-select" aria-label="expense category" id="add-expense-category"
+                name="selectedExpenseCategory" required>
+                <option value="Jedzenie" selected>Jedzenie</option>
+                <option value="Wycieczka">Wycieczka</option>
+                <option value="Mieszkanie">Mieszkanie</option>
+                <option value="Szkolenia">Szkolenia</option>
+                <option value="Transport">Transport</option>
+                <option value="Książka">Książka</option>
+                <option value="Telekomunikacja">Telekomunikacja</option>
+                <option value="Oszczędności">Oszczędności</option>
+                <option value="Opieka zdrowotna">Opieka zdrowotna</option>
+                <option value="Emerytura">Emerytura</option>
+                <option value="Ubranie">Ubranie</option>
+                <option value="Spłata długów">Spłata długów</option>
+                <option value="Higiena">Higiena</option>
+                <option value="Darowizna">Darowizna</option>
+                <option value="Dzieci">Dzieci</option>
+                <option value="Rozrywka">Rozrywka</option>
+                <option value="Inne wydatki">Inne wydatki</option>
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label for="add-expense-textarea" class="form-label">Komentarz:</label>
+            <textarea class="form-control" id="add-expense-textarea" rows="3" name="expenseCommentary"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-success"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+                <path
+                    d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
+            </svg></button>
+        <button type="reset" class="btn btn-danger mx-4"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                <path
+                    d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+            </svg></button>
+
+        {% for message in flash_messages %}
+        <div class="h2 text-{{ message.type }} font-monospace mt-3">{{ message.body }}!
+        </div>
+        {% endfor %}
+
+    </form>
+
+
+
+</div>
+
+{% endblock %}

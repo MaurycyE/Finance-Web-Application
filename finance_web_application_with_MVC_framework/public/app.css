@@ -1,3 +1,21 @@
+/* @media (max-width: 575px) {
+
+    body {
+        background-image: url(/img/background_stars2.jpg);
+        height: 100%;
+    }
+
+} */
+
+/* @media (min-width: 576px) {
+
+    body {
+        background-image: url(/img/background_stars2.jpg);
+        height: 100vh;
+    }
+
+} */
+
 @media (max-width: 575px) {
 
     body {
@@ -5,6 +23,11 @@
         height: 100%;
     }
 
+    #main-container {
+        background-image: url(img/main_menu_graphic_site.png);
+        height: 100%;
+
+    }
 }
 
 @media (min-width: 576px) {
@@ -14,16 +37,12 @@
         height: 100vh;
     }
 
-}
-
-/* @media (min-width: 993px) {
-
-    #main-container {
+    /* #main-container {
         background-image: url(img/main_menu_graphic_site.png);
         height: 100vh;
 
-    }
-} */
+    } */
+}
 
 textarea {
     resize: none;
