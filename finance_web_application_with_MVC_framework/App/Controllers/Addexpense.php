@@ -28,5 +28,4 @@ class AddExpense extends Authenticated {
 
     }
 
-    
 }

@@ -20,7 +20,7 @@ Finance_web_application_with_MVC_framework -> work in progress:
 + create new account (+)
 - log in as user (+)
 - log out (+)
-- add income (-)
+- add income (+)
 - add expense (+)
 - view balance sheet from selected period of time (-)
 - settings (-)

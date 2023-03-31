@@ -3,8 +3,6 @@
 namespace App\Models;
 
 use PDO;
-use \App\Config;
-use \App\Models\User;
 
 class Expense extends \Core\Model {
 
@@ -16,7 +14,7 @@ class Expense extends \Core\Model {
         }
     }
 
-    protected function findIdOfSelectedCategory($selectedCategory, $databaseColumnName) {
+    public static function findIdOfSelectedCategory($selectedCategory, $databaseColumnName) {
 
         extract($databaseColumnName, EXTR_SKIP);
 
@@ -36,13 +34,13 @@ class Expense extends \Core\Model {
 
     public function saveRecord() {
 
-        $idSelectedExpenseCategory = $this->findIdOfSelectedCategory($_POST['selectedExpenseCategory'], [
+        $idSelectedExpenseCategory = static::findIdOfSelectedCategory($_POST['selectedExpenseCategory'], [
             "id" => 'id_categories',
             "tableName" => 'expense_categories',
             "columnName" => 'expense_category'
         ]);
 
-        $idSelectedPaymentCategory = $this->findIdOfSelectedCategory($_POST['selectedPaymentCategory'], [
+        $idSelectedPaymentCategory = static::findIdOfSelectedCategory($_POST['selectedPaymentCategory'], [
             "id" => 'id_payment',
             "tableName" => 'expense_payment',
             "columnName" => 'expense_payment_method'
