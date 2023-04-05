@@ -1,0 +1,215 @@
+{% extends "MainMenu/navigation.html" %}
+
+{% block title %}Przejrzyj bilans{% endblock %}
+
+{% block menuOptionContent %}
+
+<div class="col-12 col-sm-8 float-sm-end bg-white p-4 rounded-4 mb-2">
+
+    <div>
+        <h2 class="font-monospace">Przeglądaj bilans</h2>
+    </div>
+
+    <form action="/viewbalance/balance" method="post">
+
+        <div class="col-6 col-lg-4">
+            <label for="view-balance-period-of-time" class="form-label"></label>
+            <select class="form-select" aria-label="view balance sheet" id="view-balance-period-of-time"
+                name="periodOfTime" required>
+                <option value="Bieżący miesiąc">Bieżący miesiąc</option>
+                <option value="Poprzedni miesiąc">Poprzedni miesiąc</option>
+                <option value="Bieżący rok">Bieżący rok</option>
+                <option value="" data-bs-toggle="modal" data-bs-target="#view-balance-modal">niestandardowe</option>
+            </select>
+
+        </div>
+
+    </form>
+
+    <!-- Modal -->
+    <div class="modal fade" id="view-balance-modal" tabindex="-1" aria-labelledby="view-balance-modalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="view-balance-modalLabel">Wybierz zakres
+                        dat:
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/viewbalance/balance" method="post">
+
+                        <div class="mb-3">
+                            <label for="view-balance-date-from" class="form-label">Od:</label>
+                            <input type="date" class="form-control" id="view-balance-date-from"
+                                aria-describedby="first date to view balance sheet" min="2001-01-01"
+                                name="firstNotStandardDate" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="view-balance-date-to" class="form-label">Do:</label>
+                            <input type="date" class="form-control" id="view-balance-date-to"
+                                aria-describedby="second date to view balance sheet" min="2001-01-01"
+                                name="secondNotStandardDate" required>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success"><svg xmlns="http://www.w3.org/2000/svg"
+                                    width="20" height="20" fill="currentColor" class="bi bi-check-lg"
+                                    viewBox="0 0 16 16">
+                                    <path
+                                        d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
+                                </svg></button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <!-- Modal -->
+
+    <h3 class=" mt-3 fw-bolder font-monospace">Przychody</h3>
+    <div class="table-responsive">
+        <table class="table table-sm table-hover mt-1">
+            <thead>
+                <tr>
+                    <th>Kwota</th>
+                    <th>Kategoria</th>
+                    <th>Data</th>
+                    <th>Komentarz</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- <?php
+                if(isset($_SESSION["incomeResult"])){
+                    foreach($_SESSION["incomeResult"] as $userIncomeData) {
+                        echo "<tr><td> {$userIncomeData['income_amout']} </td><td> {$userIncomeData['income_category']}</td> 
+                        <td> {$userIncomeData['income_date']} </td><td> {$userIncomeData['income_comment']}</td></tr>";
+                    }
+                    echo "<tr><td class='text-success font-monospace'> {$_SESSION['incomeSum'][0]} </td></tr>";
+                }
+            ?> -->
+            </tbody>
+        </table>
+    </div>
+
+    <h3 class=" mt-3 fw-bolder font-monospace">Wydatki</h3>
+    <div class="table-responsive">
+        <table class="table table-sm table-hover mt-1">
+            <thead>
+                <tr>
+                    <th>Kwota</th>
+                    <th>Kategoria</th>
+                    <th>Metoda Płatności</th>
+                    <th>Data</th>
+                    <th>Komentarz</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for balanceData in getAllResults %}
+                <tr>
+                    <td> {{ balanceData.expenseResults[0]['expense_amout'] }} </td>
+                    <td> {{ balanceData.expenseResults[0]['expense_category'] }}</td>
+                    <td> {{ balanceData.expenseResults[0]['expense_payment_method'] }} </td>
+                    <td> {{ balanceData.expenseResults[0]['expense_date'] }} </td>
+                    <td> {{ balanceData.expenseResults[0]['expense_description'] }} </td>
+                </tr>
+
+                {% endfor %}
+
+                <tr>
+                    <td class='text-danger font-monospace'> {{ getAllResults[0]['expenseSum']["SUM(expense_amout)"] }}
+                    </td>
+                    <td class='text-danger font-monospace'> {{ getAllResults.expenseResults[0]['expense_amout'] }}</td>
+                </tr>
+                <!-- <?php
+                if(isset($_SESSION["expenseResult"])){
+                    foreach($_SESSION["expenseResult"] as $userExpenseData) {
+                        echo "<tr><td> {$userExpenseData['expense_amout']} </td><td> {$userExpenseData['expense_category']}</td>
+                        <td> {$userExpenseData['expense_payment_method']} </td><td> {$userExpenseData['expense_date']} </td>
+                        <td> {$userExpenseData['expense_description']} </td></tr>";
+                    }
+                    echo "<tr><td class='text-danger font-monospace'> {$_SESSION['expenseSum'][0]} </td></tr>";
+                }
+            ?> -->
+            </tbody>
+        </table>
+    </div>
+    <h3 class=" mt-3 fw-bolder font-monospace">Bilans</h3>
+    <!-- <?php
+        $textColor;
+        if($_SESSION['incomeSum'][0]-$_SESSION['expenseSum'][0]>0)
+                $textColor="text-success";
+        else
+                $textColor="text-danger";
+                
+        echo '<span class="font-monospace h4">'.$_SESSION['incomeSum'][0].' - </span>'
+        .'<span class="font-monospace h4">'.$_SESSION['expenseSum'][0].' = </span> <span class="'.$textColor.' font-monospace h4">'
+        .$_SESSION['incomeSum'][0]-$_SESSION['expenseSum'][0].'</span>';
+        
+    ?> -->
+    <button id="pie_chart" class="btn font-monospace btn-success mx-4 float-sm-end mt-2" data-bs-toggle="modal"
+        data-bs-target="#chart_modal"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+            class="bi bi-bar-chart-line mx-2" viewBox="0 0 16 16">
+            <path
+                d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2zm1 12h2V2h-2v12zm-3 0V7H7v7h2zm-5 0v-3H2v3h2z" />
+        </svg>Zobacz wykres</button>
+
+    <!-- MODAL - CHART -->
+    <div class="modal fade" id="chart_modal" tabindex="-1" aria-labelledby="chart_modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" id="chartContainer">
+                <div class="modal-header">
+
+                </div>
+                <div class="modal-body">
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    let options = document.getElementById("view-balance-period-of-time");
+
+    options.addEventListener("change",
+        function () {
+            if (options.value != "") {
+                this.form.submit();
+            }
+
+        });
+
+    document.getElementById("pie_chart").addEventListener("click", function () {
+
+        let chart = new CanvasJS.Chart("chartContainer", {
+            animationEnabled: true,
+            title: {
+                text: "Rozkład wydatków według kategorii"
+            },
+            subtitles: [{
+                text: ""
+            }],
+            data: [{
+                type: "pie",
+                yValueFormatString: "#,##0.00\"%\"",
+                indexLabel: "{label} ({y})",
+                dataPoints: json_encode($dataPoints, JSON_NUMERIC_CHECK)
+            }]
+        });
+        chart.render();
+
+    });
+</script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+{% endblock %}
