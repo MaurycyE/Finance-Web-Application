@@ -8,8 +8,23 @@ class Balance extends \Core\Model {
 
     public function __construct($selectedOption) {
 
+        if(isset($selectedOption["periodOfTime"])) {
+
         $this->selectedPeriodOfTime=$selectedOption["periodOfTime"];
-        
+        }
+        else 
+        $this->selectedPeriodOfTime = "Niestandardowe";
+
+        if(isset($selectedOption["firstNotStandardDate"])){
+
+        $this->firstNotStandardDate = $selectedOption["firstNotStandardDate"];
+        }
+
+        if(isset($selectedOption["secondNotStandardDate"])) {
+
+        $this->secondNotStandardDate = $selectedOption["secondNotStandardDate"];
+        }
+
     }
 
     public function sumAmoutOfIncomeOrExpense($incomeOrExpenseAmout, $incomeOrExpenseTable, $incomeOrExpenseDate) {
@@ -34,6 +49,11 @@ class Balance extends \Core\Model {
             case 'Bieżący rok':
                 $sql = "SELECT SUM($incomeOrExpenseAmout) FROM $incomeOrExpenseTable WHERE 
                 YEAR($incomeOrExpenseDate)=YEAR(CURRENT_DATE()) AND id_users=:idLoggedUser";
+                break;
+            
+            case 'Niestandardowe':
+                $sql = "SELECT SUM($incomeOrExpenseAmout) FROM $incomeOrExpenseTable WHERE 
+                $incomeOrExpenseDate>='$this->firstNotStandardDate' AND $incomeOrExpenseDate<='$this->secondNotStandardDate' AND id_users=:idLoggedUser";
                 break;
 
         }
@@ -69,6 +89,12 @@ class Balance extends \Core\Model {
             case 'Bieżący rok':
                 $sql = "SELECT * FROM incomes, income_categories WHERE YEAR(income_date)=YEAR(CURRENT_DATE())
                 AND incomes.id_users=:idLoggedUser AND incomes.id_users=income_categories.id_users 
+                AND id_users_incomes_categories=id_categories ORDER BY income_date DESC";
+                break;
+            
+            case 'Niestandardowe':
+                $sql = "SELECT * FROM incomes, income_categories WHERE income_date>='$this->firstNotStandardDate' 
+                AND income_date<='$this->secondNotStandardDate' AND incomes.id_users=:idLoggedUser AND incomes.id_users=income_categories.id_users 
                 AND id_users_incomes_categories=id_categories ORDER BY income_date DESC";
                 break;
         }
@@ -110,6 +136,15 @@ class Balance extends \Core\Model {
                 AND id_users_expenses_categories=id_categories AND expenses.id_payment=expense_payment.id_payment
                 ORDER BY expense_date DESC";
                 break;
+            
+            case 'Niestandardowe':
+                $sql = "SELECT * FROM expenses, expense_categories, expense_payment WHERE
+                expense_date>='$this->firstNotStandardDate' AND expense_date<='$this->secondNotStandardDate' AND expenses.id_users=:idLoggedUser
+                AND expenses.id_users=expense_categories.id_users AND expenses.id_users=expense_payment.id_users
+                AND id_users_expenses_categories=id_categories AND expenses.id_payment=expense_payment.id_payment
+                ORDER BY expense_date DESC";
+                break;
+
         }
 
         $stmt = $db->prepare($sql);
@@ -144,6 +179,13 @@ class Balance extends \Core\Model {
                 $sql = "SELECT expense_category, SUM(expense_amout) AS expense_sum_of_categories
                 FROM expenses, expense_categories WHERE YEAR(expense_date)=YEAR(CURRENT_DATE())  AND expenses.id_users=:idLoggedUser 
                 AND id_users_expenses_categories=id_categories AND expenses.id_users=expense_categories.id_users 
+                GROUP BY expense_category ORDER BY expense_sum_of_categories DESC";
+                break;
+            
+            case 'Niestandardowe':
+                $sql = "SELECT expense_category, SUM(expense_amout) AS expense_sum_of_categories
+                FROM expenses, expense_categories WHERE expense_date>='$this->firstNotStandardDate' AND expense_date<='$this->secondNotStandardDate' 
+                AND expenses.id_users=:idLoggedUser AND id_users_expenses_categories=id_categories AND expenses.id_users=expense_categories.id_users 
                 GROUP BY expense_category ORDER BY expense_sum_of_categories DESC";
                 break;
 
