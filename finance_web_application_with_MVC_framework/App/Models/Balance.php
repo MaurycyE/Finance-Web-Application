@@ -24,6 +24,17 @@ class Balance extends \Core\Model {
                 $sql = "SELECT SUM($incomeOrExpenseAmout) FROM $incomeOrExpenseTable WHERE YEAR($incomeOrExpenseDate) = YEAR(CURRENT_DATE())
                 AND MONTH($incomeOrExpenseDate) = MONTH(CURRENT_DATE()) AND id_users=:idLoggedUser";
                 break;
+            
+            case 'Poprzedni miesiąc':
+                $sql = "SELECT SUM($incomeOrExpenseAmout) FROM $incomeOrExpenseTable WHERE $incomeOrExpenseDate BETWEEN 
+                DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01 00:00:00') AND DATE_FORMAT(LAST_DAY(NOW() - INTERVAL 1 MONTH), '%Y-%m-%d 23:59:59')
+                AND id_users=:idLoggedUser";
+                break;
+            
+            case 'Bieżący rok':
+                $sql = "SELECT SUM($incomeOrExpenseAmout) FROM $incomeOrExpenseTable WHERE 
+                YEAR($incomeOrExpenseDate)=YEAR(CURRENT_DATE()) AND id_users=:idLoggedUser";
+                break;
 
         }
 
@@ -47,6 +58,19 @@ class Balance extends \Core\Model {
                 AND MONTH(income_date) = MONTH(CURRENT_DATE()) AND incomes.id_users=:idLoggedUser
                 AND incomes.id_users=income_categories.id_users AND id_users_incomes_categories=id_categories
                 ORDER BY income_date DESC";
+                break;
+            
+            case 'Poprzedni miesiąc':
+                $sql = "SELECT * FROM incomes, income_categories WHERE income_date BETWEEN DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01 00:00:00')
+                AND DATE_FORMAT(LAST_DAY(NOW() - INTERVAL 1 MONTH), '%Y-%m-%d 23:59:59') AND incomes.id_users=:idLoggedUser 
+                AND incomes.id_users=income_categories.id_users AND id_users_incomes_categories=id_categories ORDER BY income_date DESC";
+                break;
+
+            case 'Bieżący rok':
+                $sql = "SELECT * FROM incomes, income_categories WHERE YEAR(income_date)=YEAR(CURRENT_DATE())
+                AND incomes.id_users=:idLoggedUser AND incomes.id_users=income_categories.id_users 
+                AND id_users_incomes_categories=id_categories ORDER BY income_date DESC";
+                break;
         }
 
         $stmt = $db->prepare($sql);
@@ -68,6 +92,24 @@ class Balance extends \Core\Model {
                 AND expenses.id_users=expense_categories.id_users AND expenses.id_users=expense_payment.id_users
                 AND id_users_expenses_categories=id_categories AND expenses.id_payment=expense_payment.id_payment
                 ORDER BY expense_date DESC";
+                break;
+            
+            case 'Poprzedni miesiąc':
+                $sql = "SELECT * FROM expenses, expense_categories, expense_payment WHERE expense_date
+                BETWEEN DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01 00:00:00')
+                AND DATE_FORMAT(LAST_DAY(NOW() - INTERVAL 1 MONTH), '%Y-%m-%d 23:59:59') AND expenses.id_users=:idLoggedUser
+                AND expenses.id_users=expense_categories.id_users AND expenses.id_users=expense_payment.id_users
+                AND id_users_expenses_categories=id_categories AND expenses.id_payment=expense_payment.id_payment
+                ORDER BY expense_date DESC";
+                break;
+            
+            case 'Bieżący rok':
+                $sql = "SELECT * FROM expenses, expense_categories, expense_payment WHERE
+                YEAR(expense_date)=YEAR(CURRENT_DATE()) AND expenses.id_users=:idLoggedUser
+                AND expenses.id_users=expense_categories.id_users AND expenses.id_users=expense_payment.id_users
+                AND id_users_expenses_categories=id_categories AND expenses.id_payment=expense_payment.id_payment
+                ORDER BY expense_date DESC";
+                break;
         }
 
         $stmt = $db->prepare($sql);
@@ -88,6 +130,23 @@ class Balance extends \Core\Model {
                 WHERE YEAR(expense_date)=YEAR(CURRENT_DATE()) AND MONTH(expense_date) = MONTH(CURRENT_DATE()) AND expenses.id_users=:idLoggedUser
                 AND id_users_expenses_categories=id_categories AND expenses.id_users=expense_categories.id_users GROUP BY expense_category
                 ORDER BY expense_sum_of_categories DESC";
+                break;
+
+            case 'Poprzedni miesiąc':
+                $sql = "SELECT expense_category, SUM(expense_amout) AS expense_sum_of_categories FROM expenses, expense_categories 
+                WHERE expense_date BETWEEN DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01 00:00:00') AND 
+                DATE_FORMAT(LAST_DAY(NOW() - INTERVAL 1 MONTH), '%Y-%m-%d 23:59:59') AND expenses.id_users=:idLoggedUser 
+                AND id_users_expenses_categories=id_categories AND expenses.id_users=expense_categories.id_users GROUP BY expense_category 
+                ORDER BY expense_sum_of_categories DESC";
+                break;
+            
+            case 'Bieżący rok':
+                $sql = "SELECT expense_category, SUM(expense_amout) AS expense_sum_of_categories
+                FROM expenses, expense_categories WHERE YEAR(expense_date)=YEAR(CURRENT_DATE())  AND expenses.id_users=:idLoggedUser 
+                AND id_users_expenses_categories=id_categories AND expenses.id_users=expense_categories.id_users 
+                GROUP BY expense_category ORDER BY expense_sum_of_categories DESC";
+                break;
+
         }
 
         $stmt = $db->prepare($sql);
