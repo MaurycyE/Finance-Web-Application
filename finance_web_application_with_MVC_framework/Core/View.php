@@ -33,7 +33,10 @@ class View {
             $twig = new \Twig\Environment($loader);
             $twig->addGlobal('current_user', \App\Authentication::getUser());
             $twig->addGlobal('flash_messages', \App\Flash::getMessages());
-            $twig->addGlobal('getAllResults', \App\Models\Balance::getResultsToShow());
+            $twig->addGlobal('getSumResults', \App\Models\Balance::getResultsToShow('sumResults'));
+            $twig->addGlobal('getExpenseResults', \App\Models\Balance::getResultsToShow('expenseResults'));
+            $twig->addGlobal('getIncomeResults', \App\Models\Balance::getResultsToShow('incomeResults'));
+
         }
         
         return $twig->render($template, $args);
