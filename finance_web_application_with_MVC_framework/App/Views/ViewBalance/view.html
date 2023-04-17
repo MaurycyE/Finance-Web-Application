@@ -16,10 +16,13 @@
             <label for="view-balance-period-of-time" class="form-label"></label>
             <select class="form-select" aria-label="view balance sheet" id="view-balance-period-of-time"
                 name="periodOfTime" required>
-                <option value="Bieżący miesiąc">Bieżący miesiąc</option>
-                <option value="Poprzedni miesiąc">Poprzedni miesiąc</option>
-                <option value="Bieżący rok">Bieżący rok</option>
-                <option value="" data-bs-toggle="modal" data-bs-target="#view-balance-modal">Niestandardowe</option>
+                <option value="Bieżący miesiąc" {{ getSumResults.selectedOption['Bieżący miesiąc'] }}>Bieżący miesiąc
+                </option>
+                <option value="Poprzedni miesiąc" {{ getSumResults.selectedOption['Poprzedni miesiąc'] }}>Poprzedni
+                    miesiąc</option>
+                <option value="Bieżący rok" {{ getSumResults.selectedOption['Bieżący rok'] }}>Bieżący rok</option>
+                <option value="" data-bs-toggle="modal" data-bs-target="#view-balance-modal"
+                    {{ getSumResults.selectedOption['Niestandardowe'] }}>Niestandardowe</option>
             </select>
 
         </div>
@@ -162,20 +165,47 @@
 
     </div>
 
+    <div class="js-user-rating" data-is-authenticated="{{ getChartData ? 'true' : 'false' }}"
+        data-user="{{ getChartData|json_encode() }}">
+        <!-- ... -->
+    </div>
+
+
 </div>
 
 
 <script>
 
+    // document.addEventListener('DOMContentLoaded', function () {
+    //     let userRating = document.querySelector('.js-user-rating');
+    //     let isAuthenticated = userRating.dataset.isAuthenticated;
+
+    //     let user = JSON.parse(userRating.dataset.user);
+
+    //     // or with jQuery
+    //     //var isAuthenticated = $('.js-user-rating').data('isAuthenticated');
+    // });
+
+    let userRating = document.querySelector('.js-user-rating');
+    let isAuthenticated = userRating.dataset.isAuthenticated;
+    let dataPoints = JSON.parse(userRating.dataset.user);
+
+
+    console.log(dataPoints);
+
     let options = document.getElementById("view-balance-period-of-time");
 
     options.addEventListener("change",
         function () {
+
             if (options.value != "") {
+
+                //options.selected = "selected";
                 this.form.submit();
             }
 
         });
+
 
     document.getElementById("pie_chart").addEventListener("click", function () {
 
@@ -191,7 +221,8 @@
                 type: "pie",
                 yValueFormatString: "#,##0.00\"%\"",
                 indexLabel: "{label} ({y})",
-                dataPoints: json_encode($dataPoints, JSON_NUMERIC_CHECK)
+                dataPoints: dataPoints
+
             }]
         });
         chart.render();

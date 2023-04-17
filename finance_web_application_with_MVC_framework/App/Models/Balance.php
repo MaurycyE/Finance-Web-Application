@@ -10,26 +10,34 @@ class Balance extends \Core\Model {
 
         if(isset($selectedOption["periodOfTime"])) {
 
-        $this->selectedPeriodOfTime=$selectedOption["periodOfTime"];
+            $this->selectedPeriodOfTime=$selectedOption["periodOfTime"];
         }
         else 
-        $this->selectedPeriodOfTime = "Niestandardowe";
+            $this->selectedPeriodOfTime = "Bieżący miesiąc";
 
         if(isset($selectedOption["firstNotStandardDate"])){
 
-        $this->firstNotStandardDate = $selectedOption["firstNotStandardDate"];
+            $this->firstNotStandardDate = $selectedOption["firstNotStandardDate"];
+            $this->selectedPeriodOfTime = "Niestandardowe";
         }
 
         if(isset($selectedOption["secondNotStandardDate"])) {
 
-        $this->secondNotStandardDate = $selectedOption["secondNotStandardDate"];
+            $this->secondNotStandardDate = $selectedOption["secondNotStandardDate"];
         }
 
     }
 
-    public function sumAmoutOfIncomeOrExpense($incomeOrExpenseAmout, $incomeOrExpenseTable, $incomeOrExpenseDate) {
+    protected function executeStatment($db, $sql) {
 
-        //if($this->selectedPeriodOfTime =='Bieżący miesiąc') 
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue('idLoggedUser', $_SESSION['user_id'], PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt;
+    }
+
+    protected function sumAmoutOfIncomeOrExpense($incomeOrExpenseAmout, $incomeOrExpenseTable, $incomeOrExpenseDate) {
 
         $db = static::getDB();
 
@@ -58,16 +66,13 @@ class Balance extends \Core\Model {
 
         }
 
-
-        $stmt = $db->prepare($sql);
-        $stmt->bindValue('idLoggedUser', $_SESSION['user_id'], PDO::PARAM_INT);
-        $stmt->execute();
+        $stmt = $this->executeStatment($db, $sql);
         
         return $stmt->fetch();
         
     }
 
-    public function getIncomeResult() {
+    protected function getIncomeResult() {
 
         $db = static::getDB();
 
@@ -99,14 +104,12 @@ class Balance extends \Core\Model {
                 break;
         }
 
-        $stmt = $db->prepare($sql);
-        $stmt->bindValue('idLoggedUser', $_SESSION['user_id'], PDO::PARAM_INT);
-        $stmt->execute();
+        $stmt = $this->executeStatment($db, $sql);
 
         return $stmt->fetchAll();
     }
 
-    public function getExpenseResult() {
+    protected function getExpenseResult() {
 
         $db = static::getDB();
 
@@ -147,9 +150,7 @@ class Balance extends \Core\Model {
 
         }
 
-        $stmt = $db->prepare($sql);
-        $stmt->bindValue('idLoggedUser', $_SESSION['user_id'], PDO::PARAM_INT);
-        $stmt->execute();
+        $stmt = $this->executeStatment($db, $sql);
 
         return $stmt->fetchAll();
     }
@@ -191,11 +192,55 @@ class Balance extends \Core\Model {
 
         }
 
-        $stmt = $db->prepare($sql);
-        $stmt->bindValue('idLoggedUser', $_SESSION['user_id'], PDO::PARAM_INT);
-        $stmt->execute();
+        $stmt = $this->executeStatment($db, $sql);
 
         return $stmt->fetchAll();
+    }
+
+    protected function setSelectedAtribute() {
+
+        $atributeSet;
+
+        switch($this->selectedPeriodOfTime) {
+
+            case 'Bieżący miesiąc':
+                $atributeSet = [
+                    'Bieżący miesiąc' => 'selected',
+                    'Poprzedni miesiąc' => '',
+                    'Bieżący rok' => '',
+                    'Niestandardowe' => ''
+                ];
+                break;
+
+            case 'Poprzedni miesiąc':
+                $atributeSet = [
+                    'Bieżący miesiąc' => '',
+                    'Poprzedni miesiąc' => 'selected',
+                    'Bieżący rok' => '',
+                    'Niestandardowe' => ''
+                ];
+                break;
+
+            case 'Bieżący rok':
+                $atributeSet = [
+                    'Bieżący miesiąc' => '',
+                    'Poprzedni miesiąc' => '',
+                    'Bieżący rok' => 'selected',
+                    'Niestandardowe' => ''
+                ];
+                break;
+
+            case 'Niestandardowe':
+                $atributeSet = [
+                    'Bieżący miesiąc' => '',
+                    'Poprzedni miesiąc' => '',
+                    'Bieżący rok' => '',
+                    'Niestandardowe' => 'selected'
+                ];
+                break;
+        }
+
+        return $atributeSet;
     }
 
     public function getAllResults() {
@@ -205,20 +250,25 @@ class Balance extends \Core\Model {
         $incomeSum = $this->sumAmoutOfIncomeOrExpense('income_amout', 'incomes', 'income_date');
         $expenseSum = $this->sumAmoutOfIncomeOrExpense('expense_amout', 'expenses', 'expense_date');
         $difference = $incomeSum["SUM(income_amout)"] - $expenseSum["SUM(expense_amout)"];
+        $selectedOption = $this->setSelectedAtribute();
+        $_SESSION['groupResults'] = $this->getGroupedExpensesCategories();
+
 
         $_SESSION['expenseResults'] = $expenseResults;
         $_SESSION['incomeResults'] = $incomeResults;
+
         $balanceColor = $this->setBalanceColor($difference);
 
         $_SESSION['sumResults'] = [
 
-            //'incomeResults' => $incomeResults,
-            //'expenseResults' => $expenseResults,
             'incomeSum' => $incomeSum,
             'expenseSum' => $expenseSum,
             'difference' => $difference,
-            'balanceColor' => $balanceColor
+            'balanceColor' => $balanceColor,
+            'selectedOption' => $selectedOption
         ];
+
+        $_SESSION['chartData'] = $this->setChartData();
 
     }
 
@@ -239,10 +289,43 @@ class Balance extends \Core\Model {
         if(isset($_SESSION[$dataSet])) {
 
         $balanceData = $_SESSION[$dataSet];
+
         unset($_SESSION[$dataSet]);
 
         return $balanceData;
         }
     }
+
+    public function setChartData() {
+
+        $dataPoints = array();
+
+        if((isset($_SESSION['groupResults'])) && (isset($_SESSION["sumResults"]))) {
+
+        foreach($_SESSION['groupResults'] as $expenseGroup){
+
+            array_push($dataPoints, array("label"=>$expenseGroup['expense_category'], 
+            "y"=>round($expenseGroup['expense_sum_of_categories']/$_SESSION["sumResults"]['expenseSum']["SUM(expense_amout)"]*100, 2)));
+        }
+         
+        }
+
+        return $dataPoints;
+    }
+
+    public static function getChartData() {
+
+        if(isset($_SESSION['chartData'])) {
+
+            $dataPoints = $_SESSION['chartData'];
+
+            unset($_SESSION['chartData']);
+            //
+            //var_dump($dataPoints);
+
+            return $dataPoints;
+        }
+    }
+
 
 }
