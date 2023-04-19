@@ -25,3 +25,6 @@ Finance_web_application_with_MVC_framework -> work in progress:
 - view balance sheet from selected period of time (+)
 - settings (-)
 - password recover (+)
+
+LINK:
+App/Config ->PATH_TO_MAIN_FOLDER
