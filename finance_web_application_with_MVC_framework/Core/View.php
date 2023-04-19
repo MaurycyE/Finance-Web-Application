@@ -36,8 +36,8 @@ class View {
             $twig->addGlobal('getSumResults', \App\Models\Balance::getResultsToShow('sumResults'));
             $twig->addGlobal('getExpenseResults', \App\Models\Balance::getResultsToShow('expenseResults'));
             $twig->addGlobal('getIncomeResults', \App\Models\Balance::getResultsToShow('incomeResults'));
-            $twig->addGlobal('getChartData', \App\Models\Balance::getChartData());
-
+            $twig->addGlobal('getExpenseChartData', \App\Models\Balance::getChartData('expenseChartData'));
+            $twig->addGlobal('getIncomeChartData', \App\Models\Balance::getChartData('incomeChartData'));
 
         }
         

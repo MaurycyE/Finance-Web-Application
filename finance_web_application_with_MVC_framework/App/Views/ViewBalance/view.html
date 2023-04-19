@@ -143,55 +143,34 @@
         = </span> <span
         class="font-monospace h4 text-{{ getSumResults.balanceColor }}">{{ getSumResults.difference }}</span>
 
-    <button id="pie_chart" class="btn font-monospace btn-success mx-4 float-sm-end mt-2" data-bs-toggle="modal"
-        data-bs-target="#chart_modal"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-            class="bi bi-bar-chart-line mx-2" viewBox="0 0 16 16">
-            <path
-                d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2zm1 12h2V2h-2v12zm-3 0V7H7v7h2zm-5 0v-3H2v3h2z" />
-        </svg>Zobacz wykres</button>
 
-    <!-- MODAL - CHART -->
-    <div class="modal fade" id="chart_modal" tabindex="-1" aria-labelledby="chart_modalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content" id="chartContainer">
-                <div class="modal-header">
+    <div class="d-block mt-4" id="chartContainer" style="height: 350px; width: 100%;"></div>
+    <div class="d-block mt-4" id="chartContainer2" style="height: 350px; width: 100%;"></div>
 
-                </div>
-                <div class="modal-body">
-                </div>
-
-            </div>
-        </div>
-
-    </div>
-
-    <div class="js-user-rating" data-is-authenticated="{{ getChartData ? 'true' : 'false' }}"
-        data-user="{{ getChartData|json_encode() }}">
+    <div class="js-user-rating" data-is-authenticated="{{ getExpenseChartData ? 'true' : 'false' }}"
+        data-user="{{ getExpenseChartData|json_encode() }}">
         <!-- ... -->
     </div>
 
+    <div class="js-user-rating_income" data-is-authenticated="{{ getIncomeChartData ? 'true' : 'false' }}"
+        data-user="{{ getIncomeChartData|json_encode() }}">
+        <!-- ... -->
+    </div>
 
 </div>
 
-
 <script>
-
-    // document.addEventListener('DOMContentLoaded', function () {
-    //     let userRating = document.querySelector('.js-user-rating');
-    //     let isAuthenticated = userRating.dataset.isAuthenticated;
-
-    //     let user = JSON.parse(userRating.dataset.user);
-
-    //     // or with jQuery
-    //     //var isAuthenticated = $('.js-user-rating').data('isAuthenticated');
-    // });
 
     let userRating = document.querySelector('.js-user-rating');
     let isAuthenticated = userRating.dataset.isAuthenticated;
     let dataPoints = JSON.parse(userRating.dataset.user);
 
+    let userRatingIncome = document.querySelector('.js-user-rating_income');
+    let isAuthenticatedIncome = userRatingIncome.dataset.isAuthenticatedIncome;
+    let dataPointsIncome = JSON.parse(userRatingIncome.dataset.user);
 
-    console.log(dataPoints);
+
+    console.log(dataPointsIncome);
 
     let options = document.getElementById("view-balance-period-of-time");
 
@@ -200,16 +179,32 @@
 
             if (options.value != "") {
 
-                //options.selected = "selected";
                 this.form.submit();
             }
 
         });
 
-
-    document.getElementById("pie_chart").addEventListener("click", function () {
+    window.onload = function () {
 
         let chart = new CanvasJS.Chart("chartContainer", {
+            animationEnabled: true,
+            title: {
+                text: "Rozkład przychodów według kategorii"
+            },
+            subtitles: [{
+                text: ""
+            }],
+            data: [{
+                type: "pie",
+                yValueFormatString: "#,##0.00\"%\"",
+                indexLabel: "{label} ({y})",
+                dataPoints: dataPointsIncome
+
+            }]
+        });
+        chart.render();
+
+        let chart2 = new CanvasJS.Chart("chartContainer2", {
             animationEnabled: true,
             title: {
                 text: "Rozkład wydatków według kategorii"
@@ -225,10 +220,12 @@
 
             }]
         });
-        chart.render();
+        chart2.render();
 
-    });
+    };
+
 </script>
+
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
 {% endblock %}

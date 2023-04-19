@@ -155,39 +155,39 @@ class Balance extends \Core\Model {
         return $stmt->fetchAll();
     }
 
-    public function getGroupedExpensesCategories() {
+    public function getGroupedIncomeOrExpensesCategories($incomeOrExpense, $tableName) {
 
         $db = static::getDB();
 
         switch($this->selectedPeriodOfTime) {
 
             case 'Bieżący miesiąc':
-                $sql = "SELECT expense_category, SUM(expense_amout) AS expense_sum_of_categories FROM expenses, expense_categories
-                WHERE YEAR(expense_date)=YEAR(CURRENT_DATE()) AND MONTH(expense_date) = MONTH(CURRENT_DATE()) AND expenses.id_users=:idLoggedUser
-                AND id_users_expenses_categories=id_categories AND expenses.id_users=expense_categories.id_users GROUP BY expense_category
-                ORDER BY expense_sum_of_categories DESC";
+                $sql = "SELECT ".$incomeOrExpense."_category, SUM(".$incomeOrExpense."_amout) AS ".$incomeOrExpense."_sum_of_categories FROM $tableName, ".$incomeOrExpense."_categories
+                WHERE YEAR(".$incomeOrExpense."_date)=YEAR(CURRENT_DATE()) AND MONTH(".$incomeOrExpense."_date) = MONTH(CURRENT_DATE()) AND $tableName.id_users=:idLoggedUser
+                AND id_users_".$tableName."_categories=id_categories AND $tableName.id_users=".$incomeOrExpense."_categories.id_users GROUP BY ".$incomeOrExpense."_category
+                ORDER BY ".$incomeOrExpense."_sum_of_categories DESC";
                 break;
 
             case 'Poprzedni miesiąc':
-                $sql = "SELECT expense_category, SUM(expense_amout) AS expense_sum_of_categories FROM expenses, expense_categories 
-                WHERE expense_date BETWEEN DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01 00:00:00') AND 
-                DATE_FORMAT(LAST_DAY(NOW() - INTERVAL 1 MONTH), '%Y-%m-%d 23:59:59') AND expenses.id_users=:idLoggedUser 
-                AND id_users_expenses_categories=id_categories AND expenses.id_users=expense_categories.id_users GROUP BY expense_category 
-                ORDER BY expense_sum_of_categories DESC";
+                $sql = "SELECT ".$incomeOrExpense."_category, SUM(".$incomeOrExpense."_amout) AS ".$incomeOrExpense."_sum_of_categories FROM $tableName, ".$incomeOrExpense."_categories 
+                WHERE ".$incomeOrExpense."_date BETWEEN DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01 00:00:00') AND 
+                DATE_FORMAT(LAST_DAY(NOW() - INTERVAL 1 MONTH), '%Y-%m-%d 23:59:59') AND $tableName.id_users=:idLoggedUser 
+                AND id_users_".$tableName."_categories=id_categories AND $tableName.id_users=".$incomeOrExpense."_categories.id_users GROUP BY ".$incomeOrExpense."_category 
+                ORDER BY ".$incomeOrExpense."_sum_of_categories DESC";
                 break;
             
             case 'Bieżący rok':
-                $sql = "SELECT expense_category, SUM(expense_amout) AS expense_sum_of_categories
-                FROM expenses, expense_categories WHERE YEAR(expense_date)=YEAR(CURRENT_DATE())  AND expenses.id_users=:idLoggedUser 
-                AND id_users_expenses_categories=id_categories AND expenses.id_users=expense_categories.id_users 
-                GROUP BY expense_category ORDER BY expense_sum_of_categories DESC";
+                $sql = "SELECT ".$incomeOrExpense."_category, SUM(".$incomeOrExpense."_amout) AS ".$incomeOrExpense."_sum_of_categories
+                FROM $tableName, ".$incomeOrExpense."_categories WHERE YEAR(".$incomeOrExpense."_date)=YEAR(CURRENT_DATE())  AND $tableName.id_users=:idLoggedUser 
+                AND id_users_".$tableName."_categories=id_categories AND $tableName.id_users=".$incomeOrExpense."_categories.id_users 
+                GROUP BY ".$incomeOrExpense."_category ORDER BY ".$incomeOrExpense."_sum_of_categories DESC";
                 break;
             
             case 'Niestandardowe':
-                $sql = "SELECT expense_category, SUM(expense_amout) AS expense_sum_of_categories
-                FROM expenses, expense_categories WHERE expense_date>='$this->firstNotStandardDate' AND expense_date<='$this->secondNotStandardDate' 
-                AND expenses.id_users=:idLoggedUser AND id_users_expenses_categories=id_categories AND expenses.id_users=expense_categories.id_users 
-                GROUP BY expense_category ORDER BY expense_sum_of_categories DESC";
+                $sql = "SELECT ".$incomeOrExpense."_category, SUM(".$incomeOrExpense."_amout) AS ".$incomeOrExpense."_sum_of_categories
+                FROM $tableName, ".$incomeOrExpense."_categories WHERE ".$incomeOrExpense."_date>='$this->firstNotStandardDate' AND ".$incomeOrExpense."_date<='$this->secondNotStandardDate' 
+                AND $tableName.id_users=:idLoggedUser AND id_users_".$tableName."_categories=id_categories AND $tableName.id_users=".$incomeOrExpense."_categories.id_users 
+                GROUP BY ".$incomeOrExpense."_category ORDER BY ".$incomeOrExpense."_sum_of_categories DESC";
                 break;
 
         }
@@ -251,7 +251,8 @@ class Balance extends \Core\Model {
         $expenseSum = $this->sumAmoutOfIncomeOrExpense('expense_amout', 'expenses', 'expense_date');
         $difference = $incomeSum["SUM(income_amout)"] - $expenseSum["SUM(expense_amout)"];
         $selectedOption = $this->setSelectedAtribute();
-        $_SESSION['groupResults'] = $this->getGroupedExpensesCategories();
+        $_SESSION['groupExpenseResults'] = $this->getGroupedIncomeOrExpensesCategories('expense', 'expenses');
+        $_SESSION['groupIncomeResults'] = $this->getGroupedIncomeOrExpensesCategories('income', 'incomes');
 
 
         $_SESSION['expenseResults'] = $expenseResults;
@@ -268,7 +269,9 @@ class Balance extends \Core\Model {
             'selectedOption' => $selectedOption
         ];
 
-        $_SESSION['chartData'] = $this->setChartData();
+        $_SESSION['expenseChartData'] = $this->setChartData('groupExpenseResults', 'expense');
+        $_SESSION['incomeChartData'] = $this->setChartData('groupIncomeResults', 'income');
+
 
     }
 
@@ -289,43 +292,39 @@ class Balance extends \Core\Model {
         if(isset($_SESSION[$dataSet])) {
 
         $balanceData = $_SESSION[$dataSet];
-
         unset($_SESSION[$dataSet]);
 
         return $balanceData;
         }
     }
 
-    public function setChartData() {
+    public function setChartData($incomeOrExpenseData, $columnName) {
 
         $dataPoints = array();
 
-        if((isset($_SESSION['groupResults'])) && (isset($_SESSION["sumResults"]))) {
+        if((isset($_SESSION[$incomeOrExpenseData])) && (isset($_SESSION["sumResults"]))) {
 
-        foreach($_SESSION['groupResults'] as $expenseGroup){
+            foreach($_SESSION[$incomeOrExpenseData] as $expenseGroup){
 
-            array_push($dataPoints, array("label"=>$expenseGroup['expense_category'], 
-            "y"=>round($expenseGroup['expense_sum_of_categories']/$_SESSION["sumResults"]['expenseSum']["SUM(expense_amout)"]*100, 2)));
-        }
+                array_push($dataPoints, array("label"=>$expenseGroup[$columnName.'_category'], 
+                "y"=>round($expenseGroup[$columnName.'_sum_of_categories']/$_SESSION["sumResults"][$columnName.'Sum']["SUM(".$columnName."_amout)"]*100, 2)));
+            }
          
         }
 
         return $dataPoints;
     }
 
-    public static function getChartData() {
+    public static function getChartData($incomeOrExpenseData) {
 
-        if(isset($_SESSION['chartData'])) {
+        if(isset($_SESSION[$incomeOrExpenseData])) {
 
-            $dataPoints = $_SESSION['chartData'];
+            $dataPoints = $_SESSION[$incomeOrExpenseData];
 
-            unset($_SESSION['chartData']);
-            //
-            //var_dump($dataPoints);
+            unset($_SESSION[$incomeOrExpenseData]);
 
             return $dataPoints;
         }
     }
-
 
 }

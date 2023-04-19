@@ -22,6 +22,6 @@ Finance_web_application_with_MVC_framework -> work in progress:
 - log out (+)
 - add income (+)
 - add expense (+)
-- view balance sheet from selected period of time (-)
+- view balance sheet from selected period of time (+)
 - settings (-)
 - password recover (+)
