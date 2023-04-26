@@ -26,7 +26,8 @@ class User extends \Core\Model {
 
     public function save() {
 
-        $this->validate();
+        $this->validateUsernameAndEmail();
+        $this->validatePassword();
 
         if(empty($this->errors)) {
 
@@ -48,7 +49,57 @@ class User extends \Core\Model {
         return false;
     }
 
-    public function validate() {
+    public function update() {
+
+        $this->id_users = $_SESSION['user_id'];
+        $this->validateUsernameAndEmail();
+
+        //var_dump($this->errors);
+
+        if(empty($this->errors)) {
+
+            $sql = "UPDATE users SET user_name = :name, user_email = :email WHERE id_users=:idLoggedUser";
+            $db = static::getDB();
+            $stmt = $db->prepare($sql);
+
+            $stmt->bindValue(':name', $this->user_name, PDO::PARAM_STR);
+            $stmt->bindValue(':email', $this->user_email, PDO::PARAM_STR);
+            $stmt->bindValue(':idLoggedUser', $_SESSION['user_id'], PDO::PARAM_INT);
+
+            return $stmt->execute();
+        }
+
+        return false;
+    }
+
+    // public function validate() {
+
+    //     if($this->user_name == '') {
+    //         $this->errors[] = 'Nazwa jest wymagana';
+    //     }
+
+    //     if(filter_var($this->user_email, FILTER_VALIDATE_EMAIL) === false) {
+    //         $this->errors[] = 'Nieprawidłowy email';
+    //     }
+
+    //     if(static::emailExists($this->user_email, $this->id_users ?? null)) {
+    //         $this->errors[] = 'Email już zajęty';
+    //     }
+
+    //     if(strlen($this->password)<6) {
+    //         $this->errors[] = 'Hasło musi mieć conajmniej 6 znaków';
+    //     }
+
+    //     if(preg_match('/.*[a-z]+.*/i', $this->password) ==0 ) {
+    //         $this->errors[] = 'Hasło powinno mieć przynajmniej jedną literę';
+    //     }
+
+    //     if(preg_match('/.*\d+.*/i', $this->password) == 0) {
+    //         $this->errors[] = 'Hasło powinno mieć przynajmniej jedną cyfrę';
+    //     }
+    // }
+
+    public function validateUsernameAndEmail() {
 
         if($this->user_name == '') {
             $this->errors[] = 'Nazwa jest wymagana';
@@ -61,6 +112,9 @@ class User extends \Core\Model {
         if(static::emailExists($this->user_email, $this->id_users ?? null)) {
             $this->errors[] = 'Email już zajęty';
         }
+    }
+
+    public function validatePassword() {
 
         if(strlen($this->password)<6) {
             $this->errors[] = 'Hasło musi mieć conajmniej 6 znaków';
@@ -249,7 +303,8 @@ class User extends \Core\Model {
 
         $this->password = $password;
 
-        $this->validate();
+        $this->validateUsernameAndEmail();
+        $this->validatePassword();
 
         if(empty($this->errors)) {
 

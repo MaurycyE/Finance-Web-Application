@@ -1,0 +1,200 @@
+{% extends "MainMenu/navigation.html" %}
+
+{% block title %}Ustawienia{% endblock %}
+
+{% block footer %}
+
+<script src="/js/hideShowPassword.min.js"></script>
+<script src="/js/app.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+
+        $('#setUserChangesForm').validate({
+            rules: {
+                name: 'required',
+                email: {
+                    required: true,
+                    email: true,
+                    remote: '/account/validate-email'
+                },
+                password: {
+                    required: true,
+                    minlength: 6,
+                    validPassword: true
+                }
+
+            },
+            messages: {
+                email: {
+                    remote: 'Email już zajęty'
+                }
+            },
+
+            errorPlacement: function (error, element) {
+
+                let placement = $(element).data('error');
+                if (placement) {
+                    $(placement).append(error)
+                } else {
+                    error.insertAfter(element);
+                }
+            }
+        });
+
+        $('#setUserPassword').hideShowPassword({
+            show: false,
+            innerToggle: 'focus',
+
+            toggle: {
+                className: 'hideShowPassword-toggle, btn btn-secondary'
+            },
+
+            states: {
+                shown: {
+                    toggle: {
+                        content: 'Ukryj'
+                    }
+                },
+
+                hidden: {
+                    toggle: {
+                        content: 'Pokaż'
+                    }
+                }
+
+            }
+        });
+
+    });
+
+</script>
+{% endblock %}
+
+{% block menuOptionContent %}
+
+<div class="col-12 col-sm-8 float-sm-end bg-white p-4 rounded-4 mb-2">
+
+    <div>
+        <h2 class="font-monospace mb-4">Ustawienia</h2>
+    </div>
+
+    <ul class="nav nav-tabs font-monospace mb-2">
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="/changesettings/income">Przychody</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="/changesettings/expense">Wydatki</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link  active text-secondary" aria-current="page" href="/changesettings/user">Użytkownik</a>
+        </li>
+
+    </ul>
+
+    <!-- <span class="font-monospace h5 ">Zalogowany użytkownik: <b>{{ current_user.user_name }}</b></span> -->
+
+    {% if user.errors is not empty %}
+
+    <p>Błędy:</p>
+    <ul>
+        {% for error in user.errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <form action="/changesettings/update" id="setUserChangesForm" method="post">
+
+        <div class="mt-3 mb-2">
+            <label for="setUserName" class="form-label">Nazwa użytkownika:</label>
+            <input type="text" class="form-control" id="setUserName" name="user_name"
+                value="{{ current_user.user_name }}" required data-error="#newUsernameError">
+        </div>
+        <span id="newUsernameError" class="font-monospace text-danger"></span>
+
+        <div class="mb-2">
+            <label for="setUserEmail" class="form-label">Email:</label>
+            <input type="email" class="form-control" id="setUserEmail" name="email"
+                value="{{ current_user.user_email }}" required data-error="#newEmailError">
+        </div>
+        <span id="newEmailError" class="font-monospace text-danger"></span>
+
+        <div>
+            <label for="setUserPasswordLink" class="form-label">Hasło:</label>
+            <!-- <input type="password" class="form-control" id="setUserPassword" name="setUserPassword" required
+                data-error="#newPasswordError" value="{{ current_user.user_password }}" disabled> -->
+            <a href="" id="setUserPasswordLink" class="font-monospace d-block" data-bs-toggle="modal"
+                data-bs-target="#changePasswordModal">Zmień hasło</a>
+        </div>
+        <span id="newPasswordError" class="font-monospace text-danger"></span>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-success">Zapisz zmiany</button>
+            <button type="reset" class="btn btn-danger mx-4"><svg xmlns="http://www.w3.org/2000/svg" width="20"
+                    height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                    <path
+                        d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+                </svg></button>
+        </div>
+    </form>
+
+
+    {% for message in flash_messages %}
+    <div class="h4 text-{{ message.type }} font-monospace mt-3">{{ message.body }}
+    </div>
+    {% endfor %}
+
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="view-balance-modalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="view-balance-modalLabel">Ustaw nowe hasło:
+                </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="#" method="post" id="setUserChangesForm">
+
+                    <div class="mb-3">
+                        <label for="oldPassword" class="form-label">Wpisz hasło:</label>
+                        <input type="password" class="form-control" id="oldPassword" name="oldPassword" required>
+                    </div>
+                    <span id="passwordError" class="font-monospace text-danger"></span>
+
+                    <div class="mb-3">
+                        <label for="newPassword" class="form-label">Wprowadź nowe hasło:</label>
+                        <input type="password" class="form-control" id="newPassword" name="newPassword" required>
+                    </div>
+                    <span id="passwordError" class="font-monospace text-danger"></span>
+
+                    <div class="mb-3">
+                        <label for="confirmNewPassword" class="form-label">Potwierdź hasło:</label>
+                        <input type="password" class="form-control" id="confirmNewPassword" name="confirmNewPassword"
+                            required data-error="#passwordError">
+                    </div>
+                    <span id="passwordError" class="font-monospace text-danger"></span>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success"><svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                height="20" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+                                <path
+                                    d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
+                            </svg></button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<!-- Modal -->
+
+{% endblock %}

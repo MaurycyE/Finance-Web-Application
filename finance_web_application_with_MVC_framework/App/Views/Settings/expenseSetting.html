@@ -1,0 +1,41 @@
+{% extends "MainMenu/navigation.html" %}
+
+{% block title %}Ustawienia{% endblock %}
+
+{% block menuOptionContent %}
+
+<div class="col-12 col-sm-8 float-sm-end bg-white p-4 rounded-4 mb-2">
+
+    <div>
+        <h2 class="font-monospace mb-4">Ustawienia</h2>
+    </div>
+
+    <ul class="nav nav-tabs font-monospace">
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="/changesettings/income">Przychody</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-secondary active" aria-current="page" href="/changesettings/expense">Wydatki</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="/changesettings/user">Użytkownik</a>
+        </li>
+
+    </ul>
+
+    <ul class="nav nav-tabs font-monospace mt-3">
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="#">Dodaj kategorię</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="#">Usuń kategorię</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="#">Zmień nazwę kategorii</a>
+        </li>
+
+    </ul>
+
+</div>
+
+{% endblock %}
