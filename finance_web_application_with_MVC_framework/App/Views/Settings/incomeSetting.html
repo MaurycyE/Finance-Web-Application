@@ -23,18 +23,62 @@
 
     </ul>
 
-    <ul class="nav nav-tabs font-monospace mt-3">
-        <li class="nav-item">
-            <a class="nav-link text-dark" aria-current="page" href="#">Dodaj kategorię</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" href="#">Usuń kategorię</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" href="#">Zmień nazwę kategorii</a>
-        </li>
+    {% for categories in getIncomeCategories %}
 
+    <ul class="mt-4 mb-4 font-monospace">
+        <li> {{ categories.income_category }} </li>
     </ul>
+    {% endfor %}
+
+    <div class="mx-4 font-monospace">
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addIncomeCategoryModal">Dodaj
+            kategorię</button>
+        <button class="btn btn-danger mx-4">Usuń kategorię</button>
+        <button class="btn btn-primary">Zmień nazwę kategorii</button>
+    </div>
+
+    {% for message in flash_messages %}
+    <div class="h4 text-{{ message.type }} font-monospace mt-3">{{ message.body }}
+    </div>
+    {% endfor %}
+
+    <!-- Modal category-->
+    <div class="modal fade" id="addIncomeCategoryModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="view-balance-modalLabel">Dodawanie nowej kategorii
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/changesettings/add-category" method="post" id="addIncomeCategoryForm">
+
+                        <!-- <input class="d-none" type="email" value="{{ current_user.user_email }}" name="email"> -->
+
+                        <div class="mb-3">
+                            <label for="newCategoryName" class="form-label">Wpisz nazwę kategorii:</label>
+                            <input type="text" class="form-control" id="newCategoryName" name="newCategoryName"
+                                required>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success"><svg xmlns="http://www.w3.org/2000/svg"
+                                    width="20" height="20" fill="currentColor" class="bi bi-check-lg"
+                                    viewBox="0 0 16 16">
+                                    <path
+                                        d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
+                                </svg></button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <!-- Modal -->
+
 
 </div>
 

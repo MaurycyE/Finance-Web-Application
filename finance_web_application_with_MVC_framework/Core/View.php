@@ -38,6 +38,8 @@ class View {
             $twig->addGlobal('getIncomeResults', \App\Models\Balance::getResultsToShow('incomeResults'));
             $twig->addGlobal('getExpenseChartData', \App\Models\Balance::getChartData('expenseChartData'));
             $twig->addGlobal('getIncomeChartData', \App\Models\Balance::getChartData('incomeChartData'));
+            $twig->addGlobal('getIncomeCategories', \App\Models\Settings::getIncomeCategories());
+
 
         }
         

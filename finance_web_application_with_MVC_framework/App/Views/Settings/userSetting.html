@@ -18,12 +18,12 @@
                     required: true,
                     email: true,
                     remote: '/account/validate-email'
-                },
-                password: {
-                    required: true,
-                    minlength: 6,
-                    validPassword: true
                 }
+                // password: {
+                //     required: true,
+                //     minlength: 6,
+                //     validPassword: true
+                // }
 
             },
             messages: {
@@ -43,27 +43,63 @@
             }
         });
 
-        $('#setUserPassword').hideShowPassword({
-            show: false,
-            innerToggle: 'focus',
+        // $('#setUserPassword').hideShowPassword({
+        //     show: false,
+        //     innerToggle: 'focus',
 
-            toggle: {
-                className: 'hideShowPassword-toggle, btn btn-secondary'
-            },
+        //     toggle: {
+        //         className: 'hideShowPassword-toggle, btn btn-secondary'
+        //     },
 
-            states: {
-                shown: {
-                    toggle: {
-                        content: 'Ukryj'
-                    }
-                },
+        //     states: {
+        //         shown: {
+        //             toggle: {
+        //                 content: 'Ukryj'
+        //             }
+        //         },
 
-                hidden: {
-                    toggle: {
-                        content: 'Pokaż'
-                    }
+        //         hidden: {
+        //             toggle: {
+        //                 content: 'Pokaż'
+        //             }
+        //         }
+
+        //     }
+        // });
+
+    });
+
+    $(document).ready(function () {
+
+        $('#changePasswordForm').validate({
+            rules: {
+                // name: 'required',
+                // email: {
+                //     required: true,
+                //     email: true,
+                //     remote: '/account/validate-email'
+                // },
+                password: {
+                    required: true,
+                    minlength: 6,
+                    validPassword: true
                 }
 
+            },
+            // messages: {
+            //     email: {
+            //         remote: 'Email już zajęty'
+            //     }
+            // },
+
+            errorPlacement: function (error, element) {
+
+                let placement = $(element).data('error');
+                if (placement) {
+                    $(placement).append(error)
+                } else {
+                    error.insertAfter(element);
+                }
             }
         });
 
@@ -160,26 +196,30 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="#" method="post" id="setUserChangesForm">
+                <form action="/changesettings/change-password" method="post" id="changePasswordForm">
+
+                    <input class="d-none" type="email" value="{{ current_user.user_email }}" name="email">
 
                     <div class="mb-3">
                         <label for="oldPassword" class="form-label">Wpisz hasło:</label>
-                        <input type="password" class="form-control" id="oldPassword" name="oldPassword" required>
+                        <input type="password" class="form-control" id="oldPassword" name="oldPassword" required
+                            data-error="#passwordError">
                     </div>
                     <span id="passwordError" class="font-monospace text-danger"></span>
 
                     <div class="mb-3">
                         <label for="newPassword" class="form-label">Wprowadź nowe hasło:</label>
-                        <input type="password" class="form-control" id="newPassword" name="newPassword" required>
+                        <input type="password" class="form-control" id="newPassword" name="password" required
+                            data-error="#passwordError2">
                     </div>
-                    <span id="passwordError" class="font-monospace text-danger"></span>
+                    <span id="passwordError2" class="font-monospace text-danger"></span>
 
                     <div class="mb-3">
                         <label for="confirmNewPassword" class="form-label">Potwierdź hasło:</label>
                         <input type="password" class="form-control" id="confirmNewPassword" name="confirmNewPassword"
-                            required data-error="#passwordError">
+                            required data-error="#passwordError3">
                     </div>
-                    <span id="passwordError" class="font-monospace text-danger"></span>
+                    <span id="passwordError3" class="font-monospace text-danger"></span>
 
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success"><svg xmlns="http://www.w3.org/2000/svg" width="20"

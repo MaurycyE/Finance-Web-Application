@@ -7,6 +7,7 @@ use \App\Token;
 use \App\Config;
 use \App\Mail;
 use \Core\View;
+use \App\Flash;
 
 class User extends \Core\Model {
 
@@ -71,6 +72,42 @@ class User extends \Core\Model {
 
         return false;
     }
+
+    public function changePassword() {
+
+        if($this->authenticate($this->user_email, $this->oldPassword)) {
+
+            if($this->password==$this->confirmNewPassword) {
+
+                $this->validatePassword();
+
+                if(empty($this->errors)) {
+                    
+                    $password_hash = password_hash($this->password, PASSWORD_DEFAULT);
+                    // echo $password_hash;
+                    // exit;
+
+                    $sql = "UPDATE users SET user_password=:password WHERE id_users=:idLoggedUser";
+                    $db = static::getDB();
+                    $stmt = $db->prepare($sql);
+
+                    $stmt->bindValue(':password', $password_hash, PDO::PARAM_STR);
+                    $stmt->bindValue(':idLoggedUser', $_SESSION['user_id'], PDO::PARAM_INT);
+
+                    return $stmt->execute();
+
+                }
+            }
+            Flash::addMessage('Hasła nie są takie same!', Flash::DANGER);
+
+            return false;
+        }
+        Flash::addMessage('Podano błędne hasło!', Flash::DANGER);
+
+        return false;
+
+    }
+
 
     // public function validate() {
 
