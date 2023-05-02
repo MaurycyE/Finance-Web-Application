@@ -43,7 +43,12 @@ class Settings extends \Core\Model {
         $stmt->bindValue('idLoggedUser', $_SESSION['user_id'], PDO::PARAM_INT);
         $stmt->bindValue('newUserCategory', lcfirst($this->newCategoryName), PDO::PARAM_STR);
 
-        return $stmt->execute();
+        //return $stmt->execute();
+
+        $stmt->execute();
+        // var_dump($stmt->fetchAll());
+        // exit;
+        return $stmt->fetchAll();
 
     }
 
@@ -57,14 +62,14 @@ class Settings extends \Core\Model {
 
         else {
 
-            $this->addNewIncomeCategory();
+            if($this->addNewIncomeCategory()) {
+                
+                return true;
+            }
         }
     }
 
     public function addNewIncomeCategory() {
-
-        // echo $this->newCategoryName;
-        // exit;
 
         $sql = 'INSERT INTO income_categories VALUES(:id_categories, :id_useres, :income_category)';
 
@@ -78,6 +83,46 @@ class Settings extends \Core\Model {
         return $stmt->execute();
     }
 
+    public function deleteCategory() {
+
+        $sql = "DELETE FROM income_categories WHERE id_users = :idLoggedUser AND income_category = :selectedCategory";
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':idLoggedUser', $_SESSION['user_id'], PDO::PARAM_INT);
+        $stmt->bindValue(':selectedCategory', $this->selectedCategoryToDelete, PDO::PARAM_STR);
+
+        return $stmt->execute();
+    }
+
+    public function findIdCategoryToDelete() {
+
+        $sql = "SELECT id_categories FROM income_categories WHERE income_category=:categoryName AND id_users=:idLoggedUser";
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':categoryName', $this->selectedCategoryToDelete, PDO::PARAM_STR);
+        $stmt->bindValue(':idLoggedUser', $_SESSION['user_id'], PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch();
+        
+    }
+
+    public function deleteRelatedRecords() {
+
+        // $this->idCategoryToDelete = $this->findIdCategoryToDelete();
+
+        $sql = "DELETE FROM incomes WHERE id_users = :idLoggedUser AND id_users_incomes_categories = :idCategoryToDelete";
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':idLoggedUser', $_SESSION['user_id'], PDO::PARAM_INT);
+        $stmt->bindValue(':idCategoryToDelete', $this->idCategoryToDelete["id_categories"], PDO::PARAM_INT);
+        
+        return $stmt->execute();
+
+    }
 
 
     

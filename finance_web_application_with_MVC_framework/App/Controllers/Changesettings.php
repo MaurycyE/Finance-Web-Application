@@ -79,5 +79,31 @@ class ChangeSettings extends Authenticated {
 
     }
 
+    public function deleteCategoryAction() {
+
+        $settings = new Settings($_POST);
+
+        try {
+            
+        $settings->idCategoryToDelete = $settings->findIdCategoryToDelete();
+        $settings->deleteRelatedRecords();
+
+            if($settings->deleteCategory()) {
+
+                Flash::addMessage('Usunięto kategorię!', Flash::SUCCESS);
+                $this->redirect('\changesettings\income');
+            }
+
+            if(!$settings->deleteCategory())
+                throw new Exception('Wystąpił błąd!');
+        }
+        catch (Exception $e) {
+
+            Flash::addMessage($e->getMessage(), Flash::DANGER);
+            $this->redirect('\changesettings\income');
+        }
+
+    }
+
 
 }

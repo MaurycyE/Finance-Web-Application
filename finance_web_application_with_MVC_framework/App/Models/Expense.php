@@ -55,7 +55,7 @@ class Expense extends \Core\Model {
         $stmt->bindValue(':idLoggedUser', $_SESSION['user_id'], PDO::PARAM_INT);
         $stmt->bindValue(':idSelectedExpenseCategory', $idSelectedExpenseCategory['id_categories'], PDO::PARAM_INT);
         $stmt->bindValue(':idSelectedPaymentCategory', $idSelectedPaymentCategory['id_payment'], PDO::PARAM_INT);
-        $stmt->bindValue(':expenseAmout', $this->expenseAmout, PDO::PARAM_INT);
+        $stmt->bindValue(':expenseAmout', $this->expenseAmout, PDO::PARAM_STR);
         $stmt->bindValue(':expenseDate', $this->expenseDate, PDO::PARAM_STR);
         $stmt->bindValue(':commentary', $this->expenseCommentary, PDO::PARAM_STR);
 

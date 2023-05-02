@@ -31,7 +31,7 @@ class Income extends \Core\Model {
         $stmt->bindValue(':idIncomes', NULL, PDO::PARAM_NULL);
         $stmt->bindValue(':idLoggedUser', $_SESSION['user_id'], PDO::PARAM_INT);
         $stmt->bindValue(':idSelectedIncomeCategory', $idOfSelectedIncomeCategory['id_categories'], PDO::PARAM_INT);
-        $stmt->bindValue(':incomeAmout', $this->incomeAmout, PDO::PARAM_INT);
+        $stmt->bindValue(':incomeAmout', $this->incomeAmout, PDO::PARAM_STR);
         $stmt->bindValue(':incomeDate', $this->incomeDate, PDO::PARAM_STR);
         $stmt->bindValue(':commentary', $this->commentary, PDO::PARAM_STR);
 
