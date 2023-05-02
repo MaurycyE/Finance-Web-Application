@@ -6,6 +6,7 @@ use \Core\View;
 use \App\Models\User;
 use \App\Flash;
 use \App\Models\Settings;
+use \Core\Error;
 
 class ChangeSettings extends Authenticated {
 
@@ -31,13 +32,13 @@ class ChangeSettings extends Authenticated {
         if($user->update()) {
             
             Flash::addMessage('Dane zmienione!', Flash::SUCCESS);
-            $this->redirect('\changesettings\user');
+            $this->redirect('/changesettings/user');
         }
 
         else {
 
             Flash::addMessage('Wystąpił błąd!', Flash::DANGER);
-            $this->redirect('\changesettings\user');
+            $this->redirect('/changesettings/user');
         }
 
         // echo "Fuckup";
@@ -51,13 +52,13 @@ class ChangeSettings extends Authenticated {
         if($user->changePassword()) {
             
             Flash::addMessage('Dane zmienione!', Flash::SUCCESS);
-            $this->redirect('\changesettings\user');
+            $this->redirect('/changesettings/user');
         }
 
         else {
 
             //Flash::addMessage('Wystąpił błąd!', Flash::DANGER);
-            $this->redirect('\changesettings\user');
+            $this->redirect('/changesettings/user');
         }
     }
 
@@ -68,13 +69,13 @@ class ChangeSettings extends Authenticated {
         if($settings->checkCategoryName()) {
 
             Flash::addMessage('Dodano nową kategorię!', Flash::SUCCESS);
-            $this->redirect('\changesettings\income');
+            $this->redirect('/changesettings/income');
         }
 
         else {
 
             Flash::addMessage('Wystąpił błąd!', Flash::DANGER);
-            $this->redirect('\changesettings\income');
+            $this->redirect('/changesettings/income');
         }
 
     }
@@ -83,25 +84,21 @@ class ChangeSettings extends Authenticated {
 
         $settings = new Settings($_POST);
 
-        try {
-
         $settings->idCategoryToDelete = $settings->findIdCategory();
         $settings->deleteRelatedRecords();
 
             if($settings->deleteCategory()) {
 
                 Flash::addMessage('Usunięto kategorię!', Flash::SUCCESS);
-                $this->redirect('\changesettings\income');
+                $this->redirect('/changesettings/income');
             }
 
-            if(!$settings->deleteCategory())
-                throw new Exception('Wystąpił błąd!');
-        }
-        catch (Exception $e) {
+        else {
 
-            Flash::addMessage($e->getMessage(), Flash::DANGER);
-            $this->redirect('\changesettings\income');
+        Flash::addMessage('Wystąpił błąd!', Flash::DANGER);
+        $this->redirect('/changesettings/income');
         }
+ 
 
     }
 
@@ -109,26 +106,46 @@ class ChangeSettings extends Authenticated {
 
         $settings = new Settings($_POST);
 
-        try {
+        if(!$settings->findCategoryByName()) {
+
 
             if($settings->renameCategory()) {
 
                 Flash::addMessage('Nazwa zmieniona!', Flash::SUCCESS);
-                $this->redirect('\changesettings\income');
+                $this->redirect('/changesettings/income');
             }
 
-            if(!$settings->renameCategory())
-                throw new Exception('Wystąpił błąd!');
+            else {
+
+                Flash::addMessage('Wystąpił błąd!', Flash::DANGER);
+                $this->redirect('/changesettings/income');
+            }
+            
         }
 
-        catch (Exception $e) {
+        else {
 
-            Flash::addMessage($e->getMessage(), Flash::DANGER);
-            $this->redirect('\changesettings\income');
+            Flash::addMessage("Podana nazwa już istnieje!", Flash::WARNING);
+            $this->redirect('/changesettings/income');
         }
     }
 
+    public function deleteAccountAction() {
 
+        $settings = new Settings($_POST);
 
+        if($settings->deleteAccount()) {
+
+            session_unset();
+            $this->redirect('/');
+        }
+
+        else {
+
+            Flash::addMessage('Wystąpił błąd!', Flash::DANGER);
+            $this->redirect('/changesettings/user');
+        }
+
+    }
 
 }

@@ -159,22 +159,34 @@
 
         <div>
             <label for="setUserPasswordLink" class="form-label">Hasło:</label>
-            <!-- <input type="password" class="form-control" id="setUserPassword" name="setUserPassword" required
-                data-error="#newPasswordError" value="{{ current_user.user_password }}" disabled> -->
+
             <a href="" id="setUserPasswordLink" class="font-monospace d-block" data-bs-toggle="modal"
                 data-bs-target="#changePasswordModal">Zmień hasło</a>
         </div>
         <span id="newPasswordError" class="font-monospace text-danger"></span>
 
         <div class="mt-4">
-            <button type="submit" class="btn btn-success">Zapisz zmiany</button>
-            <button type="reset" class="btn btn-danger mx-4"><svg xmlns="http://www.w3.org/2000/svg" width="20"
-                    height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+            <button type="submit" class="btn btn-primary"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="20"
+                    fill="currentColor" class="bi bi-wrench" viewBox="0 0 16 16">
                     <path
-                        d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+                        d="M.102 2.223A3.004 3.004 0 0 0 3.78 5.897l6.341 6.252A3.003 3.003 0 0 0 13 16a3 3 0 1 0-.851-5.878L5.897 3.781A3.004 3.004 0 0 0 2.223.1l2.141 2.142L4 4l-1.757.364L.102 2.223zm13.37 9.019.528.026.287.445.445.287.026.529L15 13l-.242.471-.026.529-.445.287-.287.445-.529.026L13 15l-.471-.242-.529-.026-.287-.445-.445-.287-.026-.529L11 13l.242-.471.026-.529.445-.287.287-.445.529-.026L13 11l.471.242z" />
+                </svg></button>
+            <button type="reset" class="btn btn-secondary mx-4"><svg xmlns="http://www.w3.org/2000/svg" width="30"
+                    height="20" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z" />
+                    <path
+                        d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z" />
                 </svg></button>
         </div>
     </form>
+
+    <button class="btn btn-danger float-end" data-bs-toggle="modal" data-bs-target="#deleteAccount"><svg
+            xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-x-fill"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6.146-2.854a.5.5 0 0 1 .708 0L14 6.293l1.146-1.147a.5.5 0 0 1 .708.708L14.707 7l1.147 1.146a.5.5 0 0 1-.708.708L14 7.707l-1.146 1.147a.5.5 0 0 1-.708-.708L13.293 7l-1.147-1.146a.5.5 0 0 1 0-.708z" />
+        </svg></button>
+
 
 
     {% for message in flash_messages %}
@@ -185,7 +197,7 @@
 </div>
 
 
-<!-- Modal -->
+<!-- Modal change password -->
 <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="view-balance-modalLabel"
     aria-hidden="true">
     <div class="modal-dialog">
@@ -227,6 +239,42 @@
                                 <path
                                     d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
                             </svg></button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<!-- Modal -->
+
+<!-- Modal delete account-->
+
+<div class="modal fade" id="deleteAccount" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Żegnamy się?
+                </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/changesettings/delete-account" method="post">
+
+                    <input class="d-none" type="email" value="{{ current_user.user_email }}" name="email">
+
+                    <span class="font-monospace h5 text-danger">Czy na pewno chcesz usunąć konto oraz wszystkie
+                        powiązane
+                        z nim
+                        rekordy?</span>
+                    <div class="mb-3 mt-4">
+                        <label for="iAmSure" class="form-label font-monospace">Na pewno!</label>
+                        <input type="checkbox" class="form-check-input" id="iAmSure" name="userConfirmation" required>
+                    </div>
+
+                    <div class="modal-footer ">
+                        <button type="submit" class="btn btn-danger">Usuń konto</button>
                     </div>
                 </form>
             </div>

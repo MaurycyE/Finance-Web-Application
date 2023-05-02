@@ -33,7 +33,7 @@ class Settings extends \Core\Model {
         }
     }
 
-    protected function findCategoryByName() {
+    public function findCategoryByName() {
 
         $sql = "SELECT * FROM income_categories WHERE id_users = :idLoggedUser AND income_category=:newUserCategory";
 
@@ -141,6 +141,66 @@ class Settings extends \Core\Model {
         
     }
 
+    public function deleteAccount() {
 
+        if($this->userConfirmation == "on") {
+
+            $this->deleteUserDataFromExpenses();
+            $this->deleteUserDataFromExpensesCategories();
+            $this->deleteUserDataFromExpensesPayment();
+            $this->deleteUserDataFromIncomes();
+            $this->deleteUserDataFromIncomeCategories();
+
+            $sql = "DELETE FROM users WHERE id_users = :idLoggedUser";
+
+            return $this->executeQuery($sql);
+        }
+
+        return false;
+    }
+
+    protected function executeQuery($sql) {
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':idLoggedUser', $_SESSION['user_id'], PDO::PARAM_INT);
+
+        return $stmt->execute();
+    }
+
+    public function deleteUserDataFromExpenses() {
+
+        $sql = "DELETE FROM expenses WHERE id_users = :idLoggedUser";
+        $this->executeQuery($sql);
+
+    }
+
+    public function deleteUserDataFromExpensesCategories() {
+
+        $sql = "DELETE FROM expense_categories WHERE id_users = :idLoggedUser";
+        $this->executeQuery($sql);
+
+    }
+
+    public function deleteUserDataFromExpensesPayment() {
+
+        $sql = "DELETE FROM expense_payment WHERE id_users = :idLoggedUser";
+        $this->executeQuery($sql);
+
+    }
+
+    public function deleteUserDataFromIncomes() {
+
+        $sql = "DELETE FROM incomes WHERE id_users = :idLoggedUser";
+        $this->executeQuery($sql);
+
+    }
+
+    public function deleteUserDataFromIncomeCategories() {
+
+        $sql = "DELETE FROM income_categories WHERE id_users = :idLoggedUser";
+        $this->executeQuery($sql);
+
+    }
     
 }
