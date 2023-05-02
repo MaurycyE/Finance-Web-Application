@@ -95,13 +95,13 @@ class Settings extends \Core\Model {
         return $stmt->execute();
     }
 
-    public function findIdCategoryToDelete() {
+    public function findIdCategory() {
 
         $sql = "SELECT id_categories FROM income_categories WHERE income_category=:categoryName AND id_users=:idLoggedUser";
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
-        $stmt->bindValue(':categoryName', $this->selectedCategoryToDelete, PDO::PARAM_STR);
+        $stmt->bindValue(':categoryName', $this->selectedCategory, PDO::PARAM_STR);
         $stmt->bindValue(':idLoggedUser', $_SESSION['user_id'], PDO::PARAM_INT);
         $stmt->execute();
 
@@ -122,6 +122,23 @@ class Settings extends \Core\Model {
         
         return $stmt->execute();
 
+    }
+
+    public function renameCategory() {
+
+        $this->idCategory = $this->findIdCategory();
+
+        $sql = "UPDATE income_categories SET income_category = :newCategoryName WHERE id_users = :idLoggedUser
+        AND id_categories = :idCategory";
+        
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':idLoggedUser', $_SESSION['user_id'], PDO::PARAM_INT);
+        $stmt->bindValue(':newCategoryName', lcfirst($this->newCategoryName), PDO::PARAM_STR);
+        $stmt->bindValue(':idCategory', $this->idCategory["id_categories"], PDO::PARAM_INT);
+
+        return $stmt->execute();
+        
     }
 
 

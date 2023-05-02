@@ -84,8 +84,8 @@ class ChangeSettings extends Authenticated {
         $settings = new Settings($_POST);
 
         try {
-            
-        $settings->idCategoryToDelete = $settings->findIdCategoryToDelete();
+
+        $settings->idCategoryToDelete = $settings->findIdCategory();
         $settings->deleteRelatedRecords();
 
             if($settings->deleteCategory()) {
@@ -104,6 +104,31 @@ class ChangeSettings extends Authenticated {
         }
 
     }
+
+    public function changeCategoryNameAction() {
+
+        $settings = new Settings($_POST);
+
+        try {
+
+            if($settings->renameCategory()) {
+
+                Flash::addMessage('Nazwa zmieniona!', Flash::SUCCESS);
+                $this->redirect('\changesettings\income');
+            }
+
+            if(!$settings->renameCategory())
+                throw new Exception('Wystąpił błąd!');
+        }
+
+        catch (Exception $e) {
+
+            Flash::addMessage($e->getMessage(), Flash::DANGER);
+            $this->redirect('\changesettings\income');
+        }
+    }
+
+
 
 
 }
