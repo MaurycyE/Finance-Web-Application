@@ -23,17 +23,30 @@
 
     </ul>
 
+    <!-- <h5 class="font-monospace">Kategorie Przychodów:</h5>
     {% for categories in getIncomeCategories %}
 
     <ul class="mt-4 mb-4 font-monospace">
         <li> {{ categories.income_category }} </li>
     </ul>
-    {% endfor %}
+    {% endfor %} -->
 
-    <div class="mx-4 font-monospace">
+    <div class="mt-4 mb-4 font-monospace">
+        <h5 class="fw-bold">Kategorie przychodów:</h5>
+        {% for categories in getIncomeCategories %}
+
+        <!-- <ul class="mt-2 mb-2 font-monospace">
+        <li> {{ categories.expense_category }} </li>
+    </ul> -->
+        <p> - {{ categories.income_category }}</p>
+
+        {% endfor %}
+    </div>
+
+    <div class=" font-monospace">
         <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addIncomeCategoryModal">Dodaj
             kategorię</button>
-        <button class="btn btn-danger mx-4" data-bs-toggle="modal" data-bs-target="#deleteIncomeCategoryModal">Usuń
+        <button class="btn btn-danger mx-2" data-bs-toggle="modal" data-bs-target="#deleteIncomeCategoryModal">Usuń
             kategorię</button>
         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#changeIncomeCategoryModal">Zmień nazwę
             kategorii</button>
@@ -57,6 +70,7 @@
                     <form action="/changesettings/add-category" method="post" id="addIncomeCategoryForm">
 
                         <!-- <input class="d-none" type="email" value="{{ current_user.user_email }}" name="email"> -->
+                        <input type="checkbox" class="d-none" name="categoryType" value="incomeCategory" checked>
 
                         <div class="mb-3">
                             <label for="newCategoryName" class="form-label">Wpisz nazwę kategorii:</label>
@@ -92,6 +106,8 @@
                 </div>
                 <div class="modal-body">
                     <form action="/changesettings/delete-category" method="post">
+
+                        <input type="checkbox" class="d-none" name="categoryType" value="incomeCategory" checked>
 
                         <div class="mb-4">
                             <label for="selectCategoryToDelete" class="form-label">Wybierz kategorię do
@@ -186,7 +202,6 @@
 
     </div>
     <!-- Modal -->
-
 
 </div>
 

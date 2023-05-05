@@ -19,11 +19,6 @@
                     email: true,
                     remote: '/account/validate-email'
                 }
-                // password: {
-                //     required: true,
-                //     minlength: 6,
-                //     validPassword: true
-                // }
 
             },
             messages: {
@@ -43,42 +38,12 @@
             }
         });
 
-        // $('#setUserPassword').hideShowPassword({
-        //     show: false,
-        //     innerToggle: 'focus',
-
-        //     toggle: {
-        //         className: 'hideShowPassword-toggle, btn btn-secondary'
-        //     },
-
-        //     states: {
-        //         shown: {
-        //             toggle: {
-        //                 content: 'Ukryj'
-        //             }
-        //         },
-
-        //         hidden: {
-        //             toggle: {
-        //                 content: 'Pokaż'
-        //             }
-        //         }
-
-        //     }
-        // });
-
     });
 
     $(document).ready(function () {
 
         $('#changePasswordForm').validate({
             rules: {
-                // name: 'required',
-                // email: {
-                //     required: true,
-                //     email: true,
-                //     remote: '/account/validate-email'
-                // },
                 password: {
                     required: true,
                     minlength: 6,
@@ -86,11 +51,6 @@
                 }
 
             },
-            // messages: {
-            //     email: {
-            //         remote: 'Email już zajęty'
-            //     }
-            // },
 
             errorPlacement: function (error, element) {
 
@@ -128,8 +88,6 @@
         </li>
 
     </ul>
-
-    <!-- <span class="font-monospace h5 ">Zalogowany użytkownik: <b>{{ current_user.user_name }}</b></span> -->
 
     {% if user.errors is not empty %}
 
@@ -187,15 +145,12 @@
                 d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6.146-2.854a.5.5 0 0 1 .708 0L14 6.293l1.146-1.147a.5.5 0 0 1 .708.708L14.707 7l1.147 1.146a.5.5 0 0 1-.708.708L14 7.707l-1.146 1.147a.5.5 0 0 1-.708-.708L13.293 7l-1.147-1.146a.5.5 0 0 1 0-.708z" />
         </svg></button>
 
-
-
     {% for message in flash_messages %}
     <div class="h4 text-{{ message.type }} font-monospace mt-3">{{ message.body }}
     </div>
     {% endfor %}
 
 </div>
-
 
 <!-- Modal change password -->
 <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="view-balance-modalLabel"

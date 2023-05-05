@@ -28,10 +28,16 @@
             <label for="add-expense-payment-method" class="form-label">Sposób płatności:</label>
             <select class="form-select" aria-label="payment method" id="add-expense-payment-method"
                 name="selectedPaymentCategory" required>
-                <option value="Przelew" selected>Przelew</option>
+                <!-- <option value="Przelew" selected>Przelew</option>
                 <option value="gotówka">Gotówka</option>
                 <option value="karta bankowa">Karta bankowa</option>
-                <option value="karta debetowa">Karta debetowa</option>
+                <option value="karta debetowa">Karta debetowa</option> -->
+                {% for categories in getPaymentCategories %}
+
+                <option value="{{ categories.expense_payment_method }}"> {{ categories.expense_payment_method }}
+                </option>
+
+                {% endfor %}
             </select>
         </div>
 
@@ -39,7 +45,7 @@
             <label for="add-expense-category" class="form-label">Wybierz kategorię:</label>
             <select class="form-select" aria-label="expense category" id="add-expense-category"
                 name="selectedExpenseCategory" required>
-                <option value="Jedzenie" selected>Jedzenie</option>
+                <!-- <option value="Jedzenie" selected>Jedzenie</option>
                 <option value="Wycieczka">Wycieczka</option>
                 <option value="Mieszkanie">Mieszkanie</option>
                 <option value="Szkolenia">Szkolenia</option>
@@ -55,7 +61,12 @@
                 <option value="Darowizna">Darowizna</option>
                 <option value="Dzieci">Dzieci</option>
                 <option value="Rozrywka">Rozrywka</option>
-                <option value="Inne wydatki">Inne wydatki</option>
+                <option value="Inne wydatki">Inne wydatki</option> -->
+                {% for categories in getExpenseCategories %}
+
+                <option value="{{ categories.expense_category }}"> {{ categories.expense_category }} </option>
+
+                {% endfor %}
             </select>
         </div>
 
