@@ -12,18 +12,52 @@ class Balance extends \Core\Model {
 
             $this->selectedPeriodOfTime=$selectedOption["periodOfTime"];
         }
+        // else if (isset($_SESSION["sumResults"]['selectedOption'])){
+
+        //     if($_SESSION["sumResults"]['selectedOption']['Poprzedni miesiąc']=='selected') {
+
+        //         $selectedPeriodOfTimeAfterEdit = 'Poprzedni miesiąc';
+        //     }
+            
+        //     else if($_SESSION["sumResults"]['selectedOption']['Bieżący rok']=='selected') {
+
+        //         $selectedPeriodOfTimeAfterEdit = 'Bieżący rok';
+        //     }
+
+        //     else if($_SESSION["sumResults"]['selectedOption']['Niestandardowe']=='selected') {
+
+        //         $selectedPeriodOfTimeAfterEdit = 'Niestandardowe';
+        //     }
+
+        //     $this->selectedPeriodOfTime = $selectedPeriodOfTimeAfterEdit;
+
+        // }
+
+
+        else if (isset($_SESSION['testScope'])) {
+
+            $this->selectedPeriodOfTime=$_SESSION['testScope'];
+            if($_SESSION['testScope']=="Niestandardowe") {
+
+                $this->firstNotStandardDate = $_SESSION['firstNotStandardDate'];
+                $this->secondNotStandardDate = $_SESSION['secondNotStandardDate'];
+            }
+        }
+
         else 
             $this->selectedPeriodOfTime = "Bieżący miesiąc";
 
         if(isset($selectedOption["firstNotStandardDate"])){
 
             $this->firstNotStandardDate = $selectedOption["firstNotStandardDate"];
+            $_SESSION['firstNotStandardDate'] = $selectedOption["firstNotStandardDate"];
             $this->selectedPeriodOfTime = "Niestandardowe";
         }
 
         if(isset($selectedOption["secondNotStandardDate"])) {
 
             $this->secondNotStandardDate = $selectedOption["secondNotStandardDate"];
+            $_SESSION['secondNotStandardDate'] = $selectedOption["secondNotStandardDate"];
         }
 
     }
@@ -201,6 +235,8 @@ class Balance extends \Core\Model {
 
         $atributeSet;
 
+        $_SESSION['testScope'] = $this->selectedPeriodOfTime;
+
         switch($this->selectedPeriodOfTime) {
 
             case 'Bieżący miesiąc':
@@ -271,6 +307,9 @@ class Balance extends \Core\Model {
 
         $_SESSION['expenseChartData'] = $this->setChartData('groupExpenseResults', 'expense');
         $_SESSION['incomeChartData'] = $this->setChartData('groupIncomeResults', 'income');
+
+        // echo $_SESSION['sumResults']['selectedOption']['Bieżący miesiąc'];
+        // exit;
 
 
     }

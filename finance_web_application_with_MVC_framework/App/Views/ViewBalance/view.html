@@ -89,10 +89,26 @@
 
                 {% for income in getIncomeResults %}
                 <tr>
-                    <td> {{ income.income_amout }} </td>
-                    <td> {{ income.income_category }} </td>
-                    <td> {{ income.income_date }} </td>
-                    <td> {{ income.income_comment }} </td>
+                    <td id="{{ loop.index0 }}_iid" class="d-none">{{ income.id_incomes }}</td>
+                    <td id="{{ loop.index0 }}_ia">{{ income.income_amout }}</td>
+                    <td id="{{ loop.index0 }}_ic">{{ income.income_category }}</td>
+                    <td id="{{ loop.index0 }}_ida">{{ income.income_date }}</td>
+                    <td id="{{ loop.index0 }}_ide">{{ income.income_comment }}</td>
+
+
+                    <td>
+                        <div class="float-end">
+                            <a href="" data-bs-toggle="modal" data-bs-target="#editIncomeRecord" id="{{ loop.index0 }}"
+                                name="income" onclick="findRecordInDatabase(this.id, this.name);"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-pencil" viewBox="0 0 16 16">
+                                    <path
+                                        d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                </svg></a>
+                        </div>
+                    </td>
+
+
 
                 </tr>
                 {% endfor %}
@@ -121,11 +137,25 @@
 
                 {% for expense in getExpenseResults %}
                 <tr>
-                    <td> {{ expense.expense_amout }} </td>
-                    <td> {{ expense.expense_category }} </td>
-                    <td> {{ expense.expense_payment_method }} </td>
-                    <td> {{ expense.expense_date }} </td>
-                    <td> {{ expense.expense_description }} </td>
+                    <td id="{{ loop.index0 }}_eid" class="d-none">{{ expense.id_expenses }}</td>
+                    <td id="{{ loop.index0 }}_ea">{{ expense.expense_amout }}</td>
+                    <td id="{{ loop.index0 }}_ec">{{ expense.expense_category }}</td>
+                    <td id="{{ loop.index0 }}_ep_m">{{ expense.expense_payment_method }}</td>
+                    <td id="{{ loop.index0 }}_eda">{{ expense.expense_date }}</td>
+                    <td id="{{ loop.index0 }}_ede">{{ expense.expense_description }}</td>
+                    <td>
+                        <div class="float-end">
+                            <a href="#" id="{{ loop.index0 }}" onclick="findRecordInDatabase(this.id, this.name);"
+                                name="expense"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16" data-bs-toggle="modal"
+                                    data-bs-target="#editExpenseRecord">
+                                    <path
+                                        d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                </svg></a>
+                        </div>
+
+
+                    </td>
                 </tr>
                 {% endfor %}
 
@@ -159,7 +189,208 @@
 
 </div>
 
-<script>
+
+<!-- <form action="" method="post" id="recordIdForm">
+    <input type="number" id="recordId" name="idOfSelectedRecord">
+    <input type="text" name="incomeOrExpense" id="incomeOrExpense">
+
+</form> -->
+
+<!-- Modal edit income record-->
+<div class="modal fade" id="editIncomeRecord" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Edycja wpisu
+                </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/changesettings/update-income-record" method="post">
+
+                    <input class="d-none" type="number" id="incomeRecordId" name="incomeRecordId">
+                    <input class="d-none" type="text" name="incomeRecord" id="incomeRecord">
+
+                    <div class="mb-3">
+                        <label for="editIncomeRecordAmout" class="form-label">Kwota:</label>
+                        <input type="number" class="form-control" id="editIncomeRecordAmout" min="0"
+                            name="editIncomeRecordAmout" step="0.01" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editIncomeRecordCategory" class="form-label">Kategoria:</label>
+                        <select class="form-select" id="editIncomeRecordCategory" name="editIncomeRecordCategory"
+                            required>
+                            {% for categories in getIncomeCategories %}
+
+                            <option id="{{ categories.income_category }}" value="{{ categories.income_category }}">
+                                {{ categories.income_category }}</option>
+
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editIncomeRecordDate" class="form-label">Data:</label>
+                        <input type="date" class="form-control" id="editIncomeRecordDate" min="2001-01-01"
+                            name="editIncomeRecordDate" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editIncomeRecordDescription" class="form-label">Komentarz:</label>
+                        <input type="text" class="form-control" id="editIncomeRecordDescription"
+                            name="editIncomeRecordDescription" required>
+                    </div>
+
+                    <div class="mt-4 text-danger font-monospace fw-bolder">
+                        <label for="confirmDeleteExpenseRecord" class="form-label font-monospace"><svg
+                                xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                class="bi bi-trash" viewBox="0 0 16 16">
+                                <path
+                                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
+                                <path
+                                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
+                            </svg> Usuń wpis</label>
+                        <input type="checkbox" class="form-check-input" id="confirmDeleteExpenseRecord"
+                            name="deleteIncomeRecord">
+                    </div>
+
+                    <div class="modal-footer">
+
+
+                        <button type="submit" class="btn btn-success"><svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                height="20" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+                                <path
+                                    d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
+                            </svg></button>
+
+                        <!-- <button type="submit" class="btn btn-danger mx-3" disabled id="deleteIncomeRecord"><svg
+                                xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                class="bi bi-trash" viewBox="0 0 16 16">
+                                <path
+                                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
+                                <path
+                                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
+                            </svg></button> -->
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<!-- Modal -->
+
+<!-- Modal edit expense record-->
+<div class="modal fade" id="editExpenseRecord" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Edycja wpisu
+                </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+
+                <form action="/changesettings/update-expense-record" method="post">
+
+                    <input class="d-none" type="number" id="expenseRecordId" name="expenseRecordId">
+                    <input class="d-none" type="text" name="expenseRecord" id="expenseRecord">
+
+                    <div class="mb-3">
+                        <label for="editRecordAmout" class="form-label">Kwota:</label>
+                        <input type="number" class="form-control" id="editRecordAmout" min="0" name="editRecordAmout"
+                            required step="0.01">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editRecordCategory" class="form-label">Kategoria:</label>
+                        <select class="form-select" id="editRecordCategory" name="editRecordCategory" required>
+                            {% for categories in getExpenseCategories %}
+
+                            <option id="{{ categories.expense_category }}" value="{{ categories.expense_category }}">
+                                {{ categories.expense_category }}
+                            </option>
+
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editRecordPayment" class="form-label">Metoda płatności:</label>
+                        <select class="form-select" id="editRecordPayment" name="editRecordPayment" required>
+                            {% for categories in getPaymentCategories %}
+
+                            <option id="{{ categories.expense_payment_method }}"
+                                value="{{ categories.expense_payment_method }}">
+                                {{ categories.expense_payment_method }}
+                            </option>
+
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editRecordDate" class="form-label">Data:</label>
+                        <input type="date" class="form-control" id="editRecordDate" min="2001-01-01"
+                            name="editRecordDate" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editRecordDescription" class="form-label">Komentarz:</label>
+                        <input type="text" class="form-control" id="editRecordDescription" name="editRecordDescription"
+                            required>
+                    </div>
+
+                    <div class="mt-4 text-danger font-monospace fw-bolder">
+                        <label for="confirmDeleteExpenseRecord" class="form-label font-monospace"><svg
+                                xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                class="bi bi-trash" viewBox="0 0 16 16">
+                                <path
+                                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
+                                <path
+                                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
+                            </svg> Usuń wpis</label>
+                        <input type="checkbox" class="form-check-input" id="confirmDeleteExpenseRecord"
+                            name="deleteExpenseRecord">
+                    </div>
+
+
+                    <div class="modal-footer">
+
+                        <!-- <div class="mx-3">
+                            <label for="confirmDeleteIncomeRecord" class="form-label font-monospace">Usuń wpis</label>
+                            <input type="checkbox" class="form-check-input" id="confirmDeleteIncomeRecord"
+                                name="deleteExpenseRecord" onchange="enableDeleteButton(this.id, this.name);">
+                        </div> -->
+
+                        <button type="submit" class="btn btn-success"><svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                height="20" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+                                <path
+                                    d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
+                            </svg></button>
+
+                        <!-- <button class="btn btn-danger mx-3" id="deleteExpenseRecord" disabled><svg
+                                xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                class="bi bi-trash" viewBox="0 0 16 16">
+                                <path
+                                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
+                                <path
+                                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
+                            </svg></button> -->
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<!-- Modal -->
+
+<!-- <script>
 
     let userRating = document.querySelector('.js-user-rating');
     let isAuthenticated = userRating.dataset.isAuthenticated;
@@ -168,9 +399,6 @@
     let userRatingIncome = document.querySelector('.js-user-rating_income');
     let isAuthenticatedIncome = userRatingIncome.dataset.isAuthenticatedIncome;
     let dataPointsIncome = JSON.parse(userRatingIncome.dataset.user);
-
-
-    console.log(dataPointsIncome);
 
     let options = document.getElementById("view-balance-period-of-time");
 
@@ -224,8 +452,75 @@
 
     };
 
-</script>
+</script> -->
+
+<!-- <script type="text/javascript">
+
+    function findRecordInDatabase(id, name) {
+
+        document.getElementById('incomeOrExpense').value = name;
+
+        if (name == "expense") {
+
+            document.getElementById('recordId').value = Number(document.getElementById(id + '_eid').innerHTML);
+            document.getElementById('editRecordAmout').value = Number(document.getElementById(id + '_ea').innerHTML);
+
+            let selectCategory = document.getElementById(document.getElementById(id + '_ec').innerHTML);
+            let selectPaymentMethod = document.getElementById(document.getElementById(id + '_ep_m').innerHTML);
+
+            selectCategory.selected = 'selected';
+            selectPaymentMethod.selected = 'selected';
+
+            document.getElementById('editRecordDate').value = document.getElementById(id + '_eda').innerHTML;
+            document.getElementById('editRecordDescription').value = document.getElementById(id + '_ede').innerHTML;
+        }
+
+        else {
+
+            document.getElementById('recordId').value = Number(document.getElementById(id + '_iid').innerHTML);
+            document.getElementById('editIncomeRecordAmout').value = Number(document.getElementById(id + '_ia').innerHTML);
+            let selectIncomeCategory = document.getElementById(document.getElementById(id + '_ic').innerHTML);
+            selectIncomeCategory.selected = 'selected';
+
+
+            document.getElementById('editIncomeRecordDate').value = document.getElementById(id + '_ida').innerHTML;
+            document.getElementById('editIncomeRecordDescription').value = document.getElementById(id + '_ide').innerHTML;
+
+        }
+    }
+
+    function enableDeleteButton(id, name) {
+
+        if (document.getElementById(id).checked == true)
+            document.getElementById(name).removeAttribute("disabled");
+
+        else
+            document.getElementById(name).setAttribute("disabled", "disabled");
+    }
+
+</script> -->
+
+
+
+<!-- <script>
+
+    function runModal() {
+
+        $('#editExpenseRecord').modal('show');
+
+    }
+
+</script> -->
+
 
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<!-- <script src="/js/findRecordInDatabase.js"></script> -->
+
+{% endblock %}
+
+{% block footer %}
+
+<script src="/js/findRecordInDatabase.js" type="text/javascript"></script>
+<script src="/js/dataPoints.js"></script>
 
 {% endblock %}

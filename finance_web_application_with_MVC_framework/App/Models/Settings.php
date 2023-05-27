@@ -56,11 +56,8 @@ class Settings extends \Core\Model {
         $stmt->bindValue('idLoggedUser', $_SESSION['user_id'], PDO::PARAM_INT);
         $stmt->bindValue('newUserCategory', lcfirst($this->newCategoryName), PDO::PARAM_STR);
 
-        //return $stmt->execute();
-
         $stmt->execute();
-        // var_dump($stmt->fetchAll());
-        // exit;
+
         return $stmt->fetchAll();
 
     }
@@ -125,7 +122,6 @@ class Settings extends \Core\Model {
             case 'paymentMethod':
                 $sql = "DELETE FROM expense_payment WHERE id_users = :idLoggedUser AND expense_payment_method = :selectedCategory";
                 break;
-
         }
 
         $db = static::getDB();
@@ -160,12 +156,10 @@ class Settings extends \Core\Model {
         $stmt->execute();
 
         return $stmt->fetch();
-        
     }
 
     public function deleteRelatedRecords() {
 
-        // $this->idCategoryToDelete = $this->findIdCategoryToDelete();
         switch($this->categoryType){
 
             case 'incomeCategory':
@@ -283,6 +277,111 @@ class Settings extends \Core\Model {
         $sql = "DELETE FROM income_categories WHERE id_users = :idLoggedUser";
         $this->executeQuery($sql);
 
+    }
+
+    public function findRecordById() {
+
+        switch($this->incomeOrExpense) {
+
+            case 'income':
+                $sql = "SELECT * FROM incomes WHERE id_incomes = :idRecords";
+                break;
+            case 'expense':
+                $sql = "SELECT * FROM expenses WHERE id_expenses = :idRecords";
+                break;
+        }
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        // $stmt->bindValue(':idLoggedUser', $_SESSION['user_id'], PDO::PARAM_INT);
+        $stmt->bindValue(':idRecords', $this->idOfSelectedRecord, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $_SESSION['foundRecordToEdit'] = $stmt->fetchAll();
+
+        // var_dump($_SESSION['foundRecordToEdit']);
+        // exit;
+    }
+
+    public static function getRecordToShow() {
+
+        if(isset($_SESSION['foundRecordToEdit'])) {
+
+            return $recordToEdit = $_SESSION['foundRecordToEdit'];
+        }
+    }
+
+    public function updateIncomeRecord() {
+
+        if(isset($this->deleteIncomeRecord)) {
+
+            $sql = "DELETE FROM incomes WHERE id_incomes = :incomeRecordId";
+            $db = static::getDB();
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue(':incomeRecordId', $this->incomeRecordId, PDO::PARAM_INT);
+
+            $stmt->execute();
+        }
+
+        else {
+
+            $this->categoryType = "incomeCategory";
+            $this->selectedCategory = $this->editIncomeRecordCategory;
+            $this->idCategory = $this->findIdCategory();
+
+
+            $sql = "UPDATE incomes SET id_users_incomes_categories = :idCategory, income_amout = :incomeAmout,
+            income_date = :incomeDate, income_comment = :incomeComment WHERE id_incomes = :incomeRecordId";
+            $db = static::getDB();
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue(':idCategory', $this->idCategory[0], PDO::PARAM_INT);
+            $stmt->bindValue(':incomeAmout', $this->editIncomeRecordAmout, PDO::PARAM_STR);
+            $stmt->bindValue(':incomeDate', $this->editIncomeRecordDate, PDO::PARAM_STR);
+            $stmt->bindValue(':incomeComment', $this->editIncomeRecordDescription, PDO::PARAM_STR);
+            $stmt->bindValue(':incomeRecordId', $this->incomeRecordId, PDO::PARAM_INT);
+
+
+            $stmt->execute();
+        }
+
+    }
+
+    public function updateExpenseRecord() {
+
+        if(isset($this->deleteExpenseRecord)) {
+
+            $sql = "DELETE FROM expenses WHERE id_expenses = :expenseRecordId";
+            $db = static::getDB();
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue(':expenseRecordId', $this->expenseRecordId, PDO::PARAM_INT);
+
+            $stmt->execute();
+        }
+
+        else {
+
+            $this->categoryType = "expenseCategory";
+            $this->selectedCategory = $this->editRecordCategory;
+            $this->idCategory = $this->findIdCategory();
+            
+            $this->categoryType = "paymentMethod";
+            $this->selectedCategory = $this->editRecordPayment;
+            $this->idPayment = $this->findIdCategory();
+
+            $sql = "UPDATE expenses SET id_users_expenses_categories = :idCategory, id_payment = :idPayment, expense_amout = :expenseAmout,
+            expense_date = :expenseDate, expense_description = :expenseDescription WHERE id_expenses = :expenseRecordId";
+            $db = static::getDB();
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue(':idCategory', $this->idCategory[0], PDO::PARAM_INT);
+            $stmt->bindValue(':idPayment', $this->idPayment[0], PDO::PARAM_INT);
+            $stmt->bindValue(':expenseAmout', $this->editRecordAmout, PDO::PARAM_STR);
+            $stmt->bindValue(':expenseDate', $this->editRecordDate, PDO::PARAM_STR);
+            $stmt->bindValue(':expenseDescription', $this->editRecordDescription, PDO::PARAM_STR);
+            $stmt->bindValue(':expenseRecordId', $this->expenseRecordId, PDO::PARAM_INT);
+
+
+            $stmt->execute();
+        }
     }
     
 }

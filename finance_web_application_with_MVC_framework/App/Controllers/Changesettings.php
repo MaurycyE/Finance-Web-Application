@@ -41,8 +41,6 @@ class ChangeSettings extends Authenticated {
             $this->redirect('/changesettings/user');
         }
 
-        // echo "Fuckup";
-        // exit;
     }
 
     public function changePasswordAction() {
@@ -57,7 +55,6 @@ class ChangeSettings extends Authenticated {
 
         else {
 
-            //Flash::addMessage('Wystąpił błąd!', Flash::DANGER);
             $this->redirect('/changesettings/user');
         }
     }
@@ -74,26 +71,15 @@ class ChangeSettings extends Authenticated {
 
         $settings = new Settings($_POST);
 
-        // var_dump($settings);
-        // exit;
-
         if($settings->checkCategoryName()) {
 
             Flash::addMessage('Dodano nową kategorię!', Flash::SUCCESS);
-            // if($settings->categoryType=='incomeCategory')
-            //     $this->redirect('/changesettings/income');
-            // else
-            //     $this->redirect('/changesettings/expense');
             $this->redirectToCurrentTab($settings);
         }
 
         else {
 
             Flash::addMessage('Wystąpił błąd!', Flash::DANGER);
-            // if($settings->categoryType=='incomeCategory')
-            //     $this->redirect('/changesettings/income');
-            // else
-            //     $this->redirect('/changesettings/expense');
             $this->redirectToCurrentTab($settings);
         }
 
@@ -109,14 +95,12 @@ class ChangeSettings extends Authenticated {
             if($settings->deleteCategory()) {
 
                 Flash::addMessage('Usunięto kategorię!', Flash::SUCCESS);
-                // $this->redirect('/changesettings/income');
                 $this->redirectToCurrentTab($settings);
             }
 
         else {
 
         Flash::addMessage('Wystąpił błąd!', Flash::DANGER);
-        // $this->redirect('/changesettings/income');
         $this->redirectToCurrentTab($settings);
         }
     }
@@ -127,18 +111,15 @@ class ChangeSettings extends Authenticated {
 
         if(!$settings->findCategoryByName()) {
 
-
             if($settings->renameCategory()) {
 
                 Flash::addMessage('Nazwa zmieniona!', Flash::SUCCESS);
-                // $this->redirect('/changesettings/income');
                 $this->redirectToCurrentTab($settings);
             }
 
             else {
 
                 Flash::addMessage('Wystąpił błąd!', Flash::DANGER);
-                // $this->redirect('/changesettings/income');
                 $this->redirectToCurrentTab($settings);
             }
             
@@ -147,7 +128,6 @@ class ChangeSettings extends Authenticated {
         else {
 
             Flash::addMessage("Podana nazwa już istnieje!", Flash::WARNING);
-            // $this->redirect('/changesettings/income');
             $this->redirectToCurrentTab($settings);
         }
     }
@@ -167,6 +147,44 @@ class ChangeSettings extends Authenticated {
             Flash::addMessage('Wystąpił błąd!', Flash::DANGER);
             $this->redirect('/changesettings/user');
         }
+
+    }
+
+    public function findRecordAction() {
+
+        $settings = new Settings($_POST);
+
+        $settings->findRecordById();
+
+        $this->redirect('/viewbalance/balance');
+        // var_dump($settings);
+        // exit;
+
+
+    }
+
+    public function updateIncomeRecordAction() {
+
+        $settings = new Settings($_POST);
+
+        // $_SESSION["testScope"] = "Poprzedni miesiąc";
+        // echo $_SESSION["testScope"];
+        // exit;
+
+        $settings->updateIncomeRecord();
+        $this->redirect('/viewbalance/balance');
+
+    }
+
+    public function updateExpenseRecordAction() {
+
+        $settings = new Settings($_POST);
+
+        // var_dump($settings);
+        // exit;
+
+        $settings->updateExpenseRecord();
+        $this->redirect('/viewbalance/balance');
 
     }
 

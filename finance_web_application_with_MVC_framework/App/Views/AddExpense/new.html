@@ -28,10 +28,7 @@
             <label for="add-expense-payment-method" class="form-label">Sposób płatności:</label>
             <select class="form-select" aria-label="payment method" id="add-expense-payment-method"
                 name="selectedPaymentCategory" required>
-                <!-- <option value="Przelew" selected>Przelew</option>
-                <option value="gotówka">Gotówka</option>
-                <option value="karta bankowa">Karta bankowa</option>
-                <option value="karta debetowa">Karta debetowa</option> -->
+
                 {% for categories in getPaymentCategories %}
 
                 <option value="{{ categories.expense_payment_method }}"> {{ categories.expense_payment_method }}
@@ -45,23 +42,7 @@
             <label for="add-expense-category" class="form-label">Wybierz kategorię:</label>
             <select class="form-select" aria-label="expense category" id="add-expense-category"
                 name="selectedExpenseCategory" required>
-                <!-- <option value="Jedzenie" selected>Jedzenie</option>
-                <option value="Wycieczka">Wycieczka</option>
-                <option value="Mieszkanie">Mieszkanie</option>
-                <option value="Szkolenia">Szkolenia</option>
-                <option value="Transport">Transport</option>
-                <option value="Książka">Książka</option>
-                <option value="Telekomunikacja">Telekomunikacja</option>
-                <option value="Oszczędności">Oszczędności</option>
-                <option value="Opieka zdrowotna">Opieka zdrowotna</option>
-                <option value="Emerytura">Emerytura</option>
-                <option value="Ubranie">Ubranie</option>
-                <option value="Spłata długów">Spłata długów</option>
-                <option value="Higiena">Higiena</option>
-                <option value="Darowizna">Darowizna</option>
-                <option value="Dzieci">Dzieci</option>
-                <option value="Rozrywka">Rozrywka</option>
-                <option value="Inne wydatki">Inne wydatki</option> -->
+
                 {% for categories in getExpenseCategories %}
 
                 <option value="{{ categories.expense_category }}"> {{ categories.expense_category }} </option>
