@@ -55,8 +55,6 @@ class User extends \Core\Model {
         $this->id_users = $_SESSION['user_id'];
         $this->validateUsernameAndEmail();
 
-        //var_dump($this->errors);
-
         if(empty($this->errors)) {
 
             $sql = "UPDATE users SET user_name = :name, user_email = :email WHERE id_users=:idLoggedUser";
@@ -84,8 +82,6 @@ class User extends \Core\Model {
                 if(empty($this->errors)) {
                     
                     $password_hash = password_hash($this->password, PASSWORD_DEFAULT);
-                    // echo $password_hash;
-                    // exit;
 
                     $sql = "UPDATE users SET user_password=:password WHERE id_users=:idLoggedUser";
                     $db = static::getDB();
@@ -107,34 +103,6 @@ class User extends \Core\Model {
         return false;
 
     }
-
-
-    // public function validate() {
-
-    //     if($this->user_name == '') {
-    //         $this->errors[] = 'Nazwa jest wymagana';
-    //     }
-
-    //     if(filter_var($this->user_email, FILTER_VALIDATE_EMAIL) === false) {
-    //         $this->errors[] = 'Nieprawidłowy email';
-    //     }
-
-    //     if(static::emailExists($this->user_email, $this->id_users ?? null)) {
-    //         $this->errors[] = 'Email już zajęty';
-    //     }
-
-    //     if(strlen($this->password)<6) {
-    //         $this->errors[] = 'Hasło musi mieć conajmniej 6 znaków';
-    //     }
-
-    //     if(preg_match('/.*[a-z]+.*/i', $this->password) ==0 ) {
-    //         $this->errors[] = 'Hasło powinno mieć przynajmniej jedną literę';
-    //     }
-
-    //     if(preg_match('/.*\d+.*/i', $this->password) == 0) {
-    //         $this->errors[] = 'Hasło powinno mieć przynajmniej jedną cyfrę';
-    //     }
-    // }
 
     public function validateUsernameAndEmail() {
 

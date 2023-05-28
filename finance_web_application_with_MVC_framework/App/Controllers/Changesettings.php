@@ -157,9 +157,6 @@ class ChangeSettings extends Authenticated {
         $settings->findRecordById();
 
         $this->redirect('/viewbalance/balance');
-        // var_dump($settings);
-        // exit;
-
 
     }
 
@@ -167,25 +164,16 @@ class ChangeSettings extends Authenticated {
 
         $settings = new Settings($_POST);
 
-        // $_SESSION["testScope"] = "Poprzedni miesiąc";
-        // echo $_SESSION["testScope"];
-        // exit;
-
         $settings->updateIncomeRecord();
         $this->redirect('/viewbalance/balance');
-
     }
 
     public function updateExpenseRecordAction() {
 
         $settings = new Settings($_POST);
 
-        // var_dump($settings);
-        // exit;
-
         $settings->updateExpenseRecord();
         $this->redirect('/viewbalance/balance');
-
     }
 
 }

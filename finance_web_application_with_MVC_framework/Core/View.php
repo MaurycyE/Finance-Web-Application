@@ -43,8 +43,6 @@ class View {
             $twig->addGlobal('getPaymentCategories', \App\Models\Settings::getIncomeExpenseCategories('expense_payment_method', 'expense_payment'));
             $twig->addGlobal('getRecordToEdit', \App\Models\Settings::getRecordToShow());
 
-
-
         }
         
         return $twig->render($template, $args);

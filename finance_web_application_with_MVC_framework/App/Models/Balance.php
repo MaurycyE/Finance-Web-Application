@@ -12,32 +12,11 @@ class Balance extends \Core\Model {
 
             $this->selectedPeriodOfTime=$selectedOption["periodOfTime"];
         }
-        // else if (isset($_SESSION["sumResults"]['selectedOption'])){
 
-        //     if($_SESSION["sumResults"]['selectedOption']['Poprzedni miesiąc']=='selected') {
+        else if (isset($_SESSION['rememberedEditRecordScope'])) {
 
-        //         $selectedPeriodOfTimeAfterEdit = 'Poprzedni miesiąc';
-        //     }
-            
-        //     else if($_SESSION["sumResults"]['selectedOption']['Bieżący rok']=='selected') {
-
-        //         $selectedPeriodOfTimeAfterEdit = 'Bieżący rok';
-        //     }
-
-        //     else if($_SESSION["sumResults"]['selectedOption']['Niestandardowe']=='selected') {
-
-        //         $selectedPeriodOfTimeAfterEdit = 'Niestandardowe';
-        //     }
-
-        //     $this->selectedPeriodOfTime = $selectedPeriodOfTimeAfterEdit;
-
-        // }
-
-
-        else if (isset($_SESSION['testScope'])) {
-
-            $this->selectedPeriodOfTime=$_SESSION['testScope'];
-            if($_SESSION['testScope']=="Niestandardowe") {
+            $this->selectedPeriodOfTime=$_SESSION['rememberedEditRecordScope'];
+            if($_SESSION['rememberedEditRecordScope']=="Niestandardowe") {
 
                 $this->firstNotStandardDate = $_SESSION['firstNotStandardDate'];
                 $this->secondNotStandardDate = $_SESSION['secondNotStandardDate'];
@@ -235,7 +214,7 @@ class Balance extends \Core\Model {
 
         $atributeSet;
 
-        $_SESSION['testScope'] = $this->selectedPeriodOfTime;
+        $_SESSION['rememberedEditRecordScope'] = $this->selectedPeriodOfTime;
 
         switch($this->selectedPeriodOfTime) {
 
@@ -307,10 +286,6 @@ class Balance extends \Core\Model {
 
         $_SESSION['expenseChartData'] = $this->setChartData('groupExpenseResults', 'expense');
         $_SESSION['incomeChartData'] = $this->setChartData('groupIncomeResults', 'income');
-
-        // echo $_SESSION['sumResults']['selectedOption']['Bieżący miesiąc'];
-        // exit;
-
 
     }
 

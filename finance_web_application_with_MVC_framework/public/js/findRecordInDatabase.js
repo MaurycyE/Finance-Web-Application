@@ -34,13 +34,3 @@ function findRecordInDatabase(id, name) {
 
     }
 }
-
-// function enableDeleteButton(id, name) {
-
-//     if (document.getElementById(id).checked == true)
-//         document.getElementById(name).removeAttribute("disabled");
-
-//     else
-//         document.getElementById(name).setAttribute("disabled", "disabled");
-
-// }

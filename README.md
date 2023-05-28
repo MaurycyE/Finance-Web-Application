@@ -23,7 +23,7 @@ Finance_web_application_with_MVC_framework -> work in progress:
 - add income (+)
 - add expense (+)
 - view balance sheet from selected period of time (+)
-- settings (-)
+- settings (+)
 - password recover (+)
 
 LINK:
