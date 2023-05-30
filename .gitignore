@@ -43,3 +43,5 @@
 *.docx
 
 materialy_pomocnicze/
+awstats/
+logs/
