@@ -92,7 +92,7 @@ class Balance extends \Core\Model {
         switch($this->selectedPeriodOfTime) {
 
             case 'Bieżący miesiąc':
-                $sql = "SELECT * FROM incomes, income_categories WHERE YEAR(income_date) = YEAR(CURRENT_DATE())
+                $sql = "SELECT *FROM incomes, income_categories WHERE YEAR(income_date) = YEAR(CURRENT_DATE())
                 AND MONTH(income_date) = MONTH(CURRENT_DATE()) AND incomes.id_users=:idLoggedUser
                 AND incomes.id_users=income_categories.id_users AND id_users_incomes_categories=id_categories
                 ORDER BY income_date DESC";
@@ -129,7 +129,8 @@ class Balance extends \Core\Model {
         switch($this->selectedPeriodOfTime) {
 
             case 'Bieżący miesiąc':
-                $sql = "SELECT * FROM expenses, expense_categories, expense_payment WHERE YEAR(expense_date) = YEAR(CURRENT_DATE())
+                $sql = "SELECT * 
+                FROM expenses, expense_categories, expense_payment WHERE YEAR(expense_date) = YEAR(CURRENT_DATE())
                 AND MONTH(expense_date) = MONTH(CURRENT_DATE()) AND expenses.id_users=:idLoggedUser
                 AND expenses.id_users=expense_categories.id_users AND expenses.id_users=expense_payment.id_users
                 AND id_users_expenses_categories=id_categories AND expenses.id_payment=expense_payment.id_payment

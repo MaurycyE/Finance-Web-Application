@@ -23,16 +23,7 @@
 
     </ul>
 
-    <div class="mt-4 mb-4 font-monospace">
-        <h5 class="fw-bold">Kategorie przychodów:</h5>
-        {% for categories in getIncomeCategories %}
-
-        <p> - {{ categories.income_category }}</p>
-
-        {% endfor %}
-    </div>
-
-    <div class=" font-monospace">
+    <div class="font-monospace mt-4">
         <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addIncomeCategoryModal"><svg
                 xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus"
                 viewBox="0 0 16 16">
@@ -60,6 +51,16 @@
     <div class="h4 text-{{ message.type }} font-monospace mt-3">{{ message.body }}
     </div>
     {% endfor %}
+
+    <div class="mt-4 mb-4 font-monospace">
+        <h5 class="fw-bold">Kategorie przychodów:</h5>
+        {% for categories in getIncomeCategories %}
+
+        <p> - {{ categories.income_category }}</p>
+
+        {% endfor %}
+    </div>
+
 
     <!-- Modal add category-->
     <div class="modal fade" id="addIncomeCategoryModal" tabindex="-1" aria-hidden="true">
@@ -165,6 +166,8 @@
                 </div>
                 <div class="modal-body">
                     <form action="/changesettings/change-category-name" method="post">
+
+                        <input type="checkbox" class="d-none" name="categoryType" value="incomeCategory" checked>
 
                         <div class="mb-4">
                             <label for="selectCategoryToRename" class="form-label">Wybierz kategorię, której chcesz

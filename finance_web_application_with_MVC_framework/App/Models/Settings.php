@@ -38,15 +38,15 @@ class Settings extends \Core\Model {
         switch($this->categoryType) {
 
             case 'incomeCategory':
-                $sql = "SELECT * FROM income_categories WHERE id_users = :idLoggedUser AND income_category=:newUserCategory";
+                $sql = "SELECT income_category FROM income_categories WHERE id_users = :idLoggedUser AND income_category=:newUserCategory";
                 break;
 
             case 'expenseCategory':
-                $sql = "SELECT * FROM expense_categories WHERE id_users = :idLoggedUser AND expense_category=:newUserCategory";
+                $sql = "SELECT expense_category FROM expense_categories WHERE id_users = :idLoggedUser AND expense_category=:newUserCategory";
                 break;
             
             case 'paymentMethod':
-                $sql = "SELECT * FROM expense_payment WHERE id_users = :idLoggedUser AND expense_payment_method=:newUserCategory";
+                $sql = "SELECT expense_payment_method FROM expense_payment WHERE id_users = :idLoggedUser AND expense_payment_method=:newUserCategory";
                 break;
         }
 

@@ -23,28 +23,7 @@
 
     </ul>
 
-    <div class="mt-4 mb-4 font-monospace">
-
-        <h5 class="fw-bold">Metody płatności:</h5>
-        {% for categories in getPaymentCategories %}
-
-        <p> - {{ categories.expense_payment_method }}</p>
-
-        {% endfor %}
-
-    </div>
-
-    <div class="mt-2 mb-2 font-monospace">
-        <h5 class="fw-bold">Kategorie wydatków:</h5>
-        {% for categories in getExpenseCategories %}
-
-        <p> - {{ categories.expense_category }}</p>
-
-        {% endfor %}
-
-    </div>
-
-    <div class=" font-monospace">
+    <div class=" font-monospace mt-4">
         <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addIncomeCategoryModal"><svg
                 xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus"
                 viewBox="0 0 16 16">
@@ -73,6 +52,31 @@
     </div>
     {% endfor %}
 
+    <div class="mt-4 mb-4 font-monospace">
+
+        <h5 class="fw-bold">Metody płatności:</h5>
+        {% for categories in getPaymentCategories %}
+
+        <p> - {{ categories.expense_payment_method }}</p>
+
+        {% endfor %}
+
+    </div>
+
+    <div class="mt-2 mb-2 font-monospace">
+        <h5 class="fw-bold">Kategorie wydatków:</h5>
+        {% for categories in getExpenseCategories %}
+
+        <p> - {{ categories.expense_category }}</p>
+
+        {% endfor %}
+
+    </div>
+
+
+
+
+
     <!-- Modal add category-->
     <div class="modal fade" id="addIncomeCategoryModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
@@ -84,6 +88,8 @@
                 </div>
                 <div class="modal-body">
                     <form action="/changesettings/add-category" method="post" id="addIncomeCategoryForm">
+
+                        <input type="checkbox" class="d-none" name="categoryType" value="expenseCategory" checked>
 
                         <div class="form-check mt-2">
                             <input class="form-check-input" type="radio" name="categoryType" id="categoryType1"
