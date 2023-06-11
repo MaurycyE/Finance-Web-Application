@@ -8,7 +8,7 @@ class Config {
     const DB_NAME = 'iesec9_budgetsl';
     const DB_USER = 'mee9oo_budgetsl';
     const DB_PASSWORD = 'koojuob6zu1G';
-    const SHOW_ERRORS = true;
+    const SHOW_ERRORS = false;
 
     const PATH_TO_MAIN_FOLDER = 'https://budget.slawomir-gorczynski.profesjonalnyprogramista.pl/';
 
