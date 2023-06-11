@@ -29,23 +29,10 @@
                 viewBox="0 0 16 16">
                 <path
                     d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-            </svg></button>
-        <button class="btn btn-danger mx-3" data-bs-toggle="modal" data-bs-target="#deleteIncomeCategoryModal"><svg
-                xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash"
-                viewBox="0 0 16 16">
-                <path
-                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
-                <path
-                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
-            </svg></button>
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#changeIncomeCategoryModal"><svg
-                xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-vector-pen"
-                viewBox="0 0 16 16">
-                <path fill-rule="evenodd"
-                    d="M10.646.646a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-1.902 1.902-.829 3.313a1.5 1.5 0 0 1-1.024 1.073L1.254 14.746 4.358 4.4A1.5 1.5 0 0 1 5.43 3.377l3.313-.828L10.646.646zm-1.8 2.908-3.173.793a.5.5 0 0 0-.358.342l-2.57 8.565 8.567-2.57a.5.5 0 0 0 .34-.357l.794-3.174-3.6-3.6z" />
-                <path fill-rule="evenodd" d="M2.832 13.228 8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z" />
-            </svg></button>
+            </svg> Dodaj kategorię</button>
+
     </div>
+
 
     {% for message in flash_messages %}
     <div class="h4 text-{{ message.type }} font-monospace mt-3">{{ message.body }}
@@ -53,12 +40,36 @@
     {% endfor %}
 
     <div class="mt-4 mb-4 font-monospace">
-        <h5 class="fw-bold">Kategorie przychodów:</h5>
+        <h5 class="fw-bold">Kategorie przychodów: </h5>
+
+        {% autoescape false %}
+
         {% for categories in getIncomeCategories %}
 
-        <p> - {{ categories.income_category }}</p>
+        <div class="my-3">
+            <span id="{{ loop.index0 }}">{{ categories.income_category }}</span>
+            <a href="" data-bs-toggle="modal" data-bs-target="#changeIncomeCategoryNameModal" id="{{ loop.index0 }}"
+                onclick="selectIncomeCategoryToRename(this.id);"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                    height="16" fill="currentColor" class="bi bi-vector-pen" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M10.646.646a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-1.902 1.902-.829 3.313a1.5 1.5 0 0 1-1.024 1.073L1.254 14.746 4.358 4.4A1.5 1.5 0 0 1 5.43 3.377l3.313-.828L10.646.646zm-1.8 2.908-3.173.793a.5.5 0 0 0-.358.342l-2.57 8.565 8.567-2.57a.5.5 0 0 0 .34-.357l.794-3.174-3.6-3.6z" />
+                    <path fill-rule="evenodd" d="M2.832 13.228 8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z" />
+                </svg></a>
+
+            <a class="text-danger" href="" data-bs-toggle="modal" data-bs-target="#deleteIncomeCategoryModal"
+                id="{{ loop.index0 }}" onclick="selectIncomeCategoryToDelete(this.id);"><svg
+                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
+                </svg></a>
+        </div>
 
         {% endfor %}
+
+        {% endautoescape %}
+
+
     </div>
 
 
@@ -67,7 +78,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="view-balance-modalLabel">Dodawanie nowej kategorii
+                    <h1 class="modal-title fs-5">Dodawanie nowej kategorii
                     </h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -112,23 +123,10 @@
                     <form action="/changesettings/delete-category" method="post">
 
                         <input type="checkbox" class="d-none" name="categoryType" value="incomeCategory" checked>
+                        <input type="text" id="selectCategoryToDelete" name="selectedCategory"
+                            class="form-control d-none">
 
-                        <div class="mb-4">
-                            <label for="selectCategoryToDelete" class="form-label">Wybierz kategorię do
-                                usunięcia:</label>
-                            <select class="form-select" aria-label="income category" id="selectCategoryToDelete"
-                                name="selectedCategory" required>
-
-                                <option value="">--</option>
-
-                                {% for categories in getIncomeCategories %}
-
-                                <option value="{{ categories.income_category }}"> {{ categories.income_category }}
-                                </option>
-
-                                {% endfor %}
-                            </select>
-                        </div>
+                        <input type="text" id="displayCategoryToDelete" class="form-control" disabled>
 
                         <div class="modal-footer">
 
@@ -155,8 +153,7 @@
     <!-- Modal -->
 
     <!-- Modal change name category-->
-
-    <div class="modal fade" id="changeIncomeCategoryModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="changeIncomeCategoryNameModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -165,31 +162,16 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+
                     <form action="/changesettings/change-category-name" method="post">
 
                         <input type="checkbox" class="d-none" name="categoryType" value="incomeCategory" checked>
 
-                        <div class="mb-4">
-                            <label for="selectCategoryToRename" class="form-label">Wybierz kategorię, której chcesz
-                                zmienić nazwę:</label>
-                            <select class="form-select" aria-label="income category" id="selectCategoryToRename"
-                                name="selectedCategory" required>
-
-                                <option value="">--</option>
-
-                                {% for categories in getIncomeCategories %}
-
-                                <option value="{{ categories.income_category }}"> {{ categories.income_category }}
-                                </option>
-
-                                {% endfor %}
-                            </select>
-                        </div>
+                        <input type="text" class="d-none" id="oldNameIncomeCategory" name="selectedCategory">
 
                         <div>
-                            <label for="newCategoryName" class="form-label">Wpisz nową nazwę:</label>
-                            <input type="text" id="newCategoryName" name="newCategoryName" class="form-control"
-                                required>
+                            <label for="newName" class="form-label">Wpisz nową nazwę:</label>
+                            <input type="text" id="newName" name="newCategoryName" class="form-control" required>
                         </div>
 
                         <div class="modal-footer">
@@ -210,5 +192,12 @@
     <!-- Modal -->
 
 </div>
+
+{% endblock %}
+
+{% block footer %}
+
+<script src="/js/incomeSettings.js"></script>
+
 
 {% endblock %}

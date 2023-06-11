@@ -79,7 +79,7 @@ class ChangeSettings extends Authenticated {
 
         else {
 
-            Flash::addMessage('Wystąpił błąd!', Flash::DANGER);
+            //Flash::addMessage('Wystąpił błąd!', Flash::WARNING);
             $this->redirectToCurrentTab($settings);
         }
 
@@ -147,16 +147,6 @@ class ChangeSettings extends Authenticated {
             Flash::addMessage('Wystąpił błąd!', Flash::DANGER);
             $this->redirect('/changesettings/user');
         }
-
-    }
-
-    public function findRecordAction() {
-
-        $settings = new Settings($_POST);
-
-        $settings->findRecordById();
-
-        $this->redirect('/viewbalance/balance');
 
     }
 

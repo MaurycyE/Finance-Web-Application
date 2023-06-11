@@ -151,7 +151,7 @@ class User extends \Core\Model {
 
     public static function findByEmail($email) {
 
-        $sql = 'SELECT user_email FROM users WHERE user_email = :email';
+        $sql = 'SELECT id_users, user_name, user_email, user_password, password_reset_hash, password_reset_expiry FROM users WHERE user_email = :email';
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
@@ -202,7 +202,7 @@ class User extends \Core\Model {
 
     public static function findByID($id) {
 
-        $sql = 'SELECT * FROM users WHERE id_users = :id';
+        $sql = 'SELECT id_users, user_name, user_email, user_password, password_reset_hash, password_reset_expiry FROM users WHERE id_users = :id';
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
@@ -285,7 +285,7 @@ class User extends \Core\Model {
         $token = new Token($token);
         $hashed_token = $token->getHash();
 
-        $sql = 'SELECT * FROM users WHERE password_reset_hash = :token_hash';
+        $sql = 'SELECT id_users, user_name, user_email, user_password, password_reset_hash, password_reset_expiry FROM users WHERE password_reset_hash = :token_hash';
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);

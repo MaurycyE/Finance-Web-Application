@@ -66,7 +66,7 @@ class Settings extends \Core\Model {
 
         if($this->findCategoryByName()) {
 
-            Flash::addMessage('Kategoria już istnieje', Flash::DANGER);
+            Flash::addMessage('Kategoria już istnieje', Flash::WARNING);
             return false;
         }
 
@@ -102,7 +102,7 @@ class Settings extends \Core\Model {
 
         $stmt->bindValue(':id_categories', NULL, PDO::PARAM_NULL);
         $stmt->bindValue(':id_useres', $_SESSION['user_id'], PDO::PARAM_INT);
-        $stmt->bindValue(':category', lcfirst(htmlspecialchars($this->newCategoryName)), PDO::PARAM_STR);
+        $stmt->bindValue(':category', lcfirst(htmlspecialchars($this->newCategoryName, ENT_QUOTES)), PDO::PARAM_STR);
 
         return $stmt->execute();
     }
@@ -210,7 +210,7 @@ class Settings extends \Core\Model {
         $db = static::getDB();
         $stmt = $db->prepare($sql);
         $stmt->bindValue(':idLoggedUser', $_SESSION['user_id'], PDO::PARAM_INT);
-        $stmt->bindValue(':newCategoryName', lcfirst(htmlspecialchars($this->newCategoryName)), PDO::PARAM_STR);
+        $stmt->bindValue(':newCategoryName', lcfirst(htmlspecialchars($this->newCategoryName, ENT_QUOTES)), PDO::PARAM_STR);
         $stmt->bindValue(':idCategory', $this->idCategory[0], PDO::PARAM_INT);
 
         return $stmt->execute();
@@ -277,26 +277,6 @@ class Settings extends \Core\Model {
         $sql = "DELETE FROM income_categories WHERE id_users = :idLoggedUser";
         $this->executeQuery($sql);
 
-    }
-
-    public function findRecordById() {
-
-        switch($this->incomeOrExpense) {
-
-            case 'income':
-                $sql = "SELECT * FROM incomes WHERE id_incomes = :idRecords";
-                break;
-            case 'expense':
-                $sql = "SELECT * FROM expenses WHERE id_expenses = :idRecords";
-                break;
-        }
-
-        $db = static::getDB();
-        $stmt = $db->prepare($sql);
-        $stmt->bindValue(':idRecords', $this->idOfSelectedRecord, PDO::PARAM_INT);
-        $stmt->execute();
-
-        $_SESSION['foundRecordToEdit'] = $stmt->fetchAll();
     }
 
     public static function getRecordToShow() {
