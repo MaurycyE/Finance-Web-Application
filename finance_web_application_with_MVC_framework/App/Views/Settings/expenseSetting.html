@@ -4,6 +4,7 @@
 
 {% block menuOptionContent %}
 
+
 <div class="col-12 col-sm-8 float-sm-end bg-white p-4 rounded-4 mb-2">
 
     <div>
@@ -82,6 +83,8 @@
 
         <div class="my-3">
             <span id="{{ loop.index0 }}_ec">{{ categories.expense_category }}</span>
+
+
             <a href="" data-bs-toggle="modal" data-bs-target="#changeExpenseCategoryModal" id="{{ loop.index0 }}"
                 onclick="showExpenseCategoryToRename(this.id);"><svg xmlns="http://www.w3.org/2000/svg" width="16"
                     height="16" fill="currentColor" class="bi bi-vector-pen" viewBox="0 0 16 16">
@@ -105,8 +108,13 @@
                         d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
                 </svg></a>
 
-            <span class="font-monospace float-end text-secondary">
-                Ustawiony limit: <span id="{{ loop.index0 }}_el">{{ categories.set_limit }}</span> </span>
+            {% if categories.set_limit is not empty %}
+
+            <span class="font-monospace float-end text-secondary" id="{{ loop.index0 }}_limitDisplayLine">
+                Ustawiony limit: {% endif %}
+                <span id="{{ loop.index0 }}_el">{{ categories.set_limit }}</span> </span>
+
+
         </div>
 
         {% endfor %}
@@ -143,7 +151,7 @@
                             <div class="mb-4"></div>
                             <label for="limitAmout" class="form-label">Obecny limit:</label>
                             <input type="number" class="form-control" id="limitAmout" min="0" step="0.01"
-                                placeholder="PLN" name="limitAmout" required>
+                                placeholder="PLN" name="limitAmout">
                         </div>
 
                         <!-- <input type="text" id="oldCategoryName" name="selectedCategory" class="d-none">
@@ -161,11 +169,11 @@
                                     <path
                                         d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
                                 </svg></button>
-                            <!-- <button type="reset" class="btn btn-danger mx-4"><svg xmlns="http://www.w3.org/2000/svg"
+                            <button class="btn btn-danger mx-4" id="resetButton"><svg xmlns="http://www.w3.org/2000/svg"
                                     width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
                                     <path
                                         d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
-                                </svg></button> -->
+                                </svg></button>
                         </div>
                 </div>
                 </form>
@@ -329,7 +337,12 @@
 
 <script src="/js/expenseSettings.js"></script>
 
+
 <script>
+
+    const resetButton = document.getElementById("resetButton");
+    resetButton.addEventListener("click", resetLimitValue, false);
+
     function showExpenseCategoryNameToSetLimit(id) {
 
         let selectedCategory = document.getElementById(id + "_ec").innerHTML;
@@ -340,6 +353,15 @@
         document.getElementById("expenseCategoryToSetLimit").value = "expenseCategory";
         document.getElementById("limitAmout").value = selectedCategoryLimit;
     }
+
+    function resetLimitValue(event) {
+
+
+
+        event.preventDefault();
+        document.getElementById("limitAmout").value = null;
+    }
+
 </script>
 
 

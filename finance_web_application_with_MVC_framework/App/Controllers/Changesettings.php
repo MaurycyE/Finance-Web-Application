@@ -169,7 +169,11 @@ class ChangeSettings extends Authenticated {
     public function updateLimitAction() {
 
         $settings = new Settings($_POST);
+
+        // var_dump($settings);
+        // exit;
         // echo "działa";
+
         // exit;
         $settings->updateExpenseLimit();
 
