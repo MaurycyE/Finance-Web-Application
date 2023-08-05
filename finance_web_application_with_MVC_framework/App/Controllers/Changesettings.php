@@ -166,4 +166,15 @@ class ChangeSettings extends Authenticated {
         $this->redirect('/viewbalance/balance');
     }
 
+    public function updateLimitAction() {
+
+        $settings = new Settings($_POST);
+        // echo "działa";
+        // exit;
+        $settings->updateExpenseLimit();
+
+       $this->redirectToCurrentTab($settings);
+
+    }
+
 }

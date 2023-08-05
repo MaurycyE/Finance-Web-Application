@@ -359,5 +359,19 @@ class Settings extends \Core\Model {
             $stmt->execute();
         }
     }
+
+    public function updateExpenseLimit() {
+
+        $sql = "UPDATE expense_categories SET set_limit = :limitAmout WHERE id_users = :idLoggedUser
+                AND expense_category = :expenseCategory";
+        
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue('limitAmout', $this->limitAmout, PDO::PARAM_INT);
+        $stmt->bindValue('expenseCategory', $this->selectedCategory, PDO::PARAM_STR);
+        $stmt->bindValue(':idLoggedUser', $_SESSION['user_id'], PDO::PARAM_INT);
+
+        $stmt->execute();
+    }
     
 }
