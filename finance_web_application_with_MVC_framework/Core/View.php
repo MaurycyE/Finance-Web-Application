@@ -39,7 +39,7 @@ class View {
             $twig->addGlobal('getExpenseChartData', \App\Models\Balance::getChartData('expenseChartData'));
             $twig->addGlobal('getIncomeChartData', \App\Models\Balance::getChartData('incomeChartData'));
             $twig->addGlobal('getIncomeCategories', \App\Models\Settings::getIncomeExpenseCategories('income_category', 'income_categories'));
-            $twig->addGlobal('getExpenseCategories', \App\Models\Settings::getIncomeExpenseCategories('expense_category', 'expense_categories'));
+            $twig->addGlobal('getExpenseCategories', \App\Models\Settings::getIncomeExpenseCategories('expense_category, set_limit', 'expense_categories'));
             $twig->addGlobal('getPaymentCategories', \App\Models\Settings::getIncomeExpenseCategories('expense_payment_method', 'expense_payment'));
             $twig->addGlobal('getRecordToEdit', \App\Models\Settings::getRecordToShow());
 

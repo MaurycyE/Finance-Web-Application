@@ -1,3 +1,12 @@
+function showExpenseCategoryNameToSetLimit(id) {
+
+    let selectedCategory = document.getElementById(id + "_ec").innerHTML;
+
+    document.getElementById("showCategoryNameToSetLimit").value = selectedCategory;
+    // document.getElementById("oldCategoryName").value = selectedCategory;
+    document.getElementById("expenseCategoryToSetLimit").value = "expenseCategory";
+}
+
 function showPaymentMethodToRename(id) {
 
     let selectedCategory = document.getElementById(id + "_pm").innerHTML;
