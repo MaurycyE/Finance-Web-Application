@@ -45,7 +45,8 @@
 
                 {% for categories in getExpenseCategories %}
 
-                <option value="{{ categories.expense_category }}"> {{ categories.expense_category }} </option>
+                <option id="{{ loop.index0 }}_ae" value="{{ categories.expense_category }}">
+                    {{ categories.expense_category }} </option>
 
                 {% endfor %}
             </select>
@@ -53,7 +54,7 @@
 
         <div class="mb-4">
 
-            <span class="font-monospace d-block">Ustawiony limit:</span>
+            <span class="font-monospace d-block mb-2">Ustawiony miesięczny limit: <span id="limitField"></span></span>
             <span class="font-monospace d-block">Wydatki w tej kategorii w tym miesiącu:</span>
 
         </div>
@@ -84,5 +85,11 @@
 
 
 </div>
+
+{% endblock %}
+
+{% block footer %}
+
+<script src="/js/limit.js"></script>
 
 {% endblock %}

@@ -88,7 +88,7 @@ class Settings extends \Core\Model {
                 break;
 
             case 'expenseCategory': 
-                $sql = 'INSERT INTO expense_categories VALUES(:id_categories, :id_useres, :category)';
+                $sql = 'INSERT INTO expense_categories VALUES(:id_categories, :id_useres, :category, :set_limit)';
                 break;
 
             case 'paymentMethod': 
@@ -97,12 +97,17 @@ class Settings extends \Core\Model {
 
         }
 
+
+
         $db = static::getDB();
         $stmt = $db->prepare($sql);
 
         $stmt->bindValue(':id_categories', NULL, PDO::PARAM_NULL);
         $stmt->bindValue(':id_useres', $_SESSION['user_id'], PDO::PARAM_INT);
         $stmt->bindValue(':category', lcfirst(htmlspecialchars($this->newCategoryName, ENT_QUOTES)), PDO::PARAM_STR);
+        if($this->categoryType=="expenseCategory"){
+            $stmt->bindValue(':set_limit', NULL, PDO::PARAM_NULL);
+        }
 
         return $stmt->execute();
     }

@@ -28,4 +28,16 @@ class AddExpense extends Authenticated {
 
     }
 
+
+    public function limitAction() {
+
+        //$user_id = $this->user->id;
+
+        $category = $this->routeMatchedParams['category'];
+
+        echo json_encode(Expense::getLimit($category), JSON_UNESCAPED_UNICODE);
+    }
+
+    
+
 }
