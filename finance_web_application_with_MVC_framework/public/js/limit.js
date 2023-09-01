@@ -19,14 +19,10 @@ function removeTextColor() {
 
     moneyLeftField.classList.remove("text-danger");
     moneyLeftField.classList.remove("text-success");
-    console.log("remove");
 }
 
 function changeTextColor(limit, sum, amout) {
 
-    console.log(limit);
-    console.log(sum);
-    console.log(amout);
 
     if (Number(limit) - Number(sum) - Number(amout) < 0) {
 
@@ -40,7 +36,6 @@ function changeTextColor(limit, sum, amout) {
         moneyLeftField.classList.add("text-success");
     }
 
-    console.log("color");
 }
 
 function resetFieldsState() {
@@ -52,9 +47,7 @@ function resetFieldsState() {
     amout = null;
 
     showLimit(defaultCategory);
-    //removeTextColor;
     sumField.textContent = "wybierz datę";
-    //moneyLeftField.textContent = "";
 
 }
 
@@ -97,12 +90,9 @@ const showLimit = async (category) => {
         if (data === null) {
 
             data = "Nie ustawiono limitu";
-            //moneyLeftField.textContent = "Nie ustawiono limitu";
         }
 
         limitField.textContent = data;
-
-
 
         if (limit === null) {
 
@@ -110,10 +100,6 @@ const showLimit = async (category) => {
             removeTextColor();
         }
         else {
-
-            //changeTextColor(limit, sum, amout);
-
-
 
             if (amout !== null) {
 
@@ -131,10 +117,8 @@ const showLimit = async (category) => {
                 changeTextColor(limit, 0, 0);
             }
 
-            //amout = null;
-
         }
-        //console.log(data);
+
     } catch (e) {
 
         console.log('ERROR: ', e);
@@ -143,8 +127,6 @@ const showLimit = async (category) => {
 }
 
 const showSum = async (date, category) => {
-
-
 
     try {
 
@@ -175,7 +157,6 @@ const showSum = async (date, category) => {
             else
                 moneyLeftField.textContent = "wybierz datę";
 
-            //amout = null;
         }
     }
     catch (e) {
@@ -193,12 +174,8 @@ categoryField.addEventListener("change", async (event) => {
 
     currentSelectedCategory = event.target.value;
 
-    //console.log(selectedDate);
-
     await showLimit(category);
     await showSum(selectedDate, category);
-    //limitField.textContent = data;
-
 })
 
 dateField.addEventListener("change", async (event) => {
@@ -210,7 +187,7 @@ dateField.addEventListener("change", async (event) => {
 
         currentSelectedCategory = defaultCategory;
     }
-    //console.log(currentSelectedCategory);
+
     await showSum(date, currentSelectedCategory);
 
 })
@@ -223,16 +200,10 @@ expenseAmoutField.addEventListener("input", async (event) => {
 
         moneyLeftField.textContent = Number(limit) - Number(sum) - Number(amout);
 
-        //let sumAndCurrentExpense = Number(sum) + Number(amout);
-
-        //console.log(sumAndCurrentExpense);
-
         changeTextColor(limit, sum, amout);
     }
 
 })
 
-
 submitButton.addEventListener("click", resetFieldsState);
-
 resetButton.addEventListener("click", resetFieldsState);
