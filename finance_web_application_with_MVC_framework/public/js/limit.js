@@ -10,7 +10,6 @@ const resetButton = document.getElementById("resetButton");
 
 let limit;
 let sum;
-//const defaultCategory = document.getElementById("0_ae").value;
 let selectedDate;
 let currentSelectedCategory;
 let amout;
@@ -20,23 +19,28 @@ function removeTextColor() {
 
     moneyLeftField.classList.remove("text-danger");
     moneyLeftField.classList.remove("text-success");
+    console.log("remove");
 }
 
 function changeTextColor(limit, sum, amout) {
 
-    //console.log(limit);
-    //console.log(sum);
+    console.log(limit);
+    console.log(sum);
+    console.log(amout);
 
     if (Number(limit) - Number(sum) - Number(amout) < 0) {
 
         moneyLeftField.classList.remove("text-success");
         moneyLeftField.classList.add("text-danger");
+
     }
     else {
 
         moneyLeftField.classList.remove("text-danger");
         moneyLeftField.classList.add("text-success");
     }
+
+    console.log("color");
 }
 
 function resetFieldsState() {
@@ -48,8 +52,8 @@ function resetFieldsState() {
     amout = null;
 
     showLimit(defaultCategory);
-    removeTextColor;
-    sumField.textContent = "";
+    //removeTextColor;
+    sumField.textContent = "wybierz datę";
     //moneyLeftField.textContent = "";
 
 }
@@ -83,9 +87,6 @@ const getSelectedCategoryExpensesSumInSelectedMonth = async (date, category) => 
 
 const showLimit = async (category) => {
 
-
-    removeTextColor;
-
     try {
 
         const res = await fetch(`https://budget.slawomir-gorczynski.profesjonalnyprogramista.pl/api/limit/${category}`);
@@ -106,30 +107,29 @@ const showLimit = async (category) => {
         if (limit === null) {
 
             moneyLeftField.textContent = "Nie ustawiono limitu";
+            removeTextColor();
         }
         else {
 
             //changeTextColor(limit, sum, amout);
 
-            console.log(sum);
-            console.log(limit);
-            console.log(amout);
+
 
             if (amout !== null) {
-
-                console.log("bad");
 
                 moneyLeftField.textContent = Number(limit) - Number(sum) - Number(amout);
                 changeTextColor(limit, sum, amout);
             }
             else if (limit !== null && sum !== null) {
 
-                console.log("good");
                 moneyLeftField.textContent = Number(limit) - Number(sum);
-                changeTextColor(limit, sum, amout);
+                changeTextColor(limit, sum, 0);
             }
-            else
-                moneyLeftField.textContent = "wybierz datę";
+            else {
+
+                moneyLeftField.textContent = limit;
+                changeTextColor(limit, 0, 0);
+            }
 
             //amout = null;
 
@@ -144,7 +144,7 @@ const showLimit = async (category) => {
 
 const showSum = async (date, category) => {
 
-    removeTextColor;
+
 
     try {
 
@@ -158,19 +158,19 @@ const showSum = async (date, category) => {
         if (limit === null) {
 
             moneyLeftField.textContent = "Nie ustawiono limitu";
+            removeTextColor();
         }
         else {
-
-            changeTextColor(limit, sum, amout);
-
 
             if (amout !== null) {
 
                 moneyLeftField.textContent = Number(limit) - Number(sum) - Number(amout);
+                changeTextColor(limit, sum, amout);
             }
             else if (limit !== null && sum !== null) {
 
                 moneyLeftField.textContent = Number(limit) - Number(sum);
+                changeTextColor(limit, sum, 0);
             }
             else
                 moneyLeftField.textContent = "wybierz datę";
@@ -220,7 +220,7 @@ expenseAmoutField.addEventListener("input", async (event) => {
     if (limit !== null) {
 
         amout = event.target.value;
-        //console.log(amout);
+
         moneyLeftField.textContent = Number(limit) - Number(sum) - Number(amout);
 
         //let sumAndCurrentExpense = Number(sum) + Number(amout);
