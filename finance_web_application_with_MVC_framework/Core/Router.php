@@ -15,6 +15,7 @@ Class Router {
         $route = '/^' . $route . '$/i';
 
         $this->routes[$route] = $parameters;
+
     }
 
     public function getRoutes() {
@@ -25,6 +26,8 @@ Class Router {
     public function match($url) {
 
         foreach($this->routes as $route => $params) {
+
+            //echo $route."_______";
 
             if(preg_match($route, $url, $matches)){
 

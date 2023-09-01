@@ -54,8 +54,13 @@
 
         <div class="mb-4">
 
-            <span class="font-monospace d-block mb-2">Ustawiony miesięczny limit: <span id="limitField"></span></span>
-            <span class="font-monospace d-block">Wydatki w tej kategorii w tym miesiącu:</span>
+            <span class="font-monospace d-block mb-2">Ustawiony miesięczny limit: <span id="limitField"
+                    class=" fw-bold"></span></span>
+            <span class="font-monospace d-block  mb-2">Wydatki w tej kategorii w tym miesiącu:
+                <span id="sumExpenseField" class=" fw-bold"></span> </span>
+
+            <span class="font-monospace d-block">Zostało do wydania:
+                <span id="moneyLeftField" class=" fw-bold"></span> </span>
 
         </div>
 
@@ -64,13 +69,13 @@
             <textarea class="form-control" id="add-expense-textarea" rows="3" name="expenseCommentary"></textarea>
         </div>
 
-        <button type="submit" class="btn btn-success"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+        <button type="submit" class="btn btn-success" id="submitButton"><svg xmlns="http://www.w3.org/2000/svg"
+                width="20" height="20" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
                 <path
                     d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
             </svg></button>
-        <button type="reset" class="btn btn-danger mx-4"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+        <button type="reset" class="btn btn-danger mx-4" id="resetButton"><svg xmlns="http://www.w3.org/2000/svg"
+                width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
                 <path
                     d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
             </svg></button>
@@ -91,5 +96,26 @@
 {% block footer %}
 
 <script src="/js/limit.js"></script>
+<script>
+
+    let defaultCategory;
+
+    defaultCategory = document.getElementById("0_ae").value;
+    // console.log(defaultCategory);
+
+    window.onload = (event) => {
+
+
+        sum = 0;
+        amout = 0;
+        showLimit(defaultCategory);
+
+        //console.log(sum);
+        //moneyLeftField.textContent = "Wybierz datę";
+        sumField.textContent = "Wybierz datę";
+
+        //document.getElementById("limitField").textContent = data;
+    }
+</script>
 
 {% endblock %}

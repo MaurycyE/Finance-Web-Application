@@ -101,15 +101,24 @@ class Expense extends \Core\Model {
         ]);
 
         $db = static::getDB();
-        $sql = "SELECT SUM('expense_amout') FROM 'expenses' WHERE YEAR($expenseDate) = YEAR('expense_date')
-                AND MONTH($expenseDate) = MONTH('expense_date') AND id_users=:idLoggedUser 
+        $sql = "SELECT SUM(expense_amout) FROM expenses WHERE YEAR('$expenseDate') = YEAR(expense_date)
+                AND MONTH('$expenseDate') = MONTH(expense_date) AND id_users=:idLoggedUser 
                 AND id_users_expenses_categories = :idCategory";
+
+            // $sql = "SELECT SUM(expense_amout) FROM expenses WHERE YEAR(expense_date)=YEAR('$expenseDate') AND 
+            // MONTH(expense_date)=MONTH('$expenseDate')";
+        
         $stmt = $db->prepare($sql);
         $stmt->bindValue(':idCategory', $idSelectedExpenseCategory['id_categories'], PDO::PARAM_INT);
         $stmt->bindValue(':idLoggedUser', $_SESSION['user_id'], PDO::PARAM_INT);
         $stmt->execute();
 
         $sumAmout = $stmt->fetch();
+
+        $sumAmout = floatval($sumAmout["SUM(expense_amout)"]);
+
+        // var_dump($sumAmout);
+        // exit;
 
         return $sumAmout;
 

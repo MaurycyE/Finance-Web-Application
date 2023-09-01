@@ -36,6 +36,16 @@ class AddExpense extends Authenticated {
         $category = $this->routeMatchedParams['category'];
 
         echo json_encode(Expense::getLimit($category), JSON_UNESCAPED_UNICODE);
+
+    }
+
+    public function sumAction() {
+
+        $category = $this->routeMatchedParams['category'];
+        //$category = 'transport';
+        $date = $this->routeMatchedParams['date'];
+
+        echo json_encode(Expense::getExpensesSumInSelectedCategoryAndDate($date, $category), JSON_UNESCAPED_UNICODE);
     }
 
     
