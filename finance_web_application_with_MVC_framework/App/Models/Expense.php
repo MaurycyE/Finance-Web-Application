@@ -68,28 +68,16 @@ class Expense extends \Core\Model {
 
     public static function getLimit($expenseCategory) {
 
-        // $idSelectedExpenseCategory = static::findIdOfSelectedCategory($expenseCategory, [
-        //     "id" => 'id_categories',
-        //     "tableName" => 'expense_categories',
-        //     "columnName" => 'expense_category'
-        // ]);
-
         $db = static::getDB();
-        //$sql = "SELECT set_limit FROM expenses WHERE id_users = :idLoggedUser AND id_users_expenses_categories = :idCategory";
         $sql = "SELECT set_limit FROM expense_categories WHERE id_users = :idLoggedUser AND expense_category = :category";
         $stmt = $db->prepare($sql);
         $stmt->bindValue(':idLoggedUser', $_SESSION['user_id'], PDO::PARAM_INT);
         $stmt->bindValue(':category', $expenseCategory, PDO::PARAM_STR);
-        //$stmt->bindValue(':idCategory', $idSelectedExpenseCategory['id_categories'], PDO::PARAM_INT);
         $stmt->execute();
 
         $limit = $stmt->fetch();
 
-        // var_dump($limit);
-        // exit;
-
         return $limit["set_limit"];
-
     }
 
     public static function getExpensesSumInSelectedCategoryAndDate($expenseDate, $expenseCategory) {
@@ -104,9 +92,6 @@ class Expense extends \Core\Model {
         $sql = "SELECT SUM(expense_amout) FROM expenses WHERE YEAR('$expenseDate') = YEAR(expense_date)
                 AND MONTH('$expenseDate') = MONTH(expense_date) AND id_users=:idLoggedUser 
                 AND id_users_expenses_categories = :idCategory";
-
-            // $sql = "SELECT SUM(expense_amout) FROM expenses WHERE YEAR(expense_date)=YEAR('$expenseDate') AND 
-            // MONTH(expense_date)=MONTH('$expenseDate')";
         
         $stmt = $db->prepare($sql);
         $stmt->bindValue(':idCategory', $idSelectedExpenseCategory['id_categories'], PDO::PARAM_INT);
@@ -117,11 +102,7 @@ class Expense extends \Core\Model {
 
         $sumAmout = floatval($sumAmout["SUM(expense_amout)"]);
 
-        // var_dump($sumAmout);
-        // exit;
-
         return $sumAmout;
-
     }
 
 }

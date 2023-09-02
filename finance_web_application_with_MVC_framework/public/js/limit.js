@@ -40,7 +40,6 @@ function changeTextColor(limit, sum, amout) {
 
 function resetFieldsState() {
 
-    limit = null;
     sum = null;
     selectedDate = null;
     currentSelectedCategory = null;
@@ -165,8 +164,6 @@ const showSum = async (date, category) => {
     }
 
 }
-
-
 
 categoryField.addEventListener("change", async (event) => {
 
