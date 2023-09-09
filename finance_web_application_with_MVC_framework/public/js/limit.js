@@ -47,6 +47,7 @@ function resetFieldsState() {
 
     showLimit(defaultCategory);
     sumField.textContent = "wybierz datę";
+    removeTextColor();
 
 }
 
@@ -112,8 +113,9 @@ const showLimit = async (category) => {
             }
             else {
 
-                moneyLeftField.textContent = limit;
-                changeTextColor(limit, 0, 0);
+                //moneyLeftField.textContent = limit;
+                moneyLeftField.textContent = "wybierz datę";
+                //changeTextColor(limit, 0, 0);
             }
 
         }
