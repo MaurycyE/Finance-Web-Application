@@ -8,11 +8,15 @@ const expenseAmoutField = document.getElementById("add-expense-amout");
 const submitButton = document.getElementById("submitButton");
 const resetButton = document.getElementById("resetButton");
 
-let limit;
-let sum;
-let selectedDate;
-let currentSelectedCategory;
-let amout;
+const limitElements = {
+
+    defaultCategory: document.getElementById("0_ae").value,
+    limit: null,
+    sum: null,
+    selectedDate: null,
+    currentSelectedCategory: null,
+    amout: null,
+};
 
 
 function removeTextColor() {
@@ -40,12 +44,12 @@ function changeTextColor(limit, sum, amout) {
 
 function resetFieldsState() {
 
-    sum = null;
-    selectedDate = null;
-    currentSelectedCategory = null;
-    amout = null;
+    limitElements.sum = null;
+    limitElements.selectedDate = null;
+    limitElements.currentSelectedCategory = null;
+    limitElements.amout = null;
 
-    showLimit(defaultCategory);
+    showLimit(limitElements.defaultCategory);
     sumField.textContent = "wybierz datę";
     removeTextColor();
 
@@ -85,7 +89,7 @@ const showLimit = async (category) => {
         const res = await fetch(`https://budget.slawomir-gorczynski.profesjonalnyprogramista.pl/api/limit/${category}`);
         let data = await res.json();
 
-        limit = data;
+        limitElements.limit = data;
 
         if (data === null) {
 
@@ -94,28 +98,26 @@ const showLimit = async (category) => {
 
         limitField.textContent = data;
 
-        if (limit === null) {
+        if (limitElements.limit === null) {
 
             moneyLeftField.textContent = "Nie ustawiono limitu";
             removeTextColor();
         }
         else {
 
-            if (amout !== null) {
+            if (limitElements.amout !== null && limitElements.sum !== null) {
 
-                moneyLeftField.textContent = Number(limit) - Number(sum) - Number(amout);
-                changeTextColor(limit, sum, amout);
+                moneyLeftField.textContent = Number(limitElements.limit) - Number(limitElements.sum) - Number(limitElements.amout);
+                changeTextColor(limitElements.limit, limitElements.sum, limitElements.amout);
             }
-            else if (limit !== null && sum !== null) {
+            else if (limitElements.limit !== null && limitElements.sum !== null) {
 
-                moneyLeftField.textContent = Number(limit) - Number(sum);
-                changeTextColor(limit, sum, 0);
+                moneyLeftField.textContent = Number(limitElements.limit) - Number(limitElements.sum);
+                changeTextColor(limitElements.limit, limitElements.sum, 0);
             }
             else {
 
-                //moneyLeftField.textContent = limit;
                 moneyLeftField.textContent = "wybierz datę";
-                //changeTextColor(limit, 0, 0);
             }
 
         }
@@ -134,26 +136,26 @@ const showSum = async (date, category) => {
         const res = await fetch(`https://budget.slawomir-gorczynski.profesjonalnyprogramista.pl/api/sum/${date}/${category}`);
         let data = await res.json();
 
-        sum = data;
+        limitElements.sum = data;
 
         sumField.textContent = data;
 
-        if (limit === null) {
+        if (limitElements.limit === null) {
 
             moneyLeftField.textContent = "Nie ustawiono limitu";
             removeTextColor();
         }
         else {
 
-            if (amout !== null) {
+            if (limitElements.amout !== null) {
 
-                moneyLeftField.textContent = Number(limit) - Number(sum) - Number(amout);
-                changeTextColor(limit, sum, amout);
+                moneyLeftField.textContent = Number(limitElements.limit) - Number(limitElements.sum) - Number(limitElements.amout);
+                changeTextColor(limitElements.limit, limitElements.sum, limitElements.amout);
             }
-            else if (limit !== null && sum !== null) {
+            else if (limitElements.limit !== null && limitElements.sum !== null) {
 
-                moneyLeftField.textContent = Number(limit) - Number(sum);
-                changeTextColor(limit, sum, 0);
+                moneyLeftField.textContent = Number(limitElements.limit) - Number(limitElements.sum);
+                changeTextColor(limitElements.limit, limitElements.sum, 0);
             }
             else
                 moneyLeftField.textContent = "wybierz datę";
@@ -171,35 +173,35 @@ categoryField.addEventListener("change", async (event) => {
 
     let category = event.target.value;
 
-    currentSelectedCategory = event.target.value;
+    limitElements.currentSelectedCategory = event.target.value;
 
     await showLimit(category);
-    await showSum(selectedDate, category);
+    await showSum(limitElements.selectedDate, category);
 })
 
 dateField.addEventListener("change", async (event) => {
 
     let date = event.target.value;
-    selectedDate = event.target.value;
+    limitElements.selectedDate = event.target.value;
 
-    if (currentSelectedCategory == null) {
+    if (limitElements.currentSelectedCategory == null) {
 
-        currentSelectedCategory = defaultCategory;
+        limitElements.currentSelectedCategory = limitElements.defaultCategory;
     }
 
-    await showSum(date, currentSelectedCategory);
+    await showSum(date, limitElements.currentSelectedCategory);
 
 })
 
 expenseAmoutField.addEventListener("input", async (event) => {
 
-    if (limit !== null) {
+    if (limitElements.limit !== null && limitElements.sum !== null) {
 
-        amout = event.target.value;
+        limitElements.amout = event.target.value;
 
-        moneyLeftField.textContent = Number(limit) - Number(sum) - Number(amout);
+        moneyLeftField.textContent = Number(limitElements.limit) - Number(limitElements.sum) - Number(limitElements.amout);
 
-        changeTextColor(limit, sum, amout);
+        changeTextColor(limitElements.limit, limitElements.sum, limitElements.amout);
     }
 
 })

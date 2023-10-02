@@ -98,16 +98,12 @@
 <script src="/js/limit.js"></script>
 <script>
 
-    let defaultCategory;
-
-    defaultCategory = document.getElementById("0_ae").value;
-
     window.onload = (event) => {
 
 
-        sum = null;
-        amout = null;
-        showLimit(defaultCategory);
+        limitElements.sum = null;
+        limitElements.amout = null;
+        showLimit(limitElements.defaultCategory);
         sumField.textContent = "Wybierz datę";
     }
 </script>

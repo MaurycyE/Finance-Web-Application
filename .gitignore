@@ -43,6 +43,6 @@
 *.docx
 
 materialy_pomocnicze/
-awstats/
-logs/
-vendor/
+finance_web_application_with_MVC_framework/awstats/
+finance_web_application_with_MVC_framework/logs/
+finance_web_application_with_MVC_framework/vendor/
